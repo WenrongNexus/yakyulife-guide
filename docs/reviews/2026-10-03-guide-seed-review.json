@@ -1,0 +1,1526 @@
+{
+  "gameVersion": "v2.0.11",
+  "policy": "cpbl-hof",
+  "revision": 1,
+  "policyHash": "146dce23c93222752eb6a061f8b5d87209e9d806567198160c71b9c6eab03b71",
+  "selectorHash": "fb9d60b6950e18549ad67f94368c2df79c6ca91416311dab0ee002af98525678",
+  "datasetHash": "42501c31260ec7198d4f1a1b5c28e596844040a8cc5933207423ad4698e1053a",
+  "total": 111042,
+  "method": "目前名人堂結果；二刀流首選須退休仍為二刀流。一般大傷少、TJ 危機少、累積薪資高依序比較，完全同分取短種子及文字順序。另列少 TJ 或退休仍守內野的取捨。這是編輯挑選，不是機率估計或策略實驗。",
+  "counts": {
+    "P": {
+      "total": 10512,
+      "hof": 7752
+    },
+    "C": {
+      "total": 21523,
+      "hof": 6391
+    },
+    "IF": {
+      "total": 30024,
+      "hof": 11278
+    },
+    "OF": {
+      "total": 17870,
+      "hof": 8218
+    },
+    "TW": {
+      "total": 31113,
+      "hof": 21600
+    }
+  },
+  "replayed": 17,
+  "picks": [
+    {
+      "seed": "bxu75",
+      "pos": "P",
+      "result": {
+        "tier": 0,
+        "legend": false,
+        "league": "CPBL",
+        "top": "CPBL1",
+        "genius": true,
+        "retireAge": 43,
+        "honors": 80,
+        "peak": {
+          "sta": 65,
+          "vel": 80,
+          "ctl": 68,
+          "brk": 70
+        },
+        "salary": 58039,
+        "injuries": 0,
+        "tj": 2,
+        "finalPosition": "P",
+        "finalDefence": null,
+        "policyChecks": {
+          "school": [
+            {
+              "year": 2028,
+              "age": 18,
+              "stage": "HS",
+              "stageYr": 3,
+              "pos": "P",
+              "title": "高中畢業 · 綜合能力 55 · 人生的第一個路口",
+              "pick": "投入中華職棒選秀"
+            }
+          ],
+          "splits": [],
+          "tj": [
+            {
+              "age": 27,
+              "crisis": 1,
+              "pick": "動 Tommy John 手術"
+            },
+            {
+              "age": 34,
+              "crisis": 2,
+              "pick": "打針硬撐，不進手術室"
+            }
+          ],
+          "choices": 253
+        },
+        "decisions": []
+      },
+      "kind": "primary"
+    },
+    {
+      "seed": "alzsm",
+      "pos": "P",
+      "result": {
+        "tier": 0,
+        "legend": false,
+        "league": "CPBL",
+        "top": "CPBL1",
+        "genius": false,
+        "retireAge": 41,
+        "honors": 55,
+        "peak": {
+          "sta": 56,
+          "vel": 69,
+          "ctl": 66,
+          "brk": 62
+        },
+        "salary": 33273,
+        "injuries": 2,
+        "tj": 1,
+        "finalPosition": "P",
+        "finalDefence": null,
+        "policyChecks": {
+          "school": [
+            {
+              "year": 2028,
+              "age": 18,
+              "stage": "HS",
+              "stageYr": 3,
+              "pos": "P",
+              "title": "高中畢業 · 綜合能力 53 · 人生的第一個路口",
+              "pick": "投入中華職棒選秀"
+            }
+          ],
+          "splits": [],
+          "tj": [
+            {
+              "age": 29,
+              "crisis": 1,
+              "pick": "動 Tommy John 手術"
+            }
+          ],
+          "choices": 228
+        },
+        "decisions": []
+      },
+      "kind": "fewerTj"
+    },
+    {
+      "seed": "8qekr",
+      "pos": "C",
+      "result": {
+        "tier": 0,
+        "legend": false,
+        "league": "CPBL",
+        "top": "CPBL1",
+        "genius": true,
+        "retireAge": 44,
+        "honors": 130,
+        "peak": {
+          "sta": 72,
+          "con": 80,
+          "pow": 73,
+          "spd": 73,
+          "eye": 80,
+          "rng": 26,
+          "fld": 20,
+          "arm": 25,
+          "cat": 30
+        },
+        "salary": 86928,
+        "injuries": 0,
+        "tj": 0,
+        "finalPosition": "C",
+        "finalDefence": "DH",
+        "policyChecks": {
+          "school": [
+            {
+              "year": 2028,
+              "age": 18,
+              "stage": "HS",
+              "stageYr": 3,
+              "pos": "C",
+              "title": "高中畢業 · 綜合能力 48 · 人生的第一個路口",
+              "pick": "就讀大學（延長養成）"
+            },
+            {
+              "year": 2030,
+              "age": 20,
+              "stage": "U",
+              "stageYr": 2,
+              "pos": "C",
+              "title": "大二季前 · 升學與職棒的十字路口",
+              "pick": "投入中華職棒選秀"
+            }
+          ],
+          "splits": [],
+          "tj": [],
+          "choices": 250
+        },
+        "decisions": []
+      },
+      "kind": "primary"
+    },
+    {
+      "seed": "484st",
+      "pos": "IF",
+      "result": {
+        "tier": 0,
+        "legend": true,
+        "league": "CPBL",
+        "top": "CPBL1",
+        "genius": true,
+        "retireAge": 44,
+        "honors": 122,
+        "peak": {
+          "sta": 75,
+          "con": 80,
+          "pow": 74,
+          "spd": 75,
+          "eye": 74,
+          "rng": 56,
+          "fld": 54,
+          "arm": 49
+        },
+        "salary": 97534,
+        "injuries": 0,
+        "tj": 0,
+        "finalPosition": "IF",
+        "finalDefence": "DH",
+        "policyChecks": {
+          "school": [
+            {
+              "year": 2028,
+              "age": 18,
+              "stage": "HS",
+              "stageYr": 3,
+              "pos": "IF",
+              "title": "高中畢業 · 綜合能力 39 · 人生的第一個路口",
+              "pick": "就讀大學（延長養成）"
+            },
+            {
+              "year": 2030,
+              "age": 20,
+              "stage": "U",
+              "stageYr": 2,
+              "pos": "IF",
+              "title": "大二季前 · 升學與職棒的十字路口",
+              "pick": "留在大學繼續磨練"
+            },
+            {
+              "year": 2031,
+              "age": 21,
+              "stage": "U",
+              "stageYr": 3,
+              "pos": "IF",
+              "title": "大三季前 · 升學與職棒的十字路口",
+              "pick": "留在大學繼續磨練"
+            },
+            {
+              "year": 2032,
+              "age": 22,
+              "stage": "U",
+              "stageYr": 4,
+              "pos": "IF",
+              "title": "大四季前 · 升學與職棒的十字路口",
+              "pick": "投入中華職棒選秀"
+            }
+          ],
+          "splits": [],
+          "tj": [],
+          "choices": 261
+        },
+        "decisions": []
+      },
+      "kind": "primary"
+    },
+    {
+      "seed": "avlm7",
+      "pos": "IF",
+      "result": {
+        "tier": 0,
+        "legend": false,
+        "league": "CPBL",
+        "top": "CPBL1",
+        "genius": true,
+        "retireAge": 42,
+        "honors": 95,
+        "peak": {
+          "sta": 71,
+          "con": 71,
+          "pow": 72,
+          "spd": 71,
+          "eye": 74,
+          "rng": 55,
+          "fld": 50,
+          "arm": 50
+        },
+        "salary": 62499,
+        "injuries": 0,
+        "tj": 0,
+        "finalPosition": "IF",
+        "finalDefence": "1B",
+        "policyChecks": {
+          "school": [
+            {
+              "year": 2028,
+              "age": 18,
+              "stage": "HS",
+              "stageYr": 3,
+              "pos": "IF",
+              "title": "高中畢業 · 綜合能力 37 · 人生的第一個路口",
+              "pick": "就讀大學（延長養成）"
+            },
+            {
+              "year": 2030,
+              "age": 20,
+              "stage": "U",
+              "stageYr": 2,
+              "pos": "IF",
+              "title": "大二季前 · 升學與職棒的十字路口",
+              "pick": "留在大學繼續磨練"
+            },
+            {
+              "year": 2031,
+              "age": 21,
+              "stage": "U",
+              "stageYr": 3,
+              "pos": "IF",
+              "title": "大三季前 · 升學與職棒的十字路口",
+              "pick": "留在大學繼續磨練"
+            },
+            {
+              "year": 2032,
+              "age": 22,
+              "stage": "U",
+              "stageYr": 4,
+              "pos": "IF",
+              "title": "大四季前 · 升學與職棒的十字路口",
+              "pick": "投入中華職棒選秀"
+            }
+          ],
+          "splits": [],
+          "tj": [],
+          "choices": 244
+        },
+        "decisions": []
+      },
+      "kind": "infield"
+    },
+    {
+      "seed": "hjfdh",
+      "pos": "OF",
+      "result": {
+        "tier": 0,
+        "legend": false,
+        "league": "CPBL",
+        "top": "CPBL1",
+        "genius": true,
+        "retireAge": 43,
+        "honors": 103,
+        "peak": {
+          "sta": 73,
+          "con": 80,
+          "pow": 73,
+          "spd": 73,
+          "eye": 74,
+          "rng": 49,
+          "fld": 56,
+          "arm": 49
+        },
+        "salary": 99414,
+        "injuries": 0,
+        "tj": 0,
+        "finalPosition": "OF",
+        "finalDefence": "DH",
+        "policyChecks": {
+          "school": [
+            {
+              "year": 2028,
+              "age": 18,
+              "stage": "HS",
+              "stageYr": 3,
+              "pos": "OF",
+              "title": "高中畢業 · 綜合能力 35 · 人生的第一個路口",
+              "pick": "就讀大學（延長養成）"
+            },
+            {
+              "year": 2030,
+              "age": 20,
+              "stage": "U",
+              "stageYr": 2,
+              "pos": "OF",
+              "title": "大二季前 · 升學與職棒的十字路口",
+              "pick": "留在大學繼續磨練"
+            },
+            {
+              "year": 2031,
+              "age": 21,
+              "stage": "U",
+              "stageYr": 3,
+              "pos": "OF",
+              "title": "大三季前 · 升學與職棒的十字路口",
+              "pick": "留在大學繼續磨練"
+            },
+            {
+              "year": 2032,
+              "age": 22,
+              "stage": "U",
+              "stageYr": 4,
+              "pos": "OF",
+              "title": "大四季前 · 升學與職棒的十字路口",
+              "pick": "投入中華職棒選秀"
+            }
+          ],
+          "splits": [],
+          "tj": [],
+          "choices": 239
+        },
+        "decisions": []
+      },
+      "kind": "primary"
+    },
+    {
+      "seed": "kcxep",
+      "pos": "TW",
+      "result": {
+        "tier": 0,
+        "legend": true,
+        "league": "CPBL",
+        "top": "CPBL1",
+        "genius": true,
+        "retireAge": 43,
+        "honors": 118,
+        "peak": {
+          "sta": 69,
+          "vel": 65,
+          "ctl": 80,
+          "brk": 63,
+          "con": 67,
+          "pow": 67,
+          "spd": 72,
+          "eye": 80
+        },
+        "salary": 114501,
+        "injuries": 0,
+        "tj": 3,
+        "finalPosition": "TW",
+        "finalDefence": "DH",
+        "policyChecks": {
+          "school": [
+            {
+              "year": 2028,
+              "age": 18,
+              "stage": "HS",
+              "stageYr": 3,
+              "pos": "TW",
+              "title": "高中畢業 · 綜合能力 42 · 人生的第一個路口",
+              "pick": "就讀大學（延長養成）"
+            },
+            {
+              "year": 2030,
+              "age": 20,
+              "stage": "U",
+              "stageYr": 2,
+              "pos": "TW",
+              "title": "大二季前 · 升學與職棒的十字路口",
+              "pick": "留在大學繼續磨練"
+            },
+            {
+              "year": 2031,
+              "age": 21,
+              "stage": "U",
+              "stageYr": 3,
+              "pos": "TW",
+              "title": "大三季前 · 升學與職棒的十字路口",
+              "pick": "留在大學繼續磨練"
+            },
+            {
+              "year": 2032,
+              "age": 22,
+              "stage": "U",
+              "stageYr": 4,
+              "pos": "TW",
+              "title": "大四季前 · 升學與職棒的十字路口",
+              "pick": "留在大學繼續磨練"
+            },
+            {
+              "year": 2032,
+              "age": 22,
+              "stage": "U",
+              "stageYr": 4,
+              "pos": "TW",
+              "title": "大學畢業 · 綜合能力 63",
+              "pick": "投入中華職棒選秀"
+            }
+          ],
+          "splits": [
+            {
+              "age": 23,
+              "pick": "以投為主"
+            },
+            {
+              "age": 24,
+              "pick": "以投為主"
+            },
+            {
+              "age": 25,
+              "pick": "以投為主"
+            },
+            {
+              "age": 26,
+              "pick": "以投為主"
+            },
+            {
+              "age": 27,
+              "pick": "以投為主"
+            },
+            {
+              "age": 28,
+              "pick": "以投為主"
+            },
+            {
+              "age": 29,
+              "pick": "以投為主"
+            },
+            {
+              "age": 31,
+              "pick": "以投為主"
+            },
+            {
+              "age": 32,
+              "pick": "以投為主"
+            },
+            {
+              "age": 33,
+              "pick": "以投為主"
+            },
+            {
+              "age": 34,
+              "pick": "以投為主"
+            },
+            {
+              "age": 35,
+              "pick": "以投為主"
+            },
+            {
+              "age": 36,
+              "pick": "以投為主"
+            },
+            {
+              "age": 37,
+              "pick": "以投為主"
+            },
+            {
+              "age": 38,
+              "pick": "以投為主"
+            },
+            {
+              "age": 39,
+              "pick": "以投為主"
+            },
+            {
+              "age": 40,
+              "pick": "以投為主"
+            },
+            {
+              "age": 41,
+              "pick": "以投為主"
+            },
+            {
+              "age": 42,
+              "pick": "以投為主"
+            },
+            {
+              "age": 43,
+              "pick": "以投為主"
+            }
+          ],
+          "tj": [
+            {
+              "age": 29,
+              "crisis": 1,
+              "pick": "動 Tommy John 手術"
+            },
+            {
+              "age": 35,
+              "crisis": 2,
+              "pick": "打針硬撐，不進手術室"
+            },
+            {
+              "age": 36,
+              "crisis": 3,
+              "pick": "打針硬撐，不進手術室"
+            }
+          ],
+          "choices": 257
+        },
+        "decisions": []
+      },
+      "kind": "primary"
+    },
+    {
+      "seed": "7p707",
+      "pos": "TW",
+      "result": {
+        "tier": 0,
+        "legend": false,
+        "league": "CPBL",
+        "top": "CPBL1",
+        "genius": false,
+        "retireAge": 40,
+        "honors": 40,
+        "peak": {
+          "sta": 61,
+          "vel": 53,
+          "ctl": 57,
+          "brk": 66,
+          "con": 60,
+          "pow": 72,
+          "spd": 66,
+          "eye": 53
+        },
+        "salary": 25498,
+        "injuries": 1,
+        "tj": 1,
+        "finalPosition": "TW",
+        "finalDefence": "DH",
+        "policyChecks": {
+          "school": [
+            {
+              "year": 2028,
+              "age": 18,
+              "stage": "HS",
+              "stageYr": 3,
+              "pos": "TW",
+              "title": "高中畢業 · 綜合能力 37 · 人生的第一個路口",
+              "pick": "就讀大學（延長養成）"
+            },
+            {
+              "year": 2030,
+              "age": 20,
+              "stage": "U",
+              "stageYr": 2,
+              "pos": "TW",
+              "title": "大二季前 · 升學與職棒的十字路口",
+              "pick": "留在大學繼續磨練"
+            },
+            {
+              "year": 2031,
+              "age": 21,
+              "stage": "U",
+              "stageYr": 3,
+              "pos": "TW",
+              "title": "大三季前 · 升學與職棒的十字路口",
+              "pick": "留在大學繼續磨練"
+            },
+            {
+              "year": 2032,
+              "age": 22,
+              "stage": "U",
+              "stageYr": 4,
+              "pos": "TW",
+              "title": "大四季前 · 升學與職棒的十字路口",
+              "pick": "留在大學繼續磨練"
+            },
+            {
+              "year": 2032,
+              "age": 22,
+              "stage": "U",
+              "stageYr": 4,
+              "pos": "TW",
+              "title": "大學畢業 · 綜合能力 52",
+              "pick": "投入中華職棒選秀"
+            }
+          ],
+          "splits": [
+            {
+              "age": 23,
+              "pick": "以投為主"
+            },
+            {
+              "age": 24,
+              "pick": "以投為主"
+            },
+            {
+              "age": 25,
+              "pick": "以投為主"
+            },
+            {
+              "age": 26,
+              "pick": "以投為主"
+            },
+            {
+              "age": 27,
+              "pick": "以投為主"
+            },
+            {
+              "age": 28,
+              "pick": "以投為主"
+            },
+            {
+              "age": 29,
+              "pick": "以投為主"
+            },
+            {
+              "age": 30,
+              "pick": "以投為主"
+            },
+            {
+              "age": 31,
+              "pick": "以投為主"
+            },
+            {
+              "age": 33,
+              "pick": "以投為主"
+            },
+            {
+              "age": 34,
+              "pick": "以投為主"
+            },
+            {
+              "age": 35,
+              "pick": "以投為主"
+            },
+            {
+              "age": 36,
+              "pick": "以投為主"
+            },
+            {
+              "age": 37,
+              "pick": "以投為主"
+            },
+            {
+              "age": 38,
+              "pick": "以投為主"
+            },
+            {
+              "age": 39,
+              "pick": "以投為主"
+            },
+            {
+              "age": 40,
+              "pick": "以投為主"
+            }
+          ],
+          "tj": [
+            {
+              "age": 31,
+              "crisis": 1,
+              "pick": "動 Tommy John 手術"
+            }
+          ],
+          "choices": 233
+        },
+        "decisions": []
+      },
+      "kind": "fewerTj"
+    }
+  ],
+  "previous": [
+    {
+      "seed": "65vx",
+      "pos": "C",
+      "result": {
+        "tier": 0,
+        "legend": false,
+        "league": "CPBL",
+        "top": "CPBL1",
+        "genius": true,
+        "retireAge": 44,
+        "honors": 130,
+        "peak": {
+          "sta": 69,
+          "con": 69,
+          "pow": 76,
+          "spd": 69,
+          "eye": 70,
+          "rng": 27,
+          "fld": 26,
+          "arm": 30,
+          "cat": 30
+        },
+        "salary": 55489,
+        "injuries": 2,
+        "tj": 0,
+        "finalPosition": "C",
+        "finalDefence": "DH",
+        "policyChecks": {
+          "school": [
+            {
+              "year": 2028,
+              "age": 18,
+              "stage": "HS",
+              "stageYr": 3,
+              "pos": "C",
+              "title": "高中畢業 · 綜合能力 51 · 人生的第一個路口",
+              "pick": "就讀大學（延長養成）"
+            },
+            {
+              "year": 2030,
+              "age": 20,
+              "stage": "U",
+              "stageYr": 2,
+              "pos": "C",
+              "title": "大二季前 · 升學與職棒的十字路口",
+              "pick": "投入中華職棒選秀"
+            }
+          ],
+          "splits": [],
+          "tj": [],
+          "choices": 246
+        },
+        "decisions": []
+      }
+    },
+    {
+      "seed": "h327w",
+      "pos": "C",
+      "result": {
+        "tier": 0,
+        "legend": false,
+        "league": "CPBL",
+        "top": "CPBL1",
+        "genius": true,
+        "retireAge": 44,
+        "honors": 143,
+        "peak": {
+          "sta": 74,
+          "con": 80,
+          "pow": 74,
+          "spd": 75,
+          "eye": 73,
+          "rng": 21,
+          "fld": 33,
+          "arm": 21,
+          "cat": 31
+        },
+        "salary": 71277,
+        "injuries": 1,
+        "tj": 0,
+        "finalPosition": "C",
+        "finalDefence": "DH",
+        "policyChecks": {
+          "school": [
+            {
+              "year": 2028,
+              "age": 18,
+              "stage": "HS",
+              "stageYr": 3,
+              "pos": "C",
+              "title": "高中畢業 · 綜合能力 54 · 人生的第一個路口",
+              "pick": "就讀大學（延長養成）"
+            },
+            {
+              "year": 2030,
+              "age": 20,
+              "stage": "U",
+              "stageYr": 2,
+              "pos": "C",
+              "title": "大二季前 · 升學與職棒的十字路口",
+              "pick": "投入中華職棒選秀"
+            }
+          ],
+          "splits": [],
+          "tj": [],
+          "choices": 260
+        },
+        "decisions": []
+      }
+    },
+    {
+      "seed": "664er",
+      "pos": "IF",
+      "result": {
+        "tier": 0,
+        "legend": false,
+        "league": "CPBL",
+        "top": "CPBL1",
+        "genius": true,
+        "retireAge": 42,
+        "honors": 93,
+        "peak": {
+          "sta": 70,
+          "con": 70,
+          "pow": 74,
+          "spd": 77,
+          "eye": 70,
+          "rng": 50,
+          "fld": 52,
+          "arm": 49
+        },
+        "salary": 32416,
+        "injuries": 2,
+        "tj": 0,
+        "finalPosition": "IF",
+        "finalDefence": "DH",
+        "policyChecks": {
+          "school": [
+            {
+              "year": 2028,
+              "age": 18,
+              "stage": "HS",
+              "stageYr": 3,
+              "pos": "IF",
+              "title": "高中畢業 · 綜合能力 43 · 人生的第一個路口",
+              "pick": "就讀大學（延長養成）"
+            },
+            {
+              "year": 2030,
+              "age": 20,
+              "stage": "U",
+              "stageYr": 2,
+              "pos": "IF",
+              "title": "大二季前 · 升學與職棒的十字路口",
+              "pick": "留在大學繼續磨練"
+            },
+            {
+              "year": 2031,
+              "age": 21,
+              "stage": "U",
+              "stageYr": 3,
+              "pos": "IF",
+              "title": "大三季前 · 升學與職棒的十字路口",
+              "pick": "留在大學繼續磨練"
+            },
+            {
+              "year": 2032,
+              "age": 22,
+              "stage": "U",
+              "stageYr": 4,
+              "pos": "IF",
+              "title": "大四季前 · 升學與職棒的十字路口",
+              "pick": "投入中華職棒選秀"
+            }
+          ],
+          "splits": [],
+          "tj": [],
+          "choices": 252
+        },
+        "decisions": []
+      }
+    },
+    {
+      "seed": "5f687",
+      "pos": "OF",
+      "result": {
+        "tier": 0,
+        "legend": true,
+        "league": "CPBL",
+        "top": "CPBL1",
+        "genius": true,
+        "retireAge": 44,
+        "honors": 118,
+        "peak": {
+          "sta": 70,
+          "con": 80,
+          "pow": 76,
+          "spd": 70,
+          "eye": 70,
+          "rng": 49,
+          "fld": 53,
+          "arm": 55
+        },
+        "salary": 68961,
+        "injuries": 0,
+        "tj": 0,
+        "finalPosition": "OF",
+        "finalDefence": "DH",
+        "policyChecks": {
+          "school": [
+            {
+              "year": 2028,
+              "age": 18,
+              "stage": "HS",
+              "stageYr": 3,
+              "pos": "OF",
+              "title": "高中畢業 · 綜合能力 35 · 人生的第一個路口",
+              "pick": "就讀大學（延長養成）"
+            },
+            {
+              "year": 2030,
+              "age": 20,
+              "stage": "U",
+              "stageYr": 2,
+              "pos": "OF",
+              "title": "大二季前 · 升學與職棒的十字路口",
+              "pick": "留在大學繼續磨練"
+            },
+            {
+              "year": 2031,
+              "age": 21,
+              "stage": "U",
+              "stageYr": 3,
+              "pos": "OF",
+              "title": "大三季前 · 升學與職棒的十字路口",
+              "pick": "留在大學繼續磨練"
+            },
+            {
+              "year": 2032,
+              "age": 22,
+              "stage": "U",
+              "stageYr": 4,
+              "pos": "OF",
+              "title": "大四季前 · 升學與職棒的十字路口",
+              "pick": "投入中華職棒選秀"
+            }
+          ],
+          "splits": [],
+          "tj": [],
+          "choices": 247
+        },
+        "decisions": []
+      }
+    },
+    {
+      "seed": "664er",
+      "pos": "OF",
+      "result": {
+        "tier": 0,
+        "legend": false,
+        "league": "CPBL",
+        "top": "CPBL1",
+        "genius": true,
+        "retireAge": 43,
+        "honors": 106,
+        "peak": {
+          "sta": 71,
+          "con": 72,
+          "pow": 74,
+          "spd": 77,
+          "eye": 72,
+          "rng": 50,
+          "fld": 52,
+          "arm": 49
+        },
+        "salary": 33090,
+        "injuries": 1,
+        "tj": 0,
+        "finalPosition": "OF",
+        "finalDefence": "DH",
+        "policyChecks": {
+          "school": [
+            {
+              "year": 2028,
+              "age": 18,
+              "stage": "HS",
+              "stageYr": 3,
+              "pos": "OF",
+              "title": "高中畢業 · 綜合能力 43 · 人生的第一個路口",
+              "pick": "就讀大學（延長養成）"
+            },
+            {
+              "year": 2030,
+              "age": 20,
+              "stage": "U",
+              "stageYr": 2,
+              "pos": "OF",
+              "title": "大二季前 · 升學與職棒的十字路口",
+              "pick": "留在大學繼續磨練"
+            },
+            {
+              "year": 2031,
+              "age": 21,
+              "stage": "U",
+              "stageYr": 3,
+              "pos": "OF",
+              "title": "大三季前 · 升學與職棒的十字路口",
+              "pick": "留在大學繼續磨練"
+            },
+            {
+              "year": 2032,
+              "age": 22,
+              "stage": "U",
+              "stageYr": 4,
+              "pos": "OF",
+              "title": "大四季前 · 升學與職棒的十字路口",
+              "pick": "投入中華職棒選秀"
+            }
+          ],
+          "splits": [],
+          "tj": [],
+          "choices": 244
+        },
+        "decisions": []
+      }
+    },
+    {
+      "seed": "b1dn9",
+      "pos": "P",
+      "result": {
+        "tier": 0,
+        "legend": false,
+        "league": "CPBL",
+        "top": "CPBL1",
+        "genius": true,
+        "retireAge": 48,
+        "honors": 118,
+        "peak": {
+          "sta": 68,
+          "vel": 80,
+          "ctl": 60,
+          "brk": 77
+        },
+        "salary": 69447,
+        "injuries": 1,
+        "tj": 5,
+        "finalPosition": "P",
+        "finalDefence": null,
+        "policyChecks": {
+          "school": [
+            {
+              "year": 2028,
+              "age": 18,
+              "stage": "HS",
+              "stageYr": 3,
+              "pos": "P",
+              "title": "高中畢業 · 綜合能力 57 · 人生的第一個路口",
+              "pick": "投入中華職棒選秀"
+            }
+          ],
+          "splits": [],
+          "tj": [
+            {
+              "age": 26,
+              "crisis": 1,
+              "pick": "動 Tommy John 手術"
+            },
+            {
+              "age": 33,
+              "crisis": 2,
+              "pick": "打針硬撐，不進手術室"
+            },
+            {
+              "age": 35,
+              "crisis": 3,
+              "pick": "打針硬撐，不進手術室"
+            },
+            {
+              "age": 38,
+              "crisis": 4,
+              "pick": "打針硬撐，不進手術室"
+            },
+            {
+              "age": 41,
+              "crisis": 5,
+              "pick": "打針硬撐，不進手術室"
+            }
+          ],
+          "choices": 304
+        },
+        "decisions": []
+      }
+    },
+    {
+      "seed": "gtsvz",
+      "pos": "P",
+      "result": {
+        "tier": 0,
+        "legend": false,
+        "league": "CPBL",
+        "top": "CPBL1",
+        "genius": true,
+        "retireAge": 43,
+        "honors": 85,
+        "peak": {
+          "sta": 64,
+          "vel": 80,
+          "ctl": 68,
+          "brk": 70
+        },
+        "salary": 52454,
+        "injuries": 1,
+        "tj": 3,
+        "finalPosition": "P",
+        "finalDefence": null,
+        "policyChecks": {
+          "school": [
+            {
+              "year": 2028,
+              "age": 18,
+              "stage": "HS",
+              "stageYr": 3,
+              "pos": "P",
+              "title": "高中畢業 · 綜合能力 59 · 人生的第一個路口",
+              "pick": "投入中華職棒選秀"
+            }
+          ],
+          "splits": [],
+          "tj": [
+            {
+              "age": 27,
+              "crisis": 1,
+              "pick": "動 Tommy John 手術"
+            },
+            {
+              "age": 34,
+              "crisis": 2,
+              "pick": "打針硬撐，不進手術室"
+            },
+            {
+              "age": 36,
+              "crisis": 3,
+              "pick": "打針硬撐，不進手術室"
+            }
+          ],
+          "choices": 251
+        },
+        "decisions": []
+      }
+    },
+    {
+      "seed": "1913l",
+      "pos": "TW",
+      "result": {
+        "tier": 0,
+        "legend": true,
+        "league": "CPBL",
+        "top": "CPBL1",
+        "genius": true,
+        "retireAge": 43,
+        "honors": 166,
+        "peak": {
+          "sta": 69,
+          "vel": 65,
+          "ctl": 76,
+          "brk": 66,
+          "con": 69,
+          "pow": 80,
+          "spd": 68,
+          "eye": 69
+        },
+        "salary": 124679,
+        "injuries": 1,
+        "tj": 3,
+        "finalPosition": "OF",
+        "finalDefence": "DH",
+        "policyChecks": {
+          "school": [
+            {
+              "year": 2028,
+              "age": 18,
+              "stage": "HS",
+              "stageYr": 3,
+              "pos": "TW",
+              "title": "高中畢業 · 綜合能力 42 · 人生的第一個路口",
+              "pick": "就讀大學（延長養成）"
+            },
+            {
+              "year": 2030,
+              "age": 20,
+              "stage": "U",
+              "stageYr": 2,
+              "pos": "TW",
+              "title": "大二季前 · 升學與職棒的十字路口",
+              "pick": "留在大學繼續磨練"
+            },
+            {
+              "year": 2031,
+              "age": 21,
+              "stage": "U",
+              "stageYr": 3,
+              "pos": "TW",
+              "title": "大三季前 · 升學與職棒的十字路口",
+              "pick": "留在大學繼續磨練"
+            },
+            {
+              "year": 2032,
+              "age": 22,
+              "stage": "U",
+              "stageYr": 4,
+              "pos": "TW",
+              "title": "大四季前 · 升學與職棒的十字路口",
+              "pick": "留在大學繼續磨練"
+            },
+            {
+              "year": 2032,
+              "age": 22,
+              "stage": "U",
+              "stageYr": 4,
+              "pos": "TW",
+              "title": "大學畢業 · 綜合能力 63",
+              "pick": "投入中華職棒選秀"
+            }
+          ],
+          "splits": [
+            {
+              "age": 23,
+              "pick": "以投為主"
+            },
+            {
+              "age": 24,
+              "pick": "以投為主"
+            },
+            {
+              "age": 25,
+              "pick": "以投為主"
+            },
+            {
+              "age": 26,
+              "pick": "以投為主"
+            },
+            {
+              "age": 27,
+              "pick": "以投為主"
+            },
+            {
+              "age": 28,
+              "pick": "以投為主"
+            },
+            {
+              "age": 29,
+              "pick": "以投為主"
+            },
+            {
+              "age": 31,
+              "pick": "以投為主"
+            },
+            {
+              "age": 32,
+              "pick": "以投為主"
+            },
+            {
+              "age": 33,
+              "pick": "以投為主"
+            },
+            {
+              "age": 34,
+              "pick": "以投為主"
+            },
+            {
+              "age": 35,
+              "pick": "以投為主"
+            },
+            {
+              "age": 36,
+              "pick": "以投為主"
+            },
+            {
+              "age": 37,
+              "pick": "以投為主"
+            },
+            {
+              "age": 38,
+              "pick": "以投為主"
+            },
+            {
+              "age": 39,
+              "pick": "以投為主"
+            },
+            {
+              "age": 40,
+              "pick": "以投為主"
+            },
+            {
+              "age": 41,
+              "pick": "以投為主"
+            }
+          ],
+          "tj": [
+            {
+              "age": 29,
+              "crisis": 1,
+              "pick": "動 Tommy John 手術"
+            },
+            {
+              "age": 35,
+              "crisis": 2,
+              "pick": "打針硬撐，不進手術室"
+            },
+            {
+              "age": 36,
+              "crisis": 3,
+              "pick": "打針硬撐，不進手術室"
+            }
+          ],
+          "choices": 251
+        },
+        "decisions": []
+      }
+    },
+    {
+      "seed": "7luf9",
+      "pos": "TW",
+      "result": {
+        "tier": 0,
+        "legend": false,
+        "league": "CPBL",
+        "top": "CPBL1",
+        "genius": true,
+        "retireAge": 42,
+        "honors": 74,
+        "peak": {
+          "sta": 66,
+          "vel": 58,
+          "ctl": 70,
+          "brk": 61,
+          "con": 71,
+          "pow": 68,
+          "spd": 76,
+          "eye": 58
+        },
+        "salary": 91765,
+        "injuries": 3,
+        "tj": 2,
+        "finalPosition": "OF",
+        "finalDefence": "DH",
+        "policyChecks": {
+          "school": [
+            {
+              "year": 2028,
+              "age": 18,
+              "stage": "HS",
+              "stageYr": 3,
+              "pos": "TW",
+              "title": "高中畢業 · 綜合能力 40 · 人生的第一個路口",
+              "pick": "就讀大學（延長養成）"
+            },
+            {
+              "year": 2030,
+              "age": 20,
+              "stage": "U",
+              "stageYr": 2,
+              "pos": "TW",
+              "title": "大二季前 · 升學與職棒的十字路口",
+              "pick": "留在大學繼續磨練"
+            },
+            {
+              "year": 2031,
+              "age": 21,
+              "stage": "U",
+              "stageYr": 3,
+              "pos": "TW",
+              "title": "大三季前 · 升學與職棒的十字路口",
+              "pick": "留在大學繼續磨練"
+            },
+            {
+              "year": 2032,
+              "age": 22,
+              "stage": "U",
+              "stageYr": 4,
+              "pos": "TW",
+              "title": "大四季前 · 升學與職棒的十字路口",
+              "pick": "留在大學繼續磨練"
+            },
+            {
+              "year": 2032,
+              "age": 22,
+              "stage": "U",
+              "stageYr": 4,
+              "pos": "TW",
+              "title": "大學畢業 · 綜合能力 62",
+              "pick": "投入中華職棒選秀"
+            }
+          ],
+          "splits": [
+            {
+              "age": 23,
+              "pick": "以投為主"
+            },
+            {
+              "age": 24,
+              "pick": "以投為主"
+            },
+            {
+              "age": 25,
+              "pick": "以投為主"
+            },
+            {
+              "age": 26,
+              "pick": "以投為主"
+            },
+            {
+              "age": 27,
+              "pick": "以投為主"
+            },
+            {
+              "age": 28,
+              "pick": "以投為主"
+            },
+            {
+              "age": 29,
+              "pick": "以投為主"
+            },
+            {
+              "age": 30,
+              "pick": "以投為主"
+            },
+            {
+              "age": 32,
+              "pick": "以投為主"
+            },
+            {
+              "age": 33,
+              "pick": "以投為主"
+            },
+            {
+              "age": 34,
+              "pick": "以投為主"
+            },
+            {
+              "age": 35,
+              "pick": "以投為主"
+            },
+            {
+              "age": 36,
+              "pick": "以投為主"
+            },
+            {
+              "age": 37,
+              "pick": "以投為主"
+            },
+            {
+              "age": 38,
+              "pick": "以投為主"
+            },
+            {
+              "age": 39,
+              "pick": "以投為主"
+            }
+          ],
+          "tj": [
+            {
+              "age": 30,
+              "crisis": 1,
+              "pick": "動 Tommy John 手術"
+            },
+            {
+              "age": 37,
+              "crisis": 2,
+              "pick": "打針硬撐，不進手術室"
+            }
+          ],
+          "choices": 236
+        },
+        "decisions": []
+      }
+    }
+  ]
+}

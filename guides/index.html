@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>野球人生 養成攻略｜野球人生 養成攻略</title>
+<script>// Apply before paint, then attach the same control on every standalone page.
+(() => {
+  const themes = ['system', 'dark', 'light'];
+  const labels = {system:'跟隨系統',dark:'深色',light:'淺色'};
+  let theme = 'system';
+  try { const saved = JSON.parse(localStorage.getItem('yakyu-theme')); if (themes.includes(saved)) theme = saved; } catch {}
+  const apply = () => {
+    if (theme === 'system') delete document.documentElement.dataset.theme;
+    else document.documentElement.dataset.theme = theme;
+  };
+  apply();
+  document.addEventListener('DOMContentLoaded', () => {
+    const button = document.getElementById('themeBtn');
+    if (!button) return;
+    const label = () => {
+      const text = `主題：${labels[theme]}；切換為${labels[themes[(themes.indexOf(theme)+1)%themes.length]]}`;
+      button.setAttribute('aria-label', text); button.setAttribute('title', text);
+    };
+    label();
+    button.addEventListener('click', () => {
+      theme = themes[(themes.indexOf(theme)+1)%themes.length];
+      try { localStorage.setItem('yakyu-theme', JSON.stringify(theme)); } catch {}
+      apply(); label();
+    });
+  });
+})();
+</script>
+<style>/* Shared by the finder and every guide; inlined so file:// stays self-contained. */
+:root {
+  --bg:#F3F6FA; --panel:#FFFFFF; --panel-2:#EAF0F5; --text:#17324D; --muted:#52677A;
+  --line:#CBD6E2; --line-strong:#8296A9; --accent:#126B50; --accent-soft:#E2F1E9; --accent-text:#FFFFFF;
+  --gold:#936313; --gold-soft:#FFF1CB; --good:#126B50; --good-soft:#E2F1E9;
+  --bad:#AC3640; --info:#255C93; --info-soft:#E5EFFA; --want:#126B50;
+  --bar-bg:#E7EDF3; --bar-pot:#A5CDBA; --bar-abl:#126B50;
+  --shadow:0 3px 12px rgba(23,50,77,.05);
+  --font:"Microsoft JhengHei", "PingFang TC", "Noto Sans TC", sans-serif;
+  --mono:"Cascadia Mono", Consolas, ui-monospace, monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark) {
+  :root:not([data-theme="light"]) {
+    --bg:#102233; --panel:#193044; --panel-2:#213C52; --text:#EAF2F8; --muted:#ADC1D2;
+    --line:#3B556C; --line-strong:#7491A9; --accent:#87D4B2; --accent-soft:#244A42; --accent-text:#102C22;
+    --gold:#EAC774; --gold-soft:#4B422B; --good:#87D4B2; --good-soft:#244A42;
+    --bad:#FFAAA9; --info:#A3CAF0; --info-soft:#29445E; --want:#87D4B2;
+    --bar-bg:#102233; --bar-pot:#487864; --bar-abl:#87D4B2; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg:#102233; --panel:#193044; --panel-2:#213C52; --text:#EAF2F8; --muted:#ADC1D2;
+  --line:#3B556C; --line-strong:#7491A9; --accent:#87D4B2; --accent-soft:#244A42; --accent-text:#102C22;
+  --gold:#EAC774; --gold-soft:#4B422B; --good:#87D4B2; --good-soft:#244A42;
+  --bad:#FFAAA9; --info:#A3CAF0; --info-soft:#29445E; --want:#87D4B2;
+  --bar-bg:#102233; --bar-pot:#487864; --bar-abl:#87D4B2; color-scheme:dark;
+}
+* { box-sizing:border-box; }
+html { -webkit-text-size-adjust:100%; scroll-padding-top:90px; }
+body { margin:0; color:var(--text); background:var(--bg); font:15px/1.65 var(--font); }
+a { color:var(--accent); text-underline-offset:3px; }
+button,input,select,textarea { font:inherit; color:inherit; }
+button,summary { cursor:pointer; }
+:focus-visible { outline:3px solid var(--info); outline-offset:3px; }
+[hidden] { display:none!important; }
+.site-header { display:flex; align-items:center; flex-wrap:wrap; gap:12px 32px; min-height:76px; padding:14px max(24px,calc((100vw - 1360px)/2)); background:var(--panel); border-bottom:1px solid var(--line); position:sticky; top:0; z-index:10; }
+.site-brand { display:flex; align-items:center; gap:12px; color:var(--text); text-decoration:none; font-size:21px; font-weight:800; line-height:1.25; }
+.brand-mark { flex:none; display:inline-block; position:relative; width:29px; height:29px; border:2px solid var(--accent); border-radius:4px 4px 10px 4px; transform:rotate(45deg); margin:0 5px; }
+.brand-mark:after { content:""; position:absolute; width:9px; height:9px; background:var(--accent); right:3px; bottom:3px; border-radius:50%; }
+.brand-note { display:block; font-size:12px; font-weight:500; color:var(--muted); margin-top:4px; }
+.site-nav { display:flex; align-items:center; gap:8px; margin-left:auto; }
+.site-nav a { padding:9px 15px; color:var(--muted); text-decoration:none; font-weight:700; border-radius:6px; }
+.site-nav a[aria-current="page"] { color:var(--accent); background:var(--accent-soft); }
+.site-nav a:hover { color:var(--accent); }
+.icon-btn { min-width:44px; min-height:44px; border:1px solid var(--line); background:var(--panel); border-radius:6px; padding:6px 10px; cursor:pointer; }
+.skip-link { position:fixed; top:8px; left:12px; z-index:100; transform:translateY(-160%); padding:10px 16px; background:var(--panel); color:var(--text); border:2px solid var(--accent); }
+.skip-link:focus { transform:none; }
+.btn { display:inline-flex; align-items:center; justify-content:center; min-height:40px; border:1px solid var(--line-strong); background:var(--panel); border-radius:6px; padding:7px 14px; font-weight:700; text-decoration:none; }
+.btn.primary { background:var(--accent); border-color:var(--accent); color:var(--accent-text); }
+.btn:hover { border-color:var(--accent); }
+.site-footer { display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; max-width:1408px; margin:32px auto 0; padding:24px; border-top:1px solid var(--line); font-size:13px; color:var(--muted); }
+@media(max-width:640px) {
+  html { scroll-padding-top:16px; }
+  .site-header { position:static; padding:16px; gap:16px 12px; }
+  .site-brand { font-size:20px; flex:1; }
+  .site-header>.icon-btn { order:1; }
+  .site-nav { order:2; flex:1 0 100%; margin:0; gap:4px; }
+  .site-nav a { flex:1; text-align:center; padding:10px; }
+  .site-footer { padding:20px 16px 80px; }
+}
+@media(prefers-reduced-motion:reduce) {
+  *,*::before,*::after { animation:none!important; transition:none!important; scroll-behavior:auto!important; }
+}
+
+/* The guide is the reading view of the same scouting desk. */
+.guide-nav { border-bottom: 1px solid var(--line); background: var(--panel); }
+nav.guides { display: flex; flex-wrap: wrap; gap: 4px; max-width: 1320px; margin: auto; padding: 8px 28px; }
+nav.guides a { display: inline-flex; align-items: center; min-height: 42px; padding: 7px 16px; border-radius: 6px; color: var(--muted); text-decoration: none; font-weight: 700; }
+nav.guides a:hover { color: var(--text); background: var(--panel-2); }
+nav.guides a[aria-current] { background: var(--accent-soft); color: var(--accent); }
+.guide-page .wrap { display: grid; grid-template-columns: 220px minmax(0, 850px); gap: 48px; max-width: 1240px; margin: auto; padding: 40px 28px 64px; }
+.guide-toc { position: sticky; top: 96px; align-self: start; max-height: calc(100dvh - 120px); overflow: auto; padding-right: 12px; font-size: 14px; line-height: 1.6; }
+.guide-toc summary { cursor: pointer; font-weight: 700; color: var(--text); padding: 8px 0; }
+.guide-toc > details > summary { margin-bottom: 8px; }
+.guide-toc ol { list-style: none; margin: 0; padding: 0; }
+.guide-toc a { display: block; padding: 5px 0; color: var(--muted); text-decoration: none; }
+.guide-toc a:hover { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+.guide-toc li.l3 { padding-left: 14px; font-size: 13px; }
+.guide-toc li.ev { margin-top: 12px; padding-top: 8px; border-top: 1px solid var(--line); }
+.guide-toc li.ev summary { font-size: 13px; color: var(--muted); }
+.guide-article { min-width: 0; font-size: 16px; line-height: 1.85; }
+.guide-article h1 { margin: 0 0 24px; font-size: clamp(28px, 3vw, 40px); font-weight: 800; letter-spacing: -.035em; line-height: 1.3; }
+.guide-article h2 { margin: 42px 0 16px; padding-top: 20px; border-top: 1px solid var(--line); font-size: 24px; line-height: 1.45; }
+.guide-article h3 { margin: 28px 0 10px; font-size: 19px; line-height: 1.5; }
+.guide-article h4 { margin: 22px 0 8px; font-size: 17px; }
+.guide-article h2, .guide-article h3, .guide-article h4, #guide-content { scroll-margin-top: 100px; }
+.guide-article p { margin: 12px 0; }
+.guide-article a { text-underline-offset: 3px; }
+.guide-article li { margin: 5px 0; }
+.guide-article ul, .guide-article ol { padding-left: 1.5em; }
+.guide-start { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; padding: 18px 20px; margin: 0 0 28px; border-left: 4px solid var(--accent); background: var(--panel); }
+.guide-start p { flex-basis: 100%; margin: 0; color: var(--muted); font-size: 15px; }
+.guide-start > a { font-size: 14px; font-weight: 700; }
+.guide-action { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 8px 16px; border-radius: 6px; background: var(--accent); color: var(--accent-text, white); text-decoration: none; }
+.guide-action:hover { filter: brightness(.92); }
+.guide-entry { margin-bottom: 28px; }
+.guide-entry > p { color: var(--muted); margin: 0 0 16px; }
+.position-guides { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: var(--panel); }
+.position-guides a { min-width: 0; display: flex; flex-direction: column; gap: 6px; padding: 18px 14px; text-decoration: none; color: var(--text); border-left: 1px solid var(--line); }
+.position-guides a:first-child { border-left: 0; }
+.position-guides a:hover { background: var(--accent-soft); }
+.position-guides a:focus-visible { outline-offset: -4px; }
+.position-guides .position-code { width: fit-content; color: var(--accent); font-weight: 800; font-size: 13px; letter-spacing: .04em; }
+.position-guides strong { font-size: 20px; line-height: 1.4; }
+.position-guides a > span:last-child { font-size: 13px; color: var(--muted); line-height: 1.55; }
+.guide-common { display: inline-block; padding: 12px 0 0; font-size: 14px; }
+.guide-article code { background: var(--panel-2); padding: 2px 5px; border-radius: 4px; font: .88em var(--mono); overflow-wrap: anywhere; }
+.guide-article pre { background: var(--panel-2); padding: 14px; border-radius: 8px; overflow: auto; }
+.guide-article pre code { padding: 0; background: none; }
+.guide-article .table { overflow-x: auto; max-width: 100%; margin: 16px 0; border: 1px solid var(--line); border-radius: 8px; background: var(--panel); }
+.guide-article table { border-collapse: collapse; width: 100%; font-size: 14px; line-height: 1.7; }
+.guide-article th, .guide-article td { padding: 11px 14px; vertical-align: top; text-align: left; border-bottom: 1px solid var(--line); }
+.guide-article th { background: var(--panel-2); font-weight: 700; }
+.guide-article tr:last-child td { border-bottom: 0; }
+.guide-article blockquote { margin: 20px 0; padding: 4px 18px; border-left: 3px solid var(--gold); background: var(--panel); color: var(--muted); }
+.guide-article hr { border: 0; border-top: 1px solid var(--line); margin: 32px 0; }
+details.evidence { margin: 36px 0 0; border: 1px solid var(--line); border-radius: 10px; padding: 0 20px; background: var(--panel); }
+details.evidence > summary { cursor: pointer; font-weight: 700; font-size: 16px; padding: 18px 0; }
+details.evidence[open] > summary { border-bottom: 1px solid var(--line); margin-bottom: 8px; }
+details.evidence h2:first-of-type { border-top: 0; }
+.guide-article .outline { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; margin: 20px 0; }
+.outline section { border-top: 3px solid var(--line); padding-top: 12px; }
+.guide-article .outline h3 { margin: 0 0 8px; font-size: 18px; }
+.guide-article .outline ol { margin: 0; padding-left: 20px; font-size: 14px; }
+.guide-footer { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; max-width: 1240px; margin: auto; padding: 24px 28px 104px; border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; }
+.guide-footer a { min-height: 32px; display: inline-flex; align-items: center; }
+.back-to-top { position: fixed; right: max(20px, env(safe-area-inset-right)); bottom: max(20px, env(safe-area-inset-bottom)); z-index: 20; min-height: 44px; padding: 10px 16px; border: 1px solid var(--accent); border-radius: 8px; background: var(--accent); color: var(--accent-text); font-size: 14px; font-weight: 700; box-shadow: 0 3px 12px #0002; }
+.back-to-top:hover { filter: brightness(.92); }
+@media (max-width: 1100px) { .guide-page .wrap { gap: 28px; grid-template-columns: 190px minmax(0, 1fr); } .position-guides { grid-template-columns: repeat(3, minmax(0, 1fr)); } .position-guides a:nth-child(4) { border-left: 0; } .position-guides a:nth-child(n+4) { border-top: 1px solid var(--line); } }
+@media (max-width: 860px) {
+  nav.guides { padding: 8px 16px; gap: 2px; }
+  nav.guides a { min-height: 44px; padding: 7px 13px; font-size: 14px; }
+  .guide-page .wrap { grid-template-columns: minmax(0, 1fr); padding: 24px 20px 40px; gap: 24px; }
+  .guide-toc { position: sticky; top: 90px; z-index: 9; max-height: none; padding: 4px 16px; border: 1px solid var(--line); border-radius: 8px; background: var(--panel); }
+  .guide-toc > details[open] { max-height: 55dvh; overflow-y: auto; }
+  .guide-toc > details > summary { margin: 0; min-height: 44px; display: list-item; padding: 10px 0; }
+  .guide-toc a { padding: 9px 0; }
+  .guide-toc details[open] > ol { padding-bottom: 12px; }
+  .guide-footer { padding: 20px 20px 104px; }
+}
+@media (max-width: 640px) { .guide-toc { top: 8px; } }
+@media (max-width: 600px) {
+  .guide-article { font-size: 16px; line-height: 1.8; }
+  .guide-article h2 { font-size: 22px; }
+  .guide-article .outline { grid-template-columns: minmax(0, 1fr); gap: 20px; }
+  .guide-article .table.wide { border: 0; background: none; border-radius: 0; }
+  .table.wide table, .table.wide tbody, .table.wide tr, .table.wide td { display: block; width: 100%; }
+  .table.wide thead { display: none; }
+  .table.wide tr { border: 1px solid var(--line); border-radius: 8px; margin: 0 0 12px; padding: 10px 14px; background: var(--panel); }
+  .table.wide td { border: 0; padding: 4px 0; text-align: left !important; overflow-wrap: anywhere; }
+  .table.wide td[data-label]::before { content: attr(data-label) '：'; color: var(--muted); font-size: 13px; }
+  details.evidence { padding: 0 14px; }
+  .guide-start { padding: 16px; }
+  .position-guides { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .position-guides a { padding: 15px 12px; }
+  .position-guides a:nth-child(n) { border-left: 0; border-top: 0; }
+  .position-guides a:nth-child(even) { border-left: 1px solid var(--line); }
+  .position-guides a:nth-child(n+3) { border-top: 1px solid var(--line); }
+  .position-guides a:last-child { grid-column: 1 / -1; }
+  .position-guides a > span:last-child { font-size: 12px; }
+}
+@media print { .site-header, .guide-nav, .guide-toc, .guide-footer, .guide-start, .guide-entry, .back-to-top { display: none; } .guide-page .wrap { display: block; padding: 0; } details.evidence { border: 0; padding: 0; } }
+</style>
+</head>
+<body class="guide-page">
+<a class="skip-link" href="#guide-content">跳到攻略內容</a>
+<header class="site-header" id="page-top" tabindex="-1">
+  <a class="site-brand" href="../index.html"><span class="brand-mark" aria-hidden="true"></span><span>野球人生<small class="brand-note">種子與養成</small></span></a>
+  <nav class="site-nav" aria-label="主要導覽"><a href="../index.html">找種子</a><a href="index.html" aria-current="page">養成攻略</a></nav>
+  <button class="icon-btn" id="themeBtn" type="button" title="切換深色／淺色" aria-label="切換深色／淺色">◐</button>
+</header>
+<div class="guide-nav"><nav class="guides" aria-label="攻略守位"><a href="index.html" aria-current="page">總覽</a><a href="common.html">共通</a><a href="pitcher.html">投手</a><a href="catcher.html">捕手</a><a href="infield.html">內野</a><a href="outfield.html">外野</a><a href="twoway.html">二刀流</a></nav></div>
+<div class="wrap">
+<aside class="guide-toc"><details open><summary>本頁大綱</summary><ol><li class="l2"><a href="#快速開始">快速開始</a></li><li class="l2"><a href="#選一個守位開始">選一個守位開始</a></li><li class="l2"><a href="#燈號怎麼看">燈號怎麼看</a></li></ol></details></aside>
+<main class="guide-article" id="guide-content" tabindex="-1">
+<h1>野球人生 養成攻略</h1><section class="guide-entry" aria-label="選擇守位攻略"><p>選好守位，從挑種子一路看到退休。</p><div class="position-guides"><a href="pitcher.html"><span class="position-code" aria-hidden="true">P</span><strong>投手</strong><span>投球配點</span></a><a href="catcher.html"><span class="position-code" aria-hidden="true">C</span><strong>捕手</strong><span>選秀與打擊</span></a><a href="infield.html"><span class="position-code" aria-hidden="true">IF</span><strong>內野</strong><span>守備與打擊</span></a><a href="outfield.html"><span class="position-code" aria-hidden="true">OF</span><strong>外野</strong><span>選秀與守備</span></a><a href="twoway.html"><span class="position-code" aria-hidden="true">TW</span><strong>二刀流</strong><span>投打配比</span></a></div><a class="guide-common" href="common.html">第一次玩？先看共通規則</a></section>
+<p>遊戲 v2.0.11｜最後核對 2026-10-03｜數字來自十萬多筆（種子×守位）的模擬與成對選擇實驗，規則來自<a href="https://github.com/LeoGGcat/yakyulife/tree/9b17859dacaa40110a9d3774e6f11f419881f308/src">遊戲原始碼</a></p>
+<p>這份攻略以退休頭銜為主要目標，主線全程留在中職。〔統計〕搜尋器顯示每顆種子照這套固定玩法的退休結果；〔實驗〕實驗則比較受測種子在不同選擇下的結果。這些結果不代表全程中職勝過所有旅外路線，也不代表每顆種子都已找到最好的玩法。想追求收入、旅外或保住守位，請看各守位頁的其他玩法與限制。</p>
+<h2 id="快速開始">快速開始</h2>
+<ol><li><strong>選守位</strong>：從下方的攻略入口開始。同一顆種子選不同守位，開局也不同。〔機制〕</li><li><strong>挑種子</strong>：直接用守位攻略的推薦種子，或打開<a href="../index.html">種子搜尋器</a>，選守位、排序選「退休頭銜」，再按「只看名人堂」。</li><li><strong>進遊戲</strong>：在「世界種子」輸入種子，守位選得跟攻略一樣。搜尋器卡片上的「開啟遊戲」會帶入種子，守位仍要自己選。〔機制〕</li><li><strong>照攻略玩</strong>：先看<a href="common.html#攻略玩法">攻略玩法</a>，再照守位頁配點、選對話；同分與後期配點另見<a href="common.html#固定配點細節">固定配點細節</a>。改成旅外或自由配點，就不再是搜尋器顯示的那次生涯。</li></ol>
+<p><strong>例子</strong>：選<a href="infield.html">內野</a>，使用種子 <code>484st</code>。高中畢業念大學，讀完大三，在大四季前投入選秀；之後留在中職。事件卡選保守應對，先練守備，再照攻略練打擊；被下放就接受，36 歲後繼續打。〔實驗〕時程與限制見<a href="infield.html#遇到對話怎麼選">內野決策表</a>。</p>
+<h2 id="選一個守位開始">選一個守位開始</h2>
+<div class="table" tabindex="0" role="region" aria-label="攻略、先看什麼，可橫向捲動"><table><thead><tr><th>攻略</th><th>先看什麼</th></tr></thead><tbody><tr><td data-label="攻略"><a href="pitcher.html">投手</a></td><td data-label="先看什麼">配點效率、投球方式與手肘傷病</td></tr><tr><td data-label="攻略"><a href="catcher.html">捕手</a></td><td data-label="先看什麼">不練守備的打擊順序，以及想繼續蹲捕時的取捨</td></tr><tr><td data-label="攻略"><a href="infield.html">內野</a></td><td data-label="先看什麼">先顧守備門檻，再練打擊</td></tr><tr><td data-label="攻略"><a href="outfield.html">外野</a></td><td data-label="先看什麼">守備與打擊怎麼分配，何時投入選秀</td></tr><tr><td data-label="攻略"><a href="twoway.html">二刀流</a></td><td data-label="先看什麼">先顧體力與較弱的一側，每次配比以投為主</td></tr><tr><td data-label="攻略"><a href="common.html">共通攻略</a></td><td data-label="先看什麼">完整固定選擇、選秀時程、每季流程、傷病與特質</td></tr></tbody></table></div>
+<p>不熟悉遊戲流程或用語，可以先查<a href="common.html#生涯時間軸">生涯時間軸</a>與<a href="common.html#常見用語">常見用語</a>。</p>
+<h2 id="燈號怎麼看">燈號怎麼看</h2>
+<p>決策表的「按這個」是操作建議，燈號說明證據支持到哪裡。攻略為了重現退休結果，也固定了尚無定論的選項；固定選法不等於已證明最好。</p>
+<div class="table" tabindex="0" role="region" aria-label="燈號、意思，可橫向捲動"><table><thead><tr><th>燈號</th><th>意思</th></tr></thead><tbody><tr><td data-label="燈號">🟢 推薦</td><td data-label="意思">兩批實驗支持這樣選；「接受下放」另依實驗確認的負面特質代價建議，理由在各頁</td></tr><tr><td data-label="燈號">🟡 尚無定論</td><td data-label="意思">測過，目前仍未確認優劣；暫定選項會說明實驗趨勢或規則上的取捨</td></tr><tr><td data-label="燈號">⚪ 沒測過</td><td data-label="意思">沒有比較過，只寫已知規則；測過但樣本不足時另寫「尚無可用比較」，不給燈號</td></tr><tr><td data-label="燈號">🔴 不建議</td><td data-label="意思">實驗顯示明確比較差，詳見各頁「🔴 不要這樣做」</td></tr></tbody></table></div>
+<ul><li><strong>名人堂多 5 個百分點</strong>：在受測種子中，平均每 100 顆多 5 顆進名人堂，不是把同一顆種子重玩 100 次。</li><li><strong>高風險</strong>：名人堂比例提高，但平均退休分數下降，請同時看退休頭銜分布。</li><li><strong>隨手輸入的種子</strong>：沒有經過搜尋器篩選的種子。燈號以搜尋器種子判斷；另一種來源的結果不同時，表格會註明。</li><li>名人堂差異尚未確認時，才看平均退休分數。因此「依平均分推薦」不代表已證明更容易進名人堂。</li></ul>
+<p>點選表格裡的燈號，就會打開對應證據。研究的樣本、誤差範圍與判定規則見<a href="common.html#數字是怎麼來的">數字是怎麼來的</a>。</p>
+</main>
+</div>
+<script>
+if (matchMedia("(max-width:860px)").matches) document.querySelector("aside details").open = false;
+// Links into the collapsed evidence open it first, on load, on hash change and on
+// a click that repeats the current hash (which fires no hashchange).
+function reveal(hash, focus = false) {
+  let id;
+  try { id = decodeURIComponent(hash.slice(1)); } catch { return; }
+  const el = id && document.getElementById(id);
+  if (!el) return;
+  for (let d = el.closest("details"); d; d = d.parentElement.closest("details")) d.open = true;
+  if (focus) { el.setAttribute("tabindex", "-1"); el.focus({ preventScroll: true }); }
+  el.scrollIntoView();
+}
+addEventListener("hashchange", () => reveal(location.hash));
+document.addEventListener("click", (e) => {
+  const a = e.target.closest('a[href^="#"]');
+  if (!a) return;
+  if (a.closest(".guide-toc") && matchMedia("(max-width:860px)").matches) {
+    document.querySelector(".guide-toc > details").open = false;
+  }
+  reveal(a.getAttribute("href"), true);
+});
+reveal(location.hash);
+</script>
+<footer class="guide-footer"><span>下一步，帶著攻略開始養成。</span><a href="../index.html">找種子</a><a href="index.html">攻略總覽</a><a href="#page-top">回到頂端</a></footer>
+<button class="back-to-top" id="backToTop" type="button" hidden><span aria-hidden="true">↑</span> 回到頂端</button>
+<script>
+const backToTop = document.getElementById("backToTop");
+const updateBackToTop = () => { backToTop.hidden = scrollY < 400; };
+addEventListener("scroll", updateBackToTop, { passive: true });
+addEventListener("pageshow", updateBackToTop);
+updateBackToTop();
+backToTop.addEventListener("click", () => {
+  document.querySelector(".site-brand").focus({ preventScroll: true });
+  scrollTo({ top: 0, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth" });
+});
+</script>
+</body>
+</html>

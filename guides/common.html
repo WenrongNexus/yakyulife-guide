@@ -1,0 +1,563 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>共通攻略｜野球人生 養成攻略</title>
+<script>// Apply before paint, then attach the same control on every standalone page.
+(() => {
+  const themes = ['system', 'dark', 'light'];
+  const labels = {system:'跟隨系統',dark:'深色',light:'淺色'};
+  let theme = 'system';
+  try { const saved = JSON.parse(localStorage.getItem('yakyu-theme')); if (themes.includes(saved)) theme = saved; } catch {}
+  const apply = () => {
+    if (theme === 'system') delete document.documentElement.dataset.theme;
+    else document.documentElement.dataset.theme = theme;
+  };
+  apply();
+  document.addEventListener('DOMContentLoaded', () => {
+    const button = document.getElementById('themeBtn');
+    if (!button) return;
+    const label = () => {
+      const text = `主題：${labels[theme]}；切換為${labels[themes[(themes.indexOf(theme)+1)%themes.length]]}`;
+      button.setAttribute('aria-label', text); button.setAttribute('title', text);
+    };
+    label();
+    button.addEventListener('click', () => {
+      theme = themes[(themes.indexOf(theme)+1)%themes.length];
+      try { localStorage.setItem('yakyu-theme', JSON.stringify(theme)); } catch {}
+      apply(); label();
+    });
+  });
+})();
+</script>
+<style>/* Shared by the finder and every guide; inlined so file:// stays self-contained. */
+:root {
+  --bg:#F3F6FA; --panel:#FFFFFF; --panel-2:#EAF0F5; --text:#17324D; --muted:#52677A;
+  --line:#CBD6E2; --line-strong:#8296A9; --accent:#126B50; --accent-soft:#E2F1E9; --accent-text:#FFFFFF;
+  --gold:#936313; --gold-soft:#FFF1CB; --good:#126B50; --good-soft:#E2F1E9;
+  --bad:#AC3640; --info:#255C93; --info-soft:#E5EFFA; --want:#126B50;
+  --bar-bg:#E7EDF3; --bar-pot:#A5CDBA; --bar-abl:#126B50;
+  --shadow:0 3px 12px rgba(23,50,77,.05);
+  --font:"Microsoft JhengHei", "PingFang TC", "Noto Sans TC", sans-serif;
+  --mono:"Cascadia Mono", Consolas, ui-monospace, monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark) {
+  :root:not([data-theme="light"]) {
+    --bg:#102233; --panel:#193044; --panel-2:#213C52; --text:#EAF2F8; --muted:#ADC1D2;
+    --line:#3B556C; --line-strong:#7491A9; --accent:#87D4B2; --accent-soft:#244A42; --accent-text:#102C22;
+    --gold:#EAC774; --gold-soft:#4B422B; --good:#87D4B2; --good-soft:#244A42;
+    --bad:#FFAAA9; --info:#A3CAF0; --info-soft:#29445E; --want:#87D4B2;
+    --bar-bg:#102233; --bar-pot:#487864; --bar-abl:#87D4B2; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg:#102233; --panel:#193044; --panel-2:#213C52; --text:#EAF2F8; --muted:#ADC1D2;
+  --line:#3B556C; --line-strong:#7491A9; --accent:#87D4B2; --accent-soft:#244A42; --accent-text:#102C22;
+  --gold:#EAC774; --gold-soft:#4B422B; --good:#87D4B2; --good-soft:#244A42;
+  --bad:#FFAAA9; --info:#A3CAF0; --info-soft:#29445E; --want:#87D4B2;
+  --bar-bg:#102233; --bar-pot:#487864; --bar-abl:#87D4B2; color-scheme:dark;
+}
+* { box-sizing:border-box; }
+html { -webkit-text-size-adjust:100%; scroll-padding-top:90px; }
+body { margin:0; color:var(--text); background:var(--bg); font:15px/1.65 var(--font); }
+a { color:var(--accent); text-underline-offset:3px; }
+button,input,select,textarea { font:inherit; color:inherit; }
+button,summary { cursor:pointer; }
+:focus-visible { outline:3px solid var(--info); outline-offset:3px; }
+[hidden] { display:none!important; }
+.site-header { display:flex; align-items:center; flex-wrap:wrap; gap:12px 32px; min-height:76px; padding:14px max(24px,calc((100vw - 1360px)/2)); background:var(--panel); border-bottom:1px solid var(--line); position:sticky; top:0; z-index:10; }
+.site-brand { display:flex; align-items:center; gap:12px; color:var(--text); text-decoration:none; font-size:21px; font-weight:800; line-height:1.25; }
+.brand-mark { flex:none; display:inline-block; position:relative; width:29px; height:29px; border:2px solid var(--accent); border-radius:4px 4px 10px 4px; transform:rotate(45deg); margin:0 5px; }
+.brand-mark:after { content:""; position:absolute; width:9px; height:9px; background:var(--accent); right:3px; bottom:3px; border-radius:50%; }
+.brand-note { display:block; font-size:12px; font-weight:500; color:var(--muted); margin-top:4px; }
+.site-nav { display:flex; align-items:center; gap:8px; margin-left:auto; }
+.site-nav a { padding:9px 15px; color:var(--muted); text-decoration:none; font-weight:700; border-radius:6px; }
+.site-nav a[aria-current="page"] { color:var(--accent); background:var(--accent-soft); }
+.site-nav a:hover { color:var(--accent); }
+.icon-btn { min-width:44px; min-height:44px; border:1px solid var(--line); background:var(--panel); border-radius:6px; padding:6px 10px; cursor:pointer; }
+.skip-link { position:fixed; top:8px; left:12px; z-index:100; transform:translateY(-160%); padding:10px 16px; background:var(--panel); color:var(--text); border:2px solid var(--accent); }
+.skip-link:focus { transform:none; }
+.btn { display:inline-flex; align-items:center; justify-content:center; min-height:40px; border:1px solid var(--line-strong); background:var(--panel); border-radius:6px; padding:7px 14px; font-weight:700; text-decoration:none; }
+.btn.primary { background:var(--accent); border-color:var(--accent); color:var(--accent-text); }
+.btn:hover { border-color:var(--accent); }
+.site-footer { display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; max-width:1408px; margin:32px auto 0; padding:24px; border-top:1px solid var(--line); font-size:13px; color:var(--muted); }
+@media(max-width:640px) {
+  html { scroll-padding-top:16px; }
+  .site-header { position:static; padding:16px; gap:16px 12px; }
+  .site-brand { font-size:20px; flex:1; }
+  .site-header>.icon-btn { order:1; }
+  .site-nav { order:2; flex:1 0 100%; margin:0; gap:4px; }
+  .site-nav a { flex:1; text-align:center; padding:10px; }
+  .site-footer { padding:20px 16px 80px; }
+}
+@media(prefers-reduced-motion:reduce) {
+  *,*::before,*::after { animation:none!important; transition:none!important; scroll-behavior:auto!important; }
+}
+
+/* The guide is the reading view of the same scouting desk. */
+.guide-nav { border-bottom: 1px solid var(--line); background: var(--panel); }
+nav.guides { display: flex; flex-wrap: wrap; gap: 4px; max-width: 1320px; margin: auto; padding: 8px 28px; }
+nav.guides a { display: inline-flex; align-items: center; min-height: 42px; padding: 7px 16px; border-radius: 6px; color: var(--muted); text-decoration: none; font-weight: 700; }
+nav.guides a:hover { color: var(--text); background: var(--panel-2); }
+nav.guides a[aria-current] { background: var(--accent-soft); color: var(--accent); }
+.guide-page .wrap { display: grid; grid-template-columns: 220px minmax(0, 850px); gap: 48px; max-width: 1240px; margin: auto; padding: 40px 28px 64px; }
+.guide-toc { position: sticky; top: 96px; align-self: start; max-height: calc(100dvh - 120px); overflow: auto; padding-right: 12px; font-size: 14px; line-height: 1.6; }
+.guide-toc summary { cursor: pointer; font-weight: 700; color: var(--text); padding: 8px 0; }
+.guide-toc > details > summary { margin-bottom: 8px; }
+.guide-toc ol { list-style: none; margin: 0; padding: 0; }
+.guide-toc a { display: block; padding: 5px 0; color: var(--muted); text-decoration: none; }
+.guide-toc a:hover { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+.guide-toc li.l3 { padding-left: 14px; font-size: 13px; }
+.guide-toc li.ev { margin-top: 12px; padding-top: 8px; border-top: 1px solid var(--line); }
+.guide-toc li.ev summary { font-size: 13px; color: var(--muted); }
+.guide-article { min-width: 0; font-size: 16px; line-height: 1.85; }
+.guide-article h1 { margin: 0 0 24px; font-size: clamp(28px, 3vw, 40px); font-weight: 800; letter-spacing: -.035em; line-height: 1.3; }
+.guide-article h2 { margin: 42px 0 16px; padding-top: 20px; border-top: 1px solid var(--line); font-size: 24px; line-height: 1.45; }
+.guide-article h3 { margin: 28px 0 10px; font-size: 19px; line-height: 1.5; }
+.guide-article h4 { margin: 22px 0 8px; font-size: 17px; }
+.guide-article h2, .guide-article h3, .guide-article h4, #guide-content { scroll-margin-top: 100px; }
+.guide-article p { margin: 12px 0; }
+.guide-article a { text-underline-offset: 3px; }
+.guide-article li { margin: 5px 0; }
+.guide-article ul, .guide-article ol { padding-left: 1.5em; }
+.guide-start { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; padding: 18px 20px; margin: 0 0 28px; border-left: 4px solid var(--accent); background: var(--panel); }
+.guide-start p { flex-basis: 100%; margin: 0; color: var(--muted); font-size: 15px; }
+.guide-start > a { font-size: 14px; font-weight: 700; }
+.guide-action { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 8px 16px; border-radius: 6px; background: var(--accent); color: var(--accent-text, white); text-decoration: none; }
+.guide-action:hover { filter: brightness(.92); }
+.guide-entry { margin-bottom: 28px; }
+.guide-entry > p { color: var(--muted); margin: 0 0 16px; }
+.position-guides { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: var(--panel); }
+.position-guides a { min-width: 0; display: flex; flex-direction: column; gap: 6px; padding: 18px 14px; text-decoration: none; color: var(--text); border-left: 1px solid var(--line); }
+.position-guides a:first-child { border-left: 0; }
+.position-guides a:hover { background: var(--accent-soft); }
+.position-guides a:focus-visible { outline-offset: -4px; }
+.position-guides .position-code { width: fit-content; color: var(--accent); font-weight: 800; font-size: 13px; letter-spacing: .04em; }
+.position-guides strong { font-size: 20px; line-height: 1.4; }
+.position-guides a > span:last-child { font-size: 13px; color: var(--muted); line-height: 1.55; }
+.guide-common { display: inline-block; padding: 12px 0 0; font-size: 14px; }
+.guide-article code { background: var(--panel-2); padding: 2px 5px; border-radius: 4px; font: .88em var(--mono); overflow-wrap: anywhere; }
+.guide-article pre { background: var(--panel-2); padding: 14px; border-radius: 8px; overflow: auto; }
+.guide-article pre code { padding: 0; background: none; }
+.guide-article .table { overflow-x: auto; max-width: 100%; margin: 16px 0; border: 1px solid var(--line); border-radius: 8px; background: var(--panel); }
+.guide-article table { border-collapse: collapse; width: 100%; font-size: 14px; line-height: 1.7; }
+.guide-article th, .guide-article td { padding: 11px 14px; vertical-align: top; text-align: left; border-bottom: 1px solid var(--line); }
+.guide-article th { background: var(--panel-2); font-weight: 700; }
+.guide-article tr:last-child td { border-bottom: 0; }
+.guide-article blockquote { margin: 20px 0; padding: 4px 18px; border-left: 3px solid var(--gold); background: var(--panel); color: var(--muted); }
+.guide-article hr { border: 0; border-top: 1px solid var(--line); margin: 32px 0; }
+details.evidence { margin: 36px 0 0; border: 1px solid var(--line); border-radius: 10px; padding: 0 20px; background: var(--panel); }
+details.evidence > summary { cursor: pointer; font-weight: 700; font-size: 16px; padding: 18px 0; }
+details.evidence[open] > summary { border-bottom: 1px solid var(--line); margin-bottom: 8px; }
+details.evidence h2:first-of-type { border-top: 0; }
+.guide-article .outline { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; margin: 20px 0; }
+.outline section { border-top: 3px solid var(--line); padding-top: 12px; }
+.guide-article .outline h3 { margin: 0 0 8px; font-size: 18px; }
+.guide-article .outline ol { margin: 0; padding-left: 20px; font-size: 14px; }
+.guide-footer { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; max-width: 1240px; margin: auto; padding: 24px 28px 104px; border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; }
+.guide-footer a { min-height: 32px; display: inline-flex; align-items: center; }
+.back-to-top { position: fixed; right: max(20px, env(safe-area-inset-right)); bottom: max(20px, env(safe-area-inset-bottom)); z-index: 20; min-height: 44px; padding: 10px 16px; border: 1px solid var(--accent); border-radius: 8px; background: var(--accent); color: var(--accent-text); font-size: 14px; font-weight: 700; box-shadow: 0 3px 12px #0002; }
+.back-to-top:hover { filter: brightness(.92); }
+@media (max-width: 1100px) { .guide-page .wrap { gap: 28px; grid-template-columns: 190px minmax(0, 1fr); } .position-guides { grid-template-columns: repeat(3, minmax(0, 1fr)); } .position-guides a:nth-child(4) { border-left: 0; } .position-guides a:nth-child(n+4) { border-top: 1px solid var(--line); } }
+@media (max-width: 860px) {
+  nav.guides { padding: 8px 16px; gap: 2px; }
+  nav.guides a { min-height: 44px; padding: 7px 13px; font-size: 14px; }
+  .guide-page .wrap { grid-template-columns: minmax(0, 1fr); padding: 24px 20px 40px; gap: 24px; }
+  .guide-toc { position: sticky; top: 90px; z-index: 9; max-height: none; padding: 4px 16px; border: 1px solid var(--line); border-radius: 8px; background: var(--panel); }
+  .guide-toc > details[open] { max-height: 55dvh; overflow-y: auto; }
+  .guide-toc > details > summary { margin: 0; min-height: 44px; display: list-item; padding: 10px 0; }
+  .guide-toc a { padding: 9px 0; }
+  .guide-toc details[open] > ol { padding-bottom: 12px; }
+  .guide-footer { padding: 20px 20px 104px; }
+}
+@media (max-width: 640px) { .guide-toc { top: 8px; } }
+@media (max-width: 600px) {
+  .guide-article { font-size: 16px; line-height: 1.8; }
+  .guide-article h2 { font-size: 22px; }
+  .guide-article .outline { grid-template-columns: minmax(0, 1fr); gap: 20px; }
+  .guide-article .table.wide { border: 0; background: none; border-radius: 0; }
+  .table.wide table, .table.wide tbody, .table.wide tr, .table.wide td { display: block; width: 100%; }
+  .table.wide thead { display: none; }
+  .table.wide tr { border: 1px solid var(--line); border-radius: 8px; margin: 0 0 12px; padding: 10px 14px; background: var(--panel); }
+  .table.wide td { border: 0; padding: 4px 0; text-align: left !important; overflow-wrap: anywhere; }
+  .table.wide td[data-label]::before { content: attr(data-label) '：'; color: var(--muted); font-size: 13px; }
+  details.evidence { padding: 0 14px; }
+  .guide-start { padding: 16px; }
+  .position-guides { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .position-guides a { padding: 15px 12px; }
+  .position-guides a:nth-child(n) { border-left: 0; border-top: 0; }
+  .position-guides a:nth-child(even) { border-left: 1px solid var(--line); }
+  .position-guides a:nth-child(n+3) { border-top: 1px solid var(--line); }
+  .position-guides a:last-child { grid-column: 1 / -1; }
+  .position-guides a > span:last-child { font-size: 12px; }
+}
+@media print { .site-header, .guide-nav, .guide-toc, .guide-footer, .guide-start, .guide-entry, .back-to-top { display: none; } .guide-page .wrap { display: block; padding: 0; } details.evidence { border: 0; padding: 0; } }
+</style>
+</head>
+<body class="guide-page">
+<a class="skip-link" href="#guide-content">跳到攻略內容</a>
+<header class="site-header" id="page-top" tabindex="-1">
+  <a class="site-brand" href="../index.html"><span class="brand-mark" aria-hidden="true"></span><span>野球人生<small class="brand-note">種子與養成</small></span></a>
+  <nav class="site-nav" aria-label="主要導覽"><a href="../index.html">找種子</a><a href="index.html" aria-current="page">養成攻略</a></nav>
+  <button class="icon-btn" id="themeBtn" type="button" title="切換深色／淺色" aria-label="切換深色／淺色">◐</button>
+</header>
+<div class="guide-nav"><nav class="guides" aria-label="攻略守位"><a href="index.html">總覽</a><a href="common.html" aria-current="page">共通</a><a href="pitcher.html">投手</a><a href="catcher.html">捕手</a><a href="infield.html">內野</a><a href="outfield.html">外野</a><a href="twoway.html">二刀流</a></nav></div>
+<div class="wrap">
+<aside class="guide-toc"><details open><summary>本頁大綱</summary><ol><li class="l2"><a href="#攻略玩法">攻略玩法</a></li><li class="l3"><a href="#升學選秀與配點">升學、選秀與配點</a></li><li class="l3"><a href="#其他固定選擇">其他固定選擇</a></li><li class="l2"><a href="#推薦種子怎麼選">推薦種子怎麼選</a></li><li class="l2"><a href="#只留中職何時開始選秀">只留中職：何時開始選秀</a></li><li class="l2"><a href="#分不出優劣的共通對話">分不出優劣的共通對話</a></li><li class="l2"><a href="#每季開頭的順序">每季開頭的順序</a></li><li class="l2"><a href="#受傷沒有運氣這種屬性">受傷：沒有「運氣」這種屬性</a></li><li class="l2"><a href="#會影響一輩子的特質">會影響一輩子的特質</a></li><li class="l2"><a href="#32-歲起的衰退">32 歲起的衰退</a></li><li class="l2"><a href="#點數的價錢">點數的價錢</a></li><li class="ev"><details><summary>固定配點：同分、守備與後期分配</summary><ol><li class="l2"><a href="#固定配點細節">固定配點細節</a></li></ol></details></li><li class="ev"><details><summary>遊戲流程與用語</summary><ol><li class="l2"><a href="#生涯時間軸">生涯時間軸</a></li><li class="l2"><a href="#常見用語">常見用語</a></li></ol></details></li><li class="ev"><details><summary>研究方法與完整攻略比較</summary><ol><li class="l2"><a href="#攻略修正的比較">攻略修正的比較</a></li><li class="l2"><a href="#四項選擇的獨立補測">四項選擇的獨立補測</a></li><li class="l2"><a href="#數字是怎麼來的">數字是怎麼來的</a></li></ol></details></li><li class="ev"><details><summary>升學選秀：完整時程與獨立補測</summary><ol><li class="l2"><a href="#五種選秀時程怎麼測">五種選秀時程怎麼測</a></li><li class="l2"><a href="#黃色時程的獨立補測">黃色時程的獨立補測</a></li></ol></details></li><li class="ev"><details><summary>歷史模擬：設定與退休評價</summary><ol><li class="l2"><a href="#模擬的前提">模擬的前提</a></li><li class="l3"><a href="#生涯分數怎麼算">生涯分數怎麼算</a></li><li class="l3"><a href="#退休的前提">退休的前提</a></li><li class="l3"><a href="#守備的前提">守備的前提</a></li><li class="l3"><a href="#特質不會被略過">特質不會被略過</a></li><li class="l2"><a href="#兩種生涯評價">兩種生涯評價</a></li></ol></details></li><li class="ev"><details><summary>旅外與合約：規則及實驗方法</summary><ol><li class="l2"><a href="#升學與旅外">升學與旅外</a></li><li class="l3"><a href="#升學實驗怎麼做">升學實驗怎麼做</a></li><li class="l3"><a href="#旅外的路線與報價">旅外的路線與報價</a></li><li class="l3"><a href="#旅外實驗怎麼做">旅外實驗怎麼做</a></li><li class="l3"><a href="#合約對話的實驗">合約對話的實驗</a></li><li class="l3"><a href="#薪水不影響退休等級">薪水不影響退休等級</a></li></ol></details></li><li class="ev"><details><summary>開局規則與歷史選種</summary><ol><li class="l2"><a href="#開局怎麼看">開局怎麼看</a></li><li class="l3"><a href="#天才的規則">天才的規則</a></li><li class="l3"><a href="#開局評分預測不了生涯">開局評分預測不了生涯</a></li><li class="l3"><a href="#歷史生涯分數的選種比較">歷史生涯分數的選種比較</a></li><li class="l3"><a href="#歷史開局預測分天才和非天才">歷史開局預測：分天才和非天才</a></li><li class="l3"><a href="#路線表怎麼讀">路線表怎麼讀</a></li><li class="l3"><a href="#歷史推薦的挑選方式">歷史推薦的挑選方式</a></li></ol></details></li><li class="ev"><details><summary>傷病：完整規則</summary><ol><li class="l2"><a href="#受傷的完整規則">受傷的完整規則</a></li></ol></details></li><li class="ev"><details><summary>配點與守位：評價、成本與門檻</summary><ol><li class="l2"><a href="#綜合評價怎麼算">綜合評價怎麼算</a></li><li class="l2"><a href="#野手共通">野手共通</a></li><li class="l3"><a href="#模擬怎麼幫野手配點">模擬怎麼幫野手配點</a></li><li class="l3"><a href="#三種配點方式的平均">三種配點方式的平均</a></li><li class="l3"><a href="#守位檢查的共通規則">守位檢查的共通規則</a></li><li class="l3"><a href="#守位本身的價值">守位本身的價值</a></li></ol></details></li><li class="ev"><details><summary>特質與衰退：完整規則</summary><ol><li class="l2"><a href="#特質的完整規則">特質的完整規則</a></li><li class="l3"><a href="#25-歲前的事件累積">25 歲前的事件累積</a></li><li class="l3"><a href="#練出來的特質">練出來的特質</a></li><li class="l3"><a href="#要避開的負面特質">要避開的負面特質</a></li><li class="l3"><a href="#受傷和晚年的特質">受傷和晚年的特質</a></li><li class="l2"><a href="#衰退的完整算法">衰退的完整算法</a></li></ol></details></li><li class="ev"><details><summary>合約、交易與感情：證據與取捨</summary><ol><li class="l2"><a href="#續約與市場怎麼選">續約與市場怎麼選？</a></li><li class="l2"><a href="#交易對話怎麼選">交易對話怎麼選？</a></li><li class="l2"><a href="#感情對話怎麼選">感情對話怎麼選？</a></li></ol></details></li><li class="ev"><details><summary>尚未解決的問題</summary><ol><li class="l2"><a href="#尚無可用比較的對話">尚無可用比較的對話</a></li><li class="l2"><a href="#還缺哪些實驗">還缺哪些實驗</a></li></ol></details></li></ol></details></aside>
+<main class="guide-article" id="guide-content" tabindex="-1">
+<h1>共通攻略</h1><div class="guide-start"><p>先掌握每個守位都用得上的規則，再看你的守位攻略。</p><a class="guide-action" href="index.html">選擇守位攻略</a><a href="../index.html">找種子</a></div>
+<p>遊戲 v2.0.11｜最後核對 2026-10-03｜<a href="index.html#燈號怎麼看">燈號怎麼看</a></p>
+<p>這頁是所有守位都適用的規則。各守位要怎麼玩，看<a href="pitcher.html">投手</a>、<a href="catcher.html">捕手</a>、<a href="infield.html">內野</a>、<a href="outfield.html">外野</a>、<a href="twoway.html">二刀流</a>。</p>
+<h2 id="攻略玩法">攻略玩法</h2>
+<p>搜尋器的退休頭銜，是同一顆種子、起始守位照以下選擇玩到退休的結果。〔統計〕同樣設定重播會得到相同結果；「名人堂」不是成功機率。想重現時，先照這裡的固定選擇，再查各守位的配點表與<a href="#固定配點細節">固定配點細節</a>。旅外與自由配點屬於其他玩法。</p>
+<h3 id="升學選秀與配點">升學、選秀與配點</h3>
+<p>〔實驗〕升學與選秀照<a href="#只留中職何時開始選秀">下方五守位時程表</a>。到時間就選秀，落選能留校就留校，否則進業餘，每年再試；後段指名也接受。所有旅外邀請都拒絕。</p>
+<p>〔實驗〕配點順序見<a href="pitcher.html#每季配點">投手</a>、<a href="catcher.html#每季配點">捕手</a>、<a href="infield.html#每季配點">內野</a>、<a href="outfield.html#每季配點">外野</a>、<a href="twoway.html#每季配點與檢查">二刀流</a>。捕手不練守備；內外野先顧守備，守位會議選可選位置中較難守的，有升防就接受。打擊先練 Contact。二刀流每次配比都以投為主，疲勞時也一樣；失去二刀流身分後，改用留下那一側的配點。</p>
+<h3 id="其他固定選擇">其他固定選擇</h3>
+<p>〔實驗〕下表把攻略的選法與證據限制分開列出；尚無定論的選項也必須固定，才能重現成績。</p>
+<div class="table" tabindex="0" role="region" aria-label="情境、攻略固定怎麼選、證據與限制，可橫向捲動"><table><thead><tr><th>情境</th><th>攻略固定怎麼選</th><th>證據與限制</th></tr></thead><tbody><tr><td data-label="情境">事件卡</td><td data-label="攻略固定怎麼選">保守應對</td><td data-label="證據與限制">五守位單項實驗支持；未比較依情境切換，見<a href="#25-歲前的事件累積">事件與特質</a></td></tr><tr><td data-label="情境">事件組成</td><td data-label="攻略固定怎麼選">訓練至上</td><td data-label="證據與限制">尚無定論，固定選項</td></tr><tr><td data-label="情境">投球與手肘傷病</td><td data-label="攻略固定怎麼選">單刀普通投；第一次手肘危機動手術，第二次起打針</td><td data-label="證據與限制">見<a href="pitcher.html#遇到對話怎麼選">投手決策表</a>；並非所有傷病選擇都已確認較好</td></tr><tr><td data-label="情境">投手安排與國家隊</td><td data-label="攻略固定怎麼選">二刀流留牛棚；單刀沿用球隊主要安排。投手可拒絕徵召時婉拒，強制徵召則接受</td><td data-label="證據與限制">見<a href="pitcher.html#遇到對話怎麼選">投手</a>與<a href="twoway.html#遇到對話怎麼選">二刀流</a>的限制</td></tr><tr><td data-label="情境">合約到期、無人報價</td><td data-label="攻略固定怎麼選">續約；沒有球隊開價就減薪簽約</td><td data-label="證據與限制">續約尚無定論；減薪簽約依<a href="#合約對話的實驗">合併實驗</a>推薦</td></tr><tr><td data-label="情境">約長</td><td data-label="攻略固定怎麼選">投手一般短約，傷病時只有證明約就接受；其他守位與提前延長優先長約</td><td data-label="證據與限制">約長尚無定論，固定選項</td></tr><tr><td data-label="情境">下放與退休</td><td data-label="攻略固定怎麼選">接受下放；36 歲後繼續打，直到強制退休</td><td data-label="證據與限制">退休見<a href="#退休的前提">實驗</a>；33 歲起下放約談仍尚無定論</td></tr><tr><td data-label="情境">轉二刀流</td><td data-label="攻略固定怎麼選">拒絕</td><td data-label="證據與限制">固定選項，各守位證據限制仍適用</td></tr><tr><td data-label="情境">交易與傳言</td><td data-label="攻略固定怎麼選">同意交易；傳言保持沉默</td><td data-label="證據與限制"><a href="#交易對話怎麼選">尚無定論</a></td></tr><tr><td data-label="情境">感情</td><td data-label="攻略固定怎麼選">承認交往，拒絕可能外遇的搭車與飯店邀約；內野延後求婚，其他守位求婚</td><td data-label="證據與限制"><a href="#感情對話怎麼選">尚無定論</a></td></tr></tbody></table></div>
+<p>〔實驗〕完整中職玩法已做整套比較。搜尋器種子中，投手、外野、二刀流的名人堂比例兩批都提高；捕手、內野仍無定論。這不會把每個暫定選項各自升成推薦，也不代表所有玩法中的最佳解。見<a href="#攻略修正的比較">樣本、誤差範圍與限制</a>。</p>
+<p>〔統計〕挑種子時，排序選「退休頭銜」，再按「只看名人堂」或「明星以上」。尚未模擬的種子會排除在這些篩選之外，不當成過客。開局非天才、擲不出 6 或歷史玩法表現差，都沒有經驗證的門檻可直接判為不適合攻略玩法。</p>
+<h2 id="推薦種子怎麼選">推薦種子怎麼選</h2>
+<p>〔統計〕這次重新檢視目前收錄的 111,042 筆種子與起始守位，先找出照完整攻略玩會進名人堂的結果，再挑各守位的推薦。首選依序看一般大傷較少、手肘危機較少、累積薪資較高；完全相同時才取較短、文字順序在前的種子。二刀流另外要求退休時仍有二刀流身分。</p>
+<p>這是名人堂種子之間的挑選偏好，不是另一套生涯評分。退休較晚不一定較好，收入也沒有高過名人堂目標。想少遇到手肘危機，或希望退休時還能守內野，可看各頁另列的選項與代價。</p>
+<p>〔統計〕新舊推薦共 17 組種子與守位已重新玩到退休，與儲存的完整結果一致；詳見<a href="../docs/reviews/2026-10-03-guide-seed-review.md">本次核對紀錄</a>。重播是在確認同一套選擇可重現，不是測試自由配點、旅外或按錯選項後的成功機率。一般大傷與手肘危機分開計數，手肘危機次數不等於手術次數；「一般大傷沒有發生」也不代表整段生涯沒有任何傷病。</p>
+<p>這項核對由模擬重播完成，尚未另做玩家只照文字、逐步操作到退休的核對。下方補上配點的同分規則與細節，仍不能把模擬重播一致當成玩家照文字操作已通過驗證。</p>
+<h2 id="只留中職何時開始選秀">只留中職：何時開始選秀</h2>
+<p>〔實驗〕先把五種時機完整跑到退休，再獨立補測捕手與二刀流原本黃色的對比。以下適用保守事件卡、全程中職；投手旅日、外野學校旅外的組合另談。</p>
+<div class="table" tabindex="0" role="region" aria-label="起始守位、做法與限制、燈號，可橫向捲動"><table><thead><tr><th>起始守位</th><th>做法與限制</th><th>燈號</th></tr></thead><tbody><tr><td data-label="起始守位">投手</td><td data-label="做法與限制">高中直接選秀；若已選大學路線，讀完大一就開始</td><td data-label="燈號"><a href="pitcher.html#只走中職的選秀時程">🟢 名人堂兩批支持較早選秀</a></td></tr><tr><td data-label="起始守位">捕手（不練守備）</td><td data-label="做法與限制">讀完大一，大二季前選秀；不要等到大三季前或更晚</td><td data-label="燈號"><a href="catcher.html#高中與讀完大一的獨立補測">🟢 依平均分推薦；未確認名人堂優勢</a></td></tr><tr><td data-label="起始守位">內野（練守備）</td><td data-label="做法與限制">讀完大三，大四季前選秀</td><td data-label="燈號"><a href="infield.html#只走中職的選秀時程">🟢 與讀完大二相比，依平均分判定</a></td></tr><tr><td data-label="起始守位">外野（練守備）</td><td data-label="做法與限制">讀完大三，大四季前選秀</td><td data-label="燈號"><a href="outfield.html#只走中職的選秀時程">🟢 與讀完大二相比，依平均分判定</a></td></tr><tr><td data-label="起始守位">二刀流（每次以投為主）</td><td data-label="做法與限制">讀到畢業再選秀；新補測只比較最後一年</td><td data-label="燈號"><a href="twoway.html#以投為主最後一年要留下嗎">🟢 比大四季前選秀名人堂多約 2 個百分點</a></td></tr></tbody></table></div>
+<p>〔機制〕讀完大一就是遊戲的「大二季前」；大一沒有另一個選秀按鈕。大四季前和畢業都可能顯示同一歲，但相差一整個學校球季。</p>
+<h2 id="分不出優劣的共通對話">分不出優劣的共通對話</h2>
+<p>下面都是 🟡。暫定選項只說明目前的方向，沒有證明兩邊一樣好；每個守位的退休頭銜結果仍以各頁為準。投手在國外的續約、返台已有另一組明確比較，先看<a href="pitcher.html#旅外合約到期要返台嗎">投手頁</a>；這裡比較的是續約或測試市場。</p>
+<div class="table" tabindex="0" role="region" aria-label="遊戲裡的對話、暫定選項與取捨、燈號，可橫向捲動"><table><thead><tr><th>遊戲裡的對話</th><th>暫定選項與取捨</th><th>燈號</th></tr></thead><tbody><tr><td data-label="遊戲裡的對話">合約到期 · 取得自由球員（FA）資格（球隊奪冠率…）</td><td data-label="暫定選項與取捨">求穩先與原隊續約；測試市場可能沒人開價</td><td data-label="燈號"><a href="#續約與市場怎麼選">🟡 規則上的避險，退休頭銜未確認</a></td></tr><tr><td data-label="遊戲裡的對話">球季結束：他隊送來交易報價，球團徵詢你的否決權</td><td data-label="暫定選項與取捨">暫選「點頭同意，換個環境」；否決會降低奪冠機會、下張合約減薪</td><td data-label="燈號"><a href="#交易對話怎麼選">🟡 規則上的避險，退休頭銜未確認</a></td></tr><tr><td data-label="遊戲裡的對話">季末交易傳言：媒體報導你可能在休賽季被交易</td><td data-label="暫定選項與取捨">暫選「保持沉默，專心打球」；二刀流樣本不足，不給個別燈號</td><td data-label="燈號"><a href="#交易對話怎麼選">🟡 抱怨兩次會拿到氣氛大師</a></td></tr><tr><td data-label="遊戲裡的對話">記者把麥克風遞到你面前：「兩位是在交往嗎？」</td><td data-label="暫定選項與取捨">暫選「大方承認」；成功有體力加成</td><td data-label="燈號"><a href="#感情對話怎麼選">🟡 規則有好處，退休頭銜未確認</a></td></tr><tr><td data-label="遊戲裡的對話">聚餐散場，…說順路想搭你的車／客場飯店酒吧，…傳來訊息：「睡了嗎？」</td><td data-label="暫定選項與取捨">交往後拒絕搭車；已婚後拒絕赴約，避免外遇被抓扣能力</td><td data-label="燈號"><a href="#感情對話怎麼選">🟡 避開明確代價，退休頭銜未確認</a></td></tr><tr><td data-label="遊戲裡的對話">交往第…年——…看著別人的婚禮影片看了很久</td><td data-label="暫定選項與取捨">一般暫求婚；內野暫延後，合併結果略好但兩批未都確認</td><td data-label="燈號"><a href="#感情對話怎麼選">🟡 機制與內野實驗方向不同</a></td></tr></tbody></table></div>
+<p>「母隊提前延長續約」：攻略固定優先長約，🟡 退休頭銜尚無定論。若改走自由市場，遇到「自由市場報價一覽（依國家分列）」或「球團冷處理後的報價一覽（依國家分列）」，選隊也尚無定論；重視收入可另比薪水（<a href="#續約與市場怎麼選">證據</a>）。</p>
+<p>樣本不足或推薦玩法走不到的對話，見<a href="#尚無可用比較的對話">尚無可用比較的表</a>。</p>
+<h2 id="每季開頭的順序">每季開頭的順序</h2>
+<p>每一季開頭，遊戲照這個順序處理：</p>
+<ol><li><strong>衰退</strong>：32 歲起能力會掉。</li><li><strong>二刀流審查</strong>：只有二刀流才有，兩邊評價都要過門檻。</li><li><strong>擲骰</strong>：拿這季的訓練點。有「大巧不工」的話，會自動多擲一顆並直接加上去。</li><li><strong>天才覺醒</strong>：擲出的 6 累計到 5 個就覺醒，能力和潛力馬上加分。</li><li>按下「開始分配」後，<strong>檢查守位和投手的先發、牛棚</strong>（只在中職一軍、日職一軍、大聯盟）。</li><li><strong>你分配這季的點數</strong>。</li></ol>
+<p>所以當季配的點，救不了當季的守位檢查、先發檢查或二刀流審查。要守住位置、當上先發、通過審查，都要在前一季就練好，還要把這季會掉的能力算進去。</p>
+<h2 id="受傷沒有運氣這種屬性">受傷：沒有「運氣」這種屬性</h2>
+<p>〔機制〕遊戲沒有「受傷運氣」這種開局屬性。一般受傷機率受年齡、特質、國際賽與事件選擇影響：</p>
+<ul><li><strong>年齡</strong>：32 歲起風險變高，35 歲起再更高。</li><li><strong>特質</strong>：「鐵人」把風險壓到 10% 以下，「玻璃人」讓風險至少 40%；「學院派」在 25 歲前降低風險。</li><li><strong>國際賽</strong>：被國家隊徵召，隔年風險變高。</li><li><strong>你在事件卡上的選擇</strong>：選了有受傷風險的選項，當季風險就會加上去，連鐵人也擋不住。</li></ul>
+<p>開局能力、潛力、高中、天才都不影響受傷機率。投手的手肘手術（TJ）另外計算，見<a href="pitcher.html#tj-該打針還是動手術">投手攻略</a>。</p>
+<h2 id="會影響一輩子的特質">會影響一輩子的特質</h2>
+<p><strong>25 歲前可以拿到的好特質</strong>（事件卡三種應對各自累計成功次數，畫面上看不到次數，要自己記）：</p>
+<div class="table" tabindex="0" role="region" aria-label="特質、怎麼拿、效果，可橫向捲動"><table><thead><tr><th>特質</th><th>怎麼拿</th><th>效果</th></tr></thead><tbody><tr><td data-label="特質">自律狂</td><td data-label="怎麼拿">保守應對成功 15 次，而且沒被抓到外遇、宵夜少於 5 次</td><td data-label="效果">能力衰退延後兩年</td></tr><tr><td data-label="特質">愛將</td><td data-label="怎麼拿">普通應對成功 10 次</td><td data-label="效果">守位門檻少 3、出賽機會有保障</td></tr><tr><td data-label="特質">大心臟</td><td data-label="怎麼拿">全力一搏成功 7 次</td><td data-label="效果">全力一搏比較容易成功</td></tr></tbody></table></div>
+<p><strong>要避開的壞特質</strong>：</p>
+<div class="table" tabindex="0" role="region" aria-label="特質、怎麼中的、代價，可橫向捲動"><table><thead><tr><th>特質</th><th>怎麼中的</th><th>代價</th></tr></thead><tbody><tr><td data-label="特質">外務纏身</td><td data-label="怎麼中的">宵夜加緋聞累計 4 次以上，其中有緋聞</td><td data-label="代價">每季少擲 1 顆骰，一輩子</td></tr><tr><td data-label="特質">薪水小倫</td><td data-label="怎麼中的">拒絕下放後，沒把身價打回來</td><td data-label="代價">所有事件卡成功率永久少 10 個百分點</td></tr><tr><td data-label="特質">氣氛大師</td><td data-label="怎麼中的">公開抱怨交易傳言兩次</td><td data-label="代價">季末比較容易被交易</td></tr><tr><td data-label="特質">更衣室毒瘤</td><td data-label="怎麼中的">社交、代言類的全力一搏失敗超過 10 次、外遇，或長約期間拒絕下放</td><td data-label="代價">比較容易被交易，續約條件變差</td></tr></tbody></table></div>
+<p>〔實驗〕在三種固定路線中，事件卡一律選保守應對的人，五個守位進名人堂的比例都比一律普通應對明確多 15～40 個百分點，大多也拿到自律狂；一律選全力一搏的，投手以外都明確比一律普通應對差（數字見各守位攻略）。這次沒有比較依年齡、已取得的特質或關鍵賽季切換選項。完整的取得條件見<a href="#特質的完整規則">證據</a>。</p>
+<h2 id="32-歲起的衰退">32 歲起的衰退</h2>
+<p>32～34 歲每年每項能力少 2；35 歲少 5、36 歲少 6，之後每年再多少 1。捕手的配球只掉一半。有「自律狂」的話，整條衰退曲線延後兩年。訓練還是照常進行，所以實際能力不一定會掉這麼多（<a href="#衰退的完整算法">證據</a>）。</p>
+<h2 id="點數的價錢">點數的價錢</h2>
+<p>能力越高，升 1 點越貴：</p>
+<div class="table" tabindex="0" role="region" aria-label="能力、球速、控球、變化球、其他能力（野手能力、體力），可橫向捲動"><table><thead><tr><th>能力</th><th>球速、控球、變化球</th><th>其他能力（野手能力、體力）</th></tr></thead><tbody><tr><td data-label="能力">49 以下</td><td data-label="球速、控球、變化球">1 點</td><td data-label="其他能力（野手能力、體力）">1 點</td></tr><tr><td data-label="能力">50～57</td><td data-label="球速、控球、變化球">2 點</td><td data-label="其他能力（野手能力、體力）">1 點</td></tr><tr><td data-label="能力">58～63</td><td data-label="球速、控球、變化球">4 點</td><td data-label="其他能力（野手能力、體力）">1 點</td></tr><tr><td data-label="能力">64～65</td><td data-label="球速、控球、變化球">4 點</td><td data-label="其他能力（野手能力、體力）">2 點</td></tr><tr><td data-label="能力">66～71</td><td data-label="球速、控球、變化球">7 點</td><td data-label="其他能力（野手能力、體力）">2 點</td></tr><tr><td data-label="能力">72 以上</td><td data-label="球速、控球、變化球">7 點</td><td data-label="其他能力（野手能力、體力）">3 點</td></tr></tbody></table></div>
+<p>〔機制〕能力已達潛力（能力的成長基準線）後仍能繼續練，但每次提升的點數成本會增加。投手各項能力乘 4，包含體力；二刀流的球速、控球、變化球乘 4，其餘乘 3；其他守位各項能力乘 3。從「等於潛力」就開始加價。</p>
+<details class="evidence">
+<summary>固定配點：同分、守備與後期分配</summary>
+<h2 id="固定配點細節">固定配點細節</h2>
+<p>〔統計〕以下補充搜尋器固定玩法的操作順序，是現有生涯結果採用的配點方式，沒有另外證明每個同分選法都比較好。配點門檻與成本本身見<a href="#點數的價錢">點數的價錢</a>。</p>
+<p><strong>何時重算</strong>：骰子依畫面原本的順序，一整顆放在同一項能力，再重新選下一顆的去向；一般訓練點每放 1 點就重新選。不要把一顆骰子拆開，也不要先把整批點數分完才重算。已放入、但還不夠升級的點數會留在該項的進度中。〔機制〕能力上限是 80。</p>
+<p><strong>投手</strong>：比較各項能力提高 1 級後增加的投球評價，再除以目前完整一級的成本。投球能力並列時，都用該並列組最高名次的比重；例如球速與控球並列第一，兩者提高 1 級都按第一名計算。效率完全相同時，依球速、控球、變化球、體力的順序選；已達 80 的項目跳過。比較時不用表格四捨五入的小數，也不因已有部分進度而扣減分母。評價比重見<a href="pitcher.html#每季配點">投手配點表</a>。</p>
+<p><strong>內外野守備</strong>：先按目前守位算加權守備分；尚未登錄位置或已是指定打擊時，內野以游擊、外野以中外野為目標。業餘和二軍也以中職一軍為目標。固定玩法練到該位置不折減的門檻，不扣年齡或「愛將」優惠，也不要求三項能力各自達到同一個數字。未達標時，先從尚未達潛力的守備範圍、接球、臂力中選能力最低的一項；三項都達潛力才一起比較。能力同分依守備範圍、接球、臂力選；目前守一壘時，同分改為接球、守備範圍、臂力。達標後再練打擊。加權公式與門檻見<a href="infield.html#守備門檻怎麼算">內野</a>、<a href="outfield.html#守備門檻怎麼算">外野</a>。</p>
+<p><strong>二刀流</strong>：先補體力，再比較投打評價；評價相同先練投球。較弱那側已全部達潛力，就換另一側。只在尚未達潛力的項目中，挑距離潛力最遠的；差距同分時，投球依球速、控球、變化球，打擊依 Contact、力量、選球、速度。兩側都達潛力後，才補體力到 62，再照下方後期分配。失去二刀流身分後，改用目前守位的配點。</p>
+<p><strong>野手與二刀流的後期分配</strong>：各頁前面的固定順序做完後，要把往後每一級的成本一起考慮，不能只挑下一級最便宜的。現有玩法的比較方式如下；1,000 點只是用來比較，不是玩家實際拿到的點數：</p>
+<ol><li>每個候選項目各自從目前能力出發，假設投入 1,000 點，加上該項尚未升級的進度。</li><li>按每一級的價格逐級扣點，達潛力後也照規則加價；直到剩餘點數不夠升一級，或能力到 80。</li><li>比較「能升的級數 ＋ 剩餘點數 ÷ 100」，選最高的項目。已達 80 的項目不參與；全部都到上限時沿用下表第一項。</li><li>比較值同分時，依下表順序選。骰子或訓練點放完後，重新比較。</li></ol>
+<div class="table" tabindex="0" role="region" aria-label="目前守位、後期候選與同分順序，可橫向捲動"><table><thead><tr><th>目前守位</th><th>後期候選與同分順序</th></tr></thead><tbody><tr><td data-label="目前守位">捕手、內野、外野</td><td data-label="後期候選與同分順序">Contact、力量、選球、速度、體力</td></tr><tr><td data-label="目前守位">二刀流</td><td data-label="後期候選與同分順序">球速、控球、變化球、Contact、力量、選球、速度、體力</td></tr></tbody></table></div>
+<p>這是固定玩法的完整比較規則，不能把它當成遊戲本身提供的自動配點，也沒有單獨比較它是否勝過所有其他分配方法。</p>
+</details>
+<details class="evidence">
+<summary>遊戲流程與用語</summary>
+<h2 id="生涯時間軸">生涯時間軸</h2>
+<p>〔機制〕</p>
+<div class="table" tabindex="0" role="region" aria-label="階段、會發生的事，可橫向捲動"><table><thead><tr><th>階段</th><th>會發生的事</th></tr></thead><tbody><tr><td data-label="階段">16 歲高一～高三</td><td data-label="會發生的事">每季開頭擲骰、分配訓練點；22 歲前累計擲出 5 個 6 就會覺醒天才</td></tr><tr><td data-label="階段">高三結束</td><td data-label="會發生的事">人生的第一個路口：直接選秀、念大學或旅外</td></tr><tr><td data-label="階段">大學（最多 4 年）</td><td data-label="會發生的事">大二到大四開季前都可以提前投入選秀或旅外；大四結束再選一次</td></tr><tr><td data-label="階段">選秀</td><td data-label="會發生的事">第 1 輪被選中而且綜合評價 50 以上，直接進中職一軍；其他人從二軍開始。升上一軍看表現和評價，不是年資到了就升</td></tr><tr><td data-label="階段">升上一軍</td><td data-label="會發生的事">中職一軍、日職一軍、大聯盟才會檢查守位；投手也是在這時才會被重新安排先發或牛棚</td></tr><tr><td data-label="階段">25 歲前</td><td data-label="會發生的事">事件卡的保守、普通、全力應對各自累計，可能得到自律狂、愛將、大心臟</td></tr><tr><td data-label="階段">32 歲起</td><td data-label="會發生的事">能力每年衰退，35 歲起掉得更多</td></tr><tr><td data-label="階段">36 歲起</td><td data-label="會發生的事">每年可以選繼續打或引退；48 歲一定退休</td></tr></tbody></table></div>
+<p>每季開頭的順序是：衰退 → 擲骰 → 守位檢查 → 你配點。所以當季配的點救不了當季的守位檢查，要在前一季就練好（<a href="#每季開頭的順序">共通攻略</a>）。</p>
+<h2 id="常見用語">常見用語</h2>
+<ul><li><strong>能力、潛力</strong>：能力是現在的數值；潛力是成長的基準線，不是上限，超過後還能練，只是比較貴。</li><li><strong>綜合評分、純能力分</strong>：種子搜尋器給開局打的參考分數，不是遊戲裡的數值，也預測不了生涯。</li><li><strong>退休頭銜</strong>：搜尋器現在顯示攻略玩法的確定退休結果，同級並列；另外可按原始薪資或退休年齡排序。</li><li><strong>生涯分數</strong>：歷史研究使用的分數，目前頁面不顯示。同一顆種子用 18 種固定打法各玩一次，看退休時的等級（名人堂 100、明星 70、每日 40、邊緣 15、過客 0），再取平均。18 次是 18 種玩法，不是成功機率。</li><li><strong>中職、日職、大聯盟</strong>：台灣、日本、美國的職棒。各有一軍和二軍，美國的二軍叫小聯盟（3A、2A 等）。</li><li><strong>下放</strong>：球團要把你降到下一級，不是退休。</li><li><strong>指定打擊（DH）</strong>：只打擊、不守備的位置。守不住任何位置的野手最後會被放到這裡。</li><li><strong>誤差範圍</strong>：實驗用的種子數量有限，所以結果會附上誤差範圍。誤差範圍全為正數，表示這次比較支持較高；全為負數則支持較低；跨過 0 則尚未確認差異。攻略還要求兩批結果一致，並依研究規則檢查多項比較，才判為「明確」。</li></ul>
+</details>
+<details class="evidence">
+<summary>研究方法與完整攻略比較</summary>
+<h2 id="攻略修正的比較">攻略修正的比較</h2>
+<p>〔實驗〕五個守位、搜尋器與隨手輸入兩種來源，各用兩批互不重疊的 5,000 顆；每顆比較舊攻略組合與完整攻略玩法，正式共 200,000 次生涯。每守位、每來源合併 10,000 顆，全部起始種子都保留。舊攻略組合是每顆固定玩一次，不是舊十八種玩法的平均；舊投手會旅日，完整攻略全程中職。</p>
+<p>下表差值為完整攻略減修正前設定，括號是誤差範圍。判定要求兩批各自通過多重比較校正；不能只看合併區間。</p>
+<div class="table wide" tabindex="0" role="region" aria-label="起始守位、名人堂差（百分點）、平均退休分差、搜尋器種子的整套判定，可橫向捲動"><table><thead><tr><th>起始守位</th><th style="text-align:right">名人堂差（百分點）</th><th style="text-align:right">平均退休分差</th><th>搜尋器種子的整套判定</th></tr></thead><tbody><tr><td data-label="起始守位">投手</td><td data-label="名人堂差（百分點）" style="text-align:right">+6.100（+4.347～+7.848）</td><td data-label="平均退休分差" style="text-align:right">+3.446（+3.036～+3.857）</td><td data-label="搜尋器種子的整套判定">兩批支持完整攻略，依名人堂</td></tr><tr><td data-label="起始守位">捕手</td><td data-label="名人堂差（百分點）" style="text-align:right">+0.830（−0.727～+2.387）</td><td data-label="平均退休分差" style="text-align:right">+0.776（+0.388～+1.165）</td><td data-label="搜尋器種子的整套判定">尚無定論</td></tr><tr><td data-label="起始守位">內野</td><td data-label="名人堂差（百分點）" style="text-align:right">+0.860（−0.733～+2.453）</td><td data-label="平均退休分差" style="text-align:right">−0.861（−1.335～−0.386）</td><td data-label="搜尋器種子的整套判定">尚無定論</td></tr><tr><td data-label="起始守位">外野</td><td data-label="名人堂差（百分點）" style="text-align:right">+4.750（+3.118～+6.378）</td><td data-label="平均退休分差" style="text-align:right">+1.133（+0.665～+1.600）</td><td data-label="搜尋器種子的整套判定">兩批支持完整攻略，依名人堂</td></tr><tr><td data-label="起始守位">二刀流</td><td data-label="名人堂差（百分點）" style="text-align:right">+16.970（+15.351～+18.577）</td><td data-label="平均退休分差" style="text-align:right">+5.878（+5.508～+6.249）</td><td data-label="搜尋器種子的整套判定">兩批支持完整攻略，依名人堂</td></tr></tbody></table></div>
+<p>〔實驗〕退休分布如下，各格為「修正前設定→完整攻略」，每列每套都是 10,000 顆：</p>
+<div class="table" tabindex="0" role="region" aria-label="守位、名人堂、明星、每日、邊緣、過客，可橫向捲動"><table><thead><tr><th>守位</th><th style="text-align:right">名人堂</th><th style="text-align:right">明星</th><th style="text-align:right">每日</th><th style="text-align:right">邊緣</th><th style="text-align:right">過客</th></tr></thead><tbody><tr><td data-label="守位">投手</td><td data-label="名人堂" style="text-align:right">6797→7407</td><td data-label="明星" style="text-align:right">2697→2583</td><td data-label="每日" style="text-align:right">457→10</td><td data-label="邊緣" style="text-align:right">45→0</td><td data-label="過客" style="text-align:right">4→0</td></tr><tr><td data-label="守位">捕手</td><td data-label="名人堂" style="text-align:right">2892→2975</td><td data-label="明星" style="text-align:right">6595→6586</td><td data-label="每日" style="text-align:right">359→364</td><td data-label="邊緣" style="text-align:right">28→21</td><td data-label="過客" style="text-align:right">126→54</td></tr><tr><td data-label="守位">內野</td><td data-label="名人堂" style="text-align:right">3608→3694</td><td data-label="明星" style="text-align:right">5421→5192</td><td data-label="每日" style="text-align:right">624→595</td><td data-label="邊緣" style="text-align:right">106→105</td><td data-label="過客" style="text-align:right">241→414</td></tr><tr><td data-label="守位">外野</td><td data-label="名人堂" style="text-align:right">4044→4519</td><td data-label="明星" style="text-align:right">4989→4546</td><td data-label="每日" style="text-align:right">614→489</td><td data-label="邊緣" style="text-align:right">103→92</td><td data-label="過客" style="text-align:right">250→354</td></tr><tr><td data-label="守位">二刀流</td><td data-label="名人堂" style="text-align:right">5197→6894</td><td data-label="明星" style="text-align:right">4312→2842</td><td data-label="每日" style="text-align:right">399→208</td><td data-label="邊緣" style="text-align:right">48→23</td><td data-label="過客" style="text-align:right">44→33</td></tr></tbody></table></div>
+<p>〔實驗〕隨手輸入種子的判定不同：投手、捕手支持完整攻略，但依平均分；內野支持修正前的設定，也依平均分；外野、二刀流支持完整攻略，依名人堂。沒有確認差異不等於兩套一樣好。這輪沒有測攻略時程搭配旅外、捕手練守備，或二刀流以投為主的其他三種選秀時程，也沒有逐一證明暫定選項較好。</p>
+<p>〔統計〕交付頁面另外把現有 111,042 筆種子與守位各跑一次攻略玩法；這是全庫查詢成績，沒有混進上述實驗的分母。頁面只顯示攻略模擬結果；下方歷史統計仍描述當時的十八種玩法，不用來替攻略玩法預先刪種子。</p>
+<h2 id="四項選擇的獨立補測">四項選擇的獨立補測</h2>
+<p>〔實驗〕這輪固定目前完整中職攻略，分別比較投手第一次手肘危機、二刀流第一次危機、外野守備，以及二刀流第二次起的危機。每題、每種來源都用兩批互不重複的新種子，各 5,000 顆有效、合併 10,000 顆。正式共 165,606 次生涯，含未遇到目標對話者；未觸發者保留紀錄，但不算進對話效果的分母。</p>
+<div class="table" tabindex="0" role="region" aria-label="題目、搜尋器種子的判定、適用範圍，可橫向捲動"><table><thead><tr><th>題目</th><th>搜尋器種子的判定</th><th>適用範圍</th></tr></thead><tbody><tr><td data-label="題目">投手第一次手肘危機</td><td data-label="搜尋器種子的判定"><a href="pitcher.html#tj-該打針還是動手術">🟡 仍無定論，暫選手術</a></td><td data-label="適用範圍">只改第一次，第二次起兩組都打針</td></tr><tr><td data-label="題目">二刀流第一次手肘危機</td><td data-label="搜尋器種子的判定"><a href="twoway.html#tj-該打針還是動手術">🟢 手術，依平均分；名人堂優勢未確認</a></td><td data-label="適用範圍">只改第一次，第二次起兩組都打針</td></tr><tr><td data-label="題目">外野守備</td><td data-label="搜尋器種子的判定"><a href="outfield.html#要不要練守備">🟢 練守備，高風險</a></td><td data-label="適用範圍">整段生涯的訓練策略；名人堂較多、平均分較低</td></tr><tr><td data-label="題目">二刀流第二次起的手肘危機</td><td data-label="搜尋器種子的判定"><a href="twoway.html#第二次以後的-tj-怎麼選">🟢 打針，依名人堂</a></td><td data-label="適用範圍">第一次兩組都手術，第二次起持續按各組選法</td></tr></tbody></table></div>
+<p>兩臂在指定選擇前的狀態與操作須一致；沒有觸發時，完整生涯也須相同。二刀流依起始守位納入，自然失去身分者不排除。舊研究、預跑與本題正式批次分開，新的有效數與停止上限在正式執行前鎖定；沒有按結果追加樣本，也沒有只挑推薦種子測。</p>
+<p>每種來源、每批的四題一起校正多重比較。升燈仍要求兩批區間同側、方向相同且通過校正；名人堂優先，平均分判定另寫明。投手第一次雖然差值不大，各批誤差仍未落進事前設定的差距小範圍，不能說兩種選法等效。</p>
+<p>隨手輸入的種子另行判定：外野與二刀流第二次起的結論一致；二刀流第一次仍無定論，投手第一次則支持打針，但只依平均分。各頁列出數量、誤差與退休分布。新結果支持的選法都已包含在目前固定攻略中，因此本輪只更新證據與燈號，搜尋器成績與推薦種子的玩法維持原樣。完整紀錄見<a href="../docs/reviews/2026-10-03-guide-choice/results.md">本輪驗收</a>。</p>
+<h2 id="數字是怎麼來的">數字是怎麼來的</h2>
+<p>攻略的證據分三種：</p>
+<div class="table" tabindex="0" role="region" aria-label="標記、來源、怎麼看，可橫向捲動"><table><thead><tr><th>標記</th><th>來源</th><th>怎麼看</th></tr></thead><tbody><tr><td data-label="標記">〔機制〕</td><td data-label="來源">直接讀遊戲程式得到的規則</td><td data-label="怎麼看">適用於這個遊戲版本；規則本身不代表哪種玩法最好</td></tr><tr><td data-label="標記">〔統計〕</td><td data-label="來源">歷史資料為 108,126 筆「種子 × 守位」，各玩 18 種玩法；目前另有 111,042 筆固定攻略結果</td><td data-label="怎麼看">歷史統計只能看關聯；目前結果用來查詢固定攻略的生涯，兩者不混算</td></tr><tr><td data-label="標記">〔實驗〕</td><td data-label="來源">同一批種子比較兩種選擇，或完整時程策略</td><td data-label="怎麼看">附誤差範圍；兩批種子都明確才算明確</td></tr></tbody></table></div>
+<p><strong>這份攻略追求的目標</strong>：退休時的頭銜，也就是進名人堂的機會。燈號照這個順序判斷：</p>
+<ol><li>先看進名人堂的比例（百分點）有沒有變。</li><li>名人堂比例分不出來時，才看平均生涯分數（名人堂 100、明星 70、每日 40、邊緣 15、過客 0 的平均）。</li><li>名人堂比例提高、平均退休分數卻下降時，照名人堂比例建議，並標「高風險」。請搭配各守位頁的退休頭銜分布判讀。</li></ol>
+<p>薪水和「站上大聯盟」是另外的目標，各守位攻略的〈其他玩法〉寫了做法與取捨。薪水和守位本身不算進燈號。</p>
+<p><strong>歷史單項實驗的固定設定</strong>（完整時程、獨立補測與整套攻略的設定另列）：</p>
+<ul><li>每顆種子照<strong>固定的推薦組合</strong>玩一次：事件卡選保守應對，其他照模擬的固定做法（打法「普通」、配點「會玩」）。各守位另外照自己的推薦：投手有日職報價就去；捕手高中畢業直接選秀、不練守備；內野、外野、二刀流高中畢業念大學；投手以外的守位遇到旅外報價都留在中職。每次只改要比較的那個決定。退休和下放的實驗六種打法都跑。這些是歷史單項實驗的基準，差距不能直接相加；完整攻略全程中職另有上方的整套比較，旅外組合仍未完成。</li><li><strong>兩批種子</strong>：早期每個守位抽兩批完全不同的種子，各 600 顆；遇到少見對話時，有效數可能更少。本輪以真正遇到選擇的種子計數：投手日美共同報價、赴美後下放各批 600 顆，大學提前選秀另用各批 5,000 顆新種子。引用兩批合併結果，各段明列數量；同一指標兩批都明確才支持推薦。</li><li><strong>事後才定的規則</strong>：例如「24 歲以下的報價才去」，是看完第一批的結果才想出來的，所以改用第二、三批驗證，不拿第一批當證據。</li><li><strong>兩種種子</strong>：一種是種子搜尋器裡的種子（通過收錄門檻的好種子），燈號照這種判斷；另一種是隨手輸入的 6 碼種子（沒有篩選）。兩種結果不一樣時，各守位攻略會註明「隨手輸入的種子」。</li><li><strong>樣本門檻</strong>：早期任一批不到 50 顆不同種子遇到這個對話，就寫「尚無可用比較」，不給燈號。本輪另要求達到事先訂好的有效數；未達目標不升燈，即使超過 50 顆也不算完成。同一顆種子玩多種打法，只算一顆。</li><li><strong>重複的對話</strong>：補測只改第一次同時出現兩個選項時的選擇，並核對兩組在分岔點的年紀、階段和選項一致；整段生涯的投打配比、疲勞投法等會另外說明。</li><li><strong>🟡 的暫定選項</strong>：合併結果偏向一邊時，明寫兩批沒有都確認；規則有代價時，說清楚是在避開什麼。薪水另談，不能拿來判定哪邊比較容易進名人堂。</li><li>種子用固定的亂數順序抽，同樣的設定重跑會得到同樣的結果。重跑的方法寫在專案的說明文件。</li></ul>
+<p>限制：</p>
+<ul><li>早期誤差範圍是近似算法。本輪名人堂改用稀少或零個不同結局也有寬度的保守區間，平均分仍用成對差值；新燈號除要求兩批明確，也校正同題多項比較的偶然差異。新舊方法不混合重算。</li><li>同一顆種子的不同打法、不同守位不算獨立樣本，誤差範圍已經照「同一顆種子算一組」處理。</li><li>實驗比的是「整段生涯都這樣選」或「第一次遇到時這樣選」，不是每一個當下的最佳選擇。「明確」不代表對每個玩家都成立，「分不出來」也不代表兩種做法一樣好。</li></ul>
+<p>〔統計〕歷史十八種玩法的資料：已掃描 3,600 萬顆種子，收錄門檻是投手 59、捕手 45、內野 44、外野 45、二刀流 66 分，有效生涯資料 108,126 筆。「天才、非天才」指的是第一年開局有沒有覺醒；非天才之後還可能覺醒。</p>
+<p>〔實驗〕本輪選擇實驗另從補掃到 9,000 萬的暫存種子池抽樣，排除本題舊研究、預跑與保留種子；沒有重算上述 108,126 筆統計。共同前置只用正常遊戲選項，到第一次符合條件的選擇後就停止，後續回到固定推薦組合。新的三項投手結果見<a href="pitcher.html#日美同時報價選哪邊">日美報價</a>、<a href="pitcher.html#大學期間要提前投入選秀嗎">大學提前選秀</a>、<a href="pitcher.html#在美國被下放要轉日職嗎">赴美後下放</a>。</p>
+</details>
+<details class="evidence">
+<summary>升學選秀：完整時程與獨立補測</summary>
+<h2 id="五種選秀時程怎麼測">五種選秀時程怎麼測</h2>
+<p>〔實驗〕另從補掃到 1 億 1,700 萬的暫存來源抽樣，排除本題舊研究、預跑與保留種子。五個起始守位、搜尋器與隨手輸入兩種來源，各用兩批完全不同的 5,000 顆；每顆跑高中、大二季前、大三季前、大四季前、畢業五條完整策略，正式共 500,000 次生涯。每守位、每來源引用合併 10,000 顆，兩種來源不混算。</p>
+<p>到目標時點就投入選秀；落選則留校或進業餘，之後每年再試，後段指名也接受。全部起始種子都算進分母，包括沒進職棒、提早退休、二刀流失去二刀流身分；不只留下成功選秀的人。</p>
+<p>共同玩法是全程中職、保守事件卡、原本的配點及傷病策略：捕手不練守備，內外野練守備，二刀流沿用投打並重。非二刀流起始不轉二刀流。未把本輪時程和更新後的旅外、投打配比、第二次手肘處置合在一起比較，不能當成完整攻略成功率。</p>
+<p>同種子在高中分路線之前，以及尚未離校的大學各年，完整狀態都核對相同；選秀年級、季前或畢業階段、輪次與簽約時點也有記錄。另跑觀測前後與重複重播，確認記錄沒有改變遊戲結果。</p>
+<p>每個守位五臂全對全，共十對；五守位合計五十對。每種來源、每批的名人堂與平均分，分開做多項比較校正。兩批都同方向並通過檢查，才支持一對推薦；引用的誤差範圍是合併數字，不能單看合併範圍決定燈號。名人堂未確認才看平均分，不表示名人堂機會相同。</p>
+<p>有一種時機兩批都勝過另外四種，才按這個判定順序推薦它；內外野部分是由平均分勝出，不能寫成名人堂唯一最佳。原五臂中的捕手、二刀流保留未分出的候選，沒有證明候選一樣好；後續獨立補測見<a href="#黃色時程的獨立補測">下段</a>。</p>
+<p>各臂的名人堂比例如下（〔實驗〕，每格 10,000 顆）：</p>
+<div class="table" tabindex="0" role="region" aria-label="起始守位、高中、讀完大一、讀完大二、讀完大三、畢業，可橫向捲動"><table><thead><tr><th>起始守位</th><th style="text-align:right">高中</th><th style="text-align:right">讀完大一</th><th style="text-align:right">讀完大二</th><th style="text-align:right">讀完大三</th><th style="text-align:right">畢業</th></tr></thead><tbody><tr><td data-label="起始守位">投手</td><td data-label="高中" style="text-align:right">65.7%</td><td data-label="讀完大一" style="text-align:right">59.0%</td><td data-label="讀完大二" style="text-align:right">54.1%</td><td data-label="讀完大三" style="text-align:right">50.0%</td><td data-label="畢業" style="text-align:right">44.3%</td></tr><tr><td data-label="起始守位">捕手</td><td data-label="高中" style="text-align:right">28.9%</td><td data-label="讀完大一" style="text-align:right">27.5%</td><td data-label="讀完大二" style="text-align:right">24.8%</td><td data-label="讀完大三" style="text-align:right">22.0%</td><td data-label="畢業" style="text-align:right">19.7%</td></tr><tr><td data-label="起始守位">內野</td><td data-label="高中" style="text-align:right">29.8%</td><td data-label="讀完大一" style="text-align:right">36.4%</td><td data-label="讀完大二" style="text-align:right">39.8%</td><td data-label="讀完大三" style="text-align:right">38.6%</td><td data-label="畢業" style="text-align:right">35.4%</td></tr><tr><td data-label="起始守位">外野</td><td data-label="高中" style="text-align:right">33.6%</td><td data-label="讀完大一" style="text-align:right">40.0%</td><td data-label="讀完大二" style="text-align:right">42.7%</td><td data-label="讀完大三" style="text-align:right">42.5%</td><td data-label="畢業" style="text-align:right">39.3%</td></tr><tr><td data-label="起始守位">二刀流</td><td data-label="高中" style="text-align:right">40.6%</td><td data-label="讀完大一" style="text-align:right">43.7%</td><td data-label="讀完大二" style="text-align:right">46.9%</td><td data-label="讀完大三" style="text-align:right">50.0%</td><td data-label="畢業" style="text-align:right">51.6%</td></tr></tbody></table></div>
+<p>各守位頁另附平均分、成對差值、誤差範圍及完整退休分布。原本只改首次對話的升學實驗仍保留在<a href="#升學實驗怎麼做">舊方法</a>，兩種問題不混算。</p>
+<h2 id="黃色時程的獨立補測">黃色時程的獨立補測</h2>
+<p>〔實驗〕另登記兩個比較：捕手高中與讀完大一；二刀流固定每次以投為主時，大四季前與畢業。搜尋器來源補至 1 億 3,500 萬，隨手輸入候選池另行擴充；排除原五臂研究與本輪預跑，兩來源各自使用完全不同的兩批。捕手各批 30,000 顆、合併 60,000 顆；二刀流各批 40,000 顆、合併 80,000 顆，兩臂正式共 560,000 次生涯。</p>
+<p>數量在正式結果揭露前，依預跑及既有捕手研究的誤差範圍寬度決定，沒有按哪邊勝出加人。每來源、每批，兩題形成同一多項比較組，名人堂與平均分分開校正；同一指標兩批都同方向、區間排除零且校正通過才改燈。捕手依平均分推薦讀完大一，沒有確認名人堂優勢；二刀流依名人堂推薦畢業。各頁附差值與完整退休分布。</p>
+<p>仍保留所有起始種子，逐筆核對完整共同狀態、首次選秀年級與階段、簽約輪次及二刀流所有配比選擇；另重播同種子確認觀測前後與重複結果一致。新舊研究不混算。這項補測只處理兩對時程；完整中職攻略後來另做整套比較，旅外搭配仍未驗證；二刀流原投打並重的黃色仍只描述舊玩法。</p>
+</details>
+<details class="evidence">
+<summary>歷史模擬：設定與退休評價</summary>
+<h2 id="模擬的前提">模擬的前提</h2>
+<h3 id="生涯分數怎麼算">生涯分數怎麼算</h3>
+<p>〔機制〕歷史研究的「生涯分數」是退休時最好的那個聯盟等級（名人堂 100、明星 70、每日 40、邊緣 15、過客 0）的平均。正常有 18 次；模擬失敗的那幾次不算，所以要一起看成功次數。</p>
+<p>18 次是 6 種事件卡打法 × 3 種配點方式各玩一次，不是 18 次隨機抽樣。分數高低代表這顆種子在這些固定玩法下的表現，不是真人玩的成功機率，用來比較種子。實驗用的是另一種量法：每顆種子照推薦玩法玩一次，看進名人堂的比例和平均分（見〈<a href="#數字是怎麼來的">數字是怎麼來的</a>〉）。模擬是照固定規則玩的，真人會隨機應變；36 歲後模擬一律選繼續打，所以退休年齡、名人堂比例都不是現實預測。</p>
+<h3 id="退休的前提">退休的前提</h3>
+<p>〔機制〕遊戲從 36 歲起每年問要不要引退，48 歲一定退休；模擬一律選繼續打。</p>
+<p>〔實驗〕每守位 1,200 顆種子、六種打法、推薦玩法，改成第一次能退休就退休：</p>
+<div class="table wide" tabindex="0" role="region" aria-label="守位、一路續戰：名人堂比例／平均分／平均退休年齡、第一次能退就退、種子排名的相似度、前 20 名重疊，可橫向捲動"><table><thead><tr><th>守位</th><th style="text-align:right">一路續戰：名人堂比例／平均分／平均退休年齡</th><th style="text-align:right">第一次能退就退</th><th style="text-align:right">種子排名的相似度</th><th style="text-align:right">前 20 名重疊</th></tr></thead><tbody><tr><td data-label="守位">捕手</td><td data-label="一路續戰：名人堂比例／平均分／平均退休年齡" style="text-align:right">29.3%／76.6／42.3</td><td data-label="第一次能退就退" style="text-align:right">8.4%／68.7／35.8</td><td data-label="種子排名的相似度" style="text-align:right">0.736</td><td data-label="前 20 名重疊" style="text-align:right">2/20</td></tr><tr><td data-label="守位">內野</td><td data-label="一路續戰：名人堂比例／平均分／平均退休年齡" style="text-align:right">36.2%／76.4／41.2</td><td data-label="第一次能退就退" style="text-align:right">20.6%／70.6／35.7</td><td data-label="種子排名的相似度" style="text-align:right">0.870</td><td data-label="前 20 名重疊" style="text-align:right">10/20</td></tr><tr><td data-label="守位">外野</td><td data-label="一路續戰：名人堂比例／平均分／平均退休年齡" style="text-align:right">40.2%／78.3／41.4</td><td data-label="第一次能退就退" style="text-align:right">22.5%／72.3／35.8</td><td data-label="種子排名的相似度" style="text-align:right">0.852</td><td data-label="前 20 名重疊" style="text-align:right">8/20</td></tr><tr><td data-label="守位">投手</td><td data-label="一路續戰：名人堂比例／平均分／平均退休年齡" style="text-align:right">70.4%／89.6／45.0</td><td data-label="第一次能退就退" style="text-align:right">49.2%／81.7／36.0</td><td data-label="種子排名的相似度" style="text-align:right">0.817</td><td data-label="前 20 名重疊" style="text-align:right">9/20</td></tr><tr><td data-label="守位">二刀流</td><td data-label="一路續戰：名人堂比例／平均分／平均退休年齡" style="text-align:right">48.2%／82.8／42.2</td><td data-label="第一次能退就退" style="text-align:right">15.8%／72.3／36.0</td><td data-label="種子排名的相似度" style="text-align:right">0.740</td><td data-label="前 20 名重疊" style="text-align:right">2/20</td></tr></tbody></table></div>
+<p>36,000 組比較裡，一路續戰的退休等級比較高 9,222 次、比較低 80 次、一樣 26,698 次。提早退休讓名人堂比例少 16～32 個百分點，五個守位兩批都明確。種子的排名大致相近（相似度 1 代表完全一樣），但最前面的 20 顆變動很大。資料庫維持「一路續戰」來比較種子，這也是推薦的玩法。</p>
+<h3 id="守備的前提">守備的前提</h3>
+<p>〔機制〕守位門檻只在中職一軍、日職一軍、大聯盟檢查。模擬的「會玩」和「普通玩」在業餘和二軍、小聯盟時，就先照中職一軍的門檻練守備；已經被轉成指定打擊時，改以捕手、游擊或中外野為目標。這是模擬的固定做法，不保證一直守在原本的位置。「亂玩」則是補最低的能力，不練守備。</p>
+<p>二刀流不投球的日子固定是指定打擊；失去二刀流身分後，會依保留的那一邊變成投手或外野手。</p>
+<p>守備會用掉練打擊的點數。〔實驗〕捕手不練、內野練守備的依據見<a href="#三種配點方式的平均">歷史三種配點比較</a>；外野的新補測支持練守備，但名人堂較多、平均分較低，屬於<a href="outfield.html#要不要練守備">高風險取捨</a>。歷史十八種玩法的生涯分數保留當時的守備設定；目前攻略的退休結果另按各守位固定選擇計算。</p>
+<h3 id="特質不會被略過">特質不會被略過</h3>
+<p>〔機制〕自律狂、愛將、大心臟這些特質，在模擬裡會照遊戲規則正常取得，生涯分數已經包含它們的影響。不過 18 種固定玩法不是真人的上限，懂得隨機應變的玩法可能更好。</p>
+<h2 id="兩種生涯評價">兩種生涯評價</h2>
+<p>〔機制〕遊戲的退休畫面分別計算中職、日職、大聯盟的成績，取最好的那個聯盟的等級，不同聯盟的數據和獎項不會加在一起。目前搜尋器顯示這套攻略的退休頭銜；歷史「生涯分數」則將等級換成分數後，取十八種玩法的平均。「聯盟校正分」則把中職的等級降兩級、日職降一級、大聯盟不變，讓不同聯盟能放在一起比；它只是換算退休頭銜，不代表球員實力，也沒有實驗證明它比較準。</p>
+<p>〔機制〕「神主牌」要在同一隊打滿七個頂級聯盟球季，而且曾經隨隊奪冠。拿到後在隊上不會被交易、母隊續約多 4%、解除「更衣室毒瘤」，退休評價多 200 分。這個規則本身不代表留隊一定比轉隊好。</p>
+</details>
+<details class="evidence">
+<summary>旅外與合約：規則及實驗方法</summary>
+<h2 id="升學與旅外">升學與旅外</h2>
+<p>各守位的升學、旅外結果在各自的攻略。這裡是共通的規則、實驗方法，和五個守位合併的結果。</p>
+<h3 id="升學實驗怎麼做">升學實驗怎麼做</h3>
+<p>〔實驗〕每顆種子在高中畢業時，分別選「投入中華職棒選秀」和「就讀大學」，其他決定照推薦玩法（投手有日職報價就去，其他守位留在中職）。這項比較只改高中畢業那一次。大學期間提前選秀和旅美另有補測，結果在<a href="infield.html#大學期間要提前投入選秀嗎">內野</a>、<a href="outfield.html#大學期間要提前投入選秀嗎">外野</a>、<a href="twoway.html#大學期間要提前投入選秀嗎">二刀流</a>各頁。捕手另外在練守備、不練守備兩種配點下各比一次（<a href="catcher.html#念大學差多少">捕手攻略</a>）。</p>
+<h3 id="旅外的路線與報價">旅外的路線與報價</h3>
+<p>〔機制〕合約上會寫「隊名（層級）」；只有日本、美國同一年都報價時，才會同時出現兩國的旗子。旅外不一定要先去日本：中職一軍評價 60 以上就可能直接收到大聯盟的報價。高中畢業的對話會顯示綜合能力：44 以上才有「洽談旅日合約」（從日職二軍出發），50 以上才有「洽談旅美合約」（從新人聯盟或 1A 出發）。</p>
+<div class="table" tabindex="0" role="region" aria-label="什麼時候、會有哪些選擇，可橫向捲動"><table><thead><tr><th>什麼時候</th><th>會有哪些選擇</th></tr></thead><tbody><tr><td data-label="什麼時候">高中或大學畢業</td><td data-label="會有哪些選擇">選秀、旅日、旅美</td></tr><tr><td data-label="什麼時候">在中職一軍收到國外報價</td><td data-label="會有哪些選擇">日職一軍或二軍、美國 3A 或大聯盟、留在原隊</td></tr><tr><td data-label="什麼時候">合約到期成為自由球員</td><td data-label="會有哪些選擇">續約、測試市場，偶爾會有轉日職或回台的機會</td></tr><tr><td data-label="什麼時候">在國外二軍或小聯盟打完一季</td><td data-label="會有哪些選擇">繼續挑戰，或回台灣</td></tr><tr><td data-label="什麼時候">大聯盟合約到期</td><td data-label="會有哪些選擇">續約、測試市場，偶爾會有日職一軍的機會</td></tr></tbody></table></div>
+<p>〔機制〕中職評價 57 以上才可能有美國報價，60 以下給的是 3A；日職二軍只在評價 51 以下才會出現。所以 3A 和日職二軍不會同時出現；同時有 3A 的話，日本那邊一定是一軍。</p>
+<h3 id="旅外實驗怎麼做">旅外實驗怎麼做</h3>
+<p>〔實驗〕整段生涯只接受某一種旅外報價，其他一律留在中職，和「一律留在中職」比較。比的是整段生涯的做法，不是某一次轉隊。測過的做法：</p>
+<ul><li><strong>畢業時旅美／旅日</strong>：只接高中、大學期間的報價，包含大學季前及畢業。這是整段學校旅外策略，不是單獨高中畢業按鈕的效果。</li><li><strong>進職棒後旅美／旅日</strong>：只接進入職業以後的報價。</li><li><strong>只接美國／只接日本／接第一個報價</strong>：任何時期。</li><li><strong>有條件才去</strong>：進職棒後 24 歲以下的報價才去、只接大聯盟等級（不接 3A）的美國報價、兩者都符合才去。這幾條是看完第一批種子才定的，用第二、三批驗證。</li></ul>
+<p><strong>大聯盟合約到期</strong>：只看真的在大聯盟合約到期、而且可以續約或轉日職一軍的生涯，比較「續約」和「轉日職」。推薦玩法下只有投手走得到這一步。</p>
+<h3 id="合約對話的實驗">合約對話的實驗</h3>
+<p>〔實驗〕每顆種子第一次同時遇到表格裡兩個選項時，分別選左邊和右邊，其他對話照推薦玩法。只算兩邊都真的遇到這個對話、而且打到退休的生涯，五個守位合併。推薦玩法下，有些對話只有特定守位會遇到，表格最後一欄有寫。</p>
+<div class="table wide" tabindex="0" role="region" aria-label="第一次遇到的對話：左 → 右、生涯數、名人堂差（百分點）、誤差範圍、誰會遇到，可橫向捲動"><table><thead><tr><th>第一次遇到的對話：左 → 右</th><th style="text-align:right">生涯數</th><th style="text-align:right">名人堂差（百分點）</th><th>誤差範圍</th><th>誰會遇到</th></tr></thead><tbody><tr><td data-label="第一次遇到的對話：左 → 右">在日職二軍：繼續挑戰 → 回台灣</td><td data-label="生涯數" style="text-align:right">280</td><td data-label="名人堂差（百分點）" style="text-align:right">−0.7</td><td data-label="誤差範圍">−5.3～+3.8，分不出來</td><td data-label="誰會遇到">投手</td></tr><tr><td data-label="第一次遇到的對話：左 → 右">中職同時收到日、美報價：旅日 → 旅美</td><td data-label="生涯數" style="text-align:right">863</td><td data-label="名人堂差（百分點）" style="text-align:right">+6.8</td><td data-label="誤差範圍">+3.2～+10.5，兩批都明確</td><td data-label="誰會遇到">野手、二刀流</td></tr><tr><td data-label="第一次遇到的對話：左 → 右">被釋出：接中職合約 → 直接引退</td><td data-label="生涯數" style="text-align:right">854</td><td data-label="名人堂差（百分點）" style="text-align:right">0.0</td><td data-label="誤差範圍">一樣</td><td data-label="誰會遇到">投手</td></tr><tr><td data-label="第一次遇到的對話：左 → 右">沒有球隊開價：減薪簽約 → 引退</td><td data-label="生涯數" style="text-align:right">1,287</td><td data-label="名人堂差（百分點）" style="text-align:right">−7.2</td><td data-label="誤差範圍">−8.7～−5.8，兩批都明確</td><td data-label="誰會遇到">全部</td></tr><tr><td data-label="第一次遇到的對話：左 → 右">選擇合約類型：長約 → 短約</td><td data-label="生涯數" style="text-align:right">5,906</td><td data-label="名人堂差（百分點）" style="text-align:right">+0.7</td><td data-label="誤差範圍">−0.3～+1.8，分不出來</td><td data-label="誰會遇到">全部</td></tr><tr><td data-label="第一次遇到的對話：左 → 右">大聯盟競標：選第一隊 → 選最後一隊</td><td data-label="生涯數" style="text-align:right">682</td><td data-label="名人堂差（百分點）" style="text-align:right">0.0</td><td data-label="誤差範圍">一樣</td><td data-label="誰會遇到">投手</td></tr></tbody></table></div>
+<p>日美同時報價這一組，實驗會強迫在兩國之間選一個；實驗的固定設定裡，野手和二刀流本來兩邊都不去。分守位看，只有外野是旅美明確比較好（<a href="outfield.html#進職棒後要旅外嗎">外野攻略</a>）。被釋出和大聯盟競標兩組在退休等級上完全一樣，不代表薪水或球隊經歷也一樣。</p>
+<p>〔實驗〕「沒有球隊開價」的合併結果有 1,287 次生涯，兩批都明確支持減薪簽約。投手單獨看也達到門檻；捕手、內野、外野、二刀流任一批遇到的不同種子不到 50 顆，不能給個別結論。這四頁借用合併結果作建議，並不代表已經各自驗證。</p>
+<h3 id="薪水不影響退休等級">薪水不影響退休等級</h3>
+<p>〔機制〕退休等級和榮譽的計算都不看薪水，所以薪水高不會讓頭銜變好。各守位旅外和留台的平均累積薪資列在各自的攻略；那些只是兩組的平均，沒有誤差範圍，不能當成某個球員一定拿得到的合約。</p>
+</details>
+<details class="evidence">
+<summary>開局規則與歷史選種</summary>
+<h2 id="開局怎麼看">開局怎麼看</h2>
+<p>本節的開局規則仍適用；統計表描述的是歷史十八種玩法，不能拿來當成目前攻略的退休結果或排除門檻。</p>
+<h3 id="天才的規則">天才的規則</h3>
+<p>〔機制〕22 歲前累計擲出 5 個 6 就會覺醒天才，不是只看第一年。第一年的骰子由種子和起始守位決定；之後的結果還會受你的選擇影響，但同一顆種子、同一個守位、同樣的選擇，結果一定一樣。一般守位第一年擲出 3 個 6，之後覺醒的機率約 86%；擲出 4 個約 97%。這是照骰子規則算的機率，沒有算進受傷、學院派、外務纏身。二刀流另有骰數保底和高中補 6 的規則，種子搜尋器用另一張機率表。</p>
+<p>覺醒時，從能力和潛力都低於 70 的項目裡隨機挑最多兩項，潛力加 10（最高 80）、能力加 5（捕手的守備範圍、接球、臂力、配球不會被挑到）。之後訓練骰固定 4 點以上。</p>
+<h3 id="開局評分預測不了生涯">開局評分預測不了生涯</h3>
+<p>〔統計〕種子搜尋器的「綜合評分」和生涯分數的相關係數（0 代表完全沒關係，1 代表完全一致）：捕手 0.38、內野 0.32、外野 0.32、投手 0.27、二刀流 0.12。綜合評分裡天才直接加 27 分，所以它有一部分是在分出誰是天才；同樣是天才的捕手，綜合評分和生涯幾乎沒有關係（0.03）。</p>
+<p>「純能力分」是綜合評分拿掉天才加分和高中加分（最多 10 分）。它和生涯分數的相關係數：</p>
+<div class="table" tabindex="0" role="region" aria-label="守位、全部、天才、非天才，可橫向捲動"><table><thead><tr><th>守位</th><th style="text-align:right">全部</th><th style="text-align:right">天才</th><th style="text-align:right">非天才</th></tr></thead><tbody><tr><td data-label="守位">投手</td><td data-label="全部" style="text-align:right">−0.21</td><td data-label="天才" style="text-align:right">+0.15</td><td data-label="非天才" style="text-align:right">+0.06</td></tr><tr><td data-label="守位">捕手</td><td data-label="全部" style="text-align:right"><strong>−0.41</strong></td><td data-label="天才" style="text-align:right">−0.03</td><td data-label="非天才" style="text-align:right">+0.01</td></tr><tr><td data-label="守位">內野</td><td data-label="全部" style="text-align:right">−0.22</td><td data-label="天才" style="text-align:right">+0.28</td><td data-label="非天才" style="text-align:right">+0.01</td></tr><tr><td data-label="守位">外野</td><td data-label="全部" style="text-align:right">−0.16</td><td data-label="天才" style="text-align:right">+0.38</td><td data-label="非天才" style="text-align:right">+0.06</td></tr></tbody></table></div>
+<p>全部一起看是負的，是收錄規則造成的：非天才要靠高能力才會被收進資料庫，天才不管能力多少都收，所以能力低的那一端聚集了很多天才。這不代表能力越高生涯越差。分開看的話，非天才四個守位都接近 0，天才從捕手 −0.03 到外野 +0.38 都有，沒有共同的方向。</p>
+<p>目前沒有單獨測量「某項潛力到 80」有沒有額外的預測力，不能說它完全沒用，也不能拿它代替生涯模擬。</p>
+<h3 id="歷史生涯分數的選種比較">歷史生涯分數的選種比較</h3>
+<p>〔統計〕把每顆種子的 18 次模擬拆成兩半。用前一半排序挑出前 50 名，再看這 50 顆在後一半的平均生涯分數：</p>
+<div class="table" tabindex="0" role="region" aria-label="守位、守位平均、用生涯分數挑、名人堂次數、明星以上次數、綜合評分、純能力分、力量／三項平均，可橫向捲動"><table><thead><tr><th>守位</th><th>守位平均</th><th>用生涯分數挑</th><th>名人堂次數</th><th>明星以上次數</th><th>綜合評分</th><th>純能力分</th><th>力量／三項平均</th></tr></thead><tbody><tr><td data-label="守位">捕手</td><td data-label="守位平均">48.3</td><td data-label="用生涯分數挑"><strong>93.8</strong></td><td data-label="名人堂次數">93.7</td><td data-label="明星以上次數">84.6</td><td data-label="綜合評分">71.1</td><td data-label="純能力分">45.2</td><td data-label="力量／三項平均">82.2</td></tr><tr><td data-label="守位">內野</td><td data-label="守位平均">51.5</td><td data-label="用生涯分數挑"><strong>93.4</strong></td><td data-label="名人堂次數">93.1</td><td data-label="明星以上次數">85.6</td><td data-label="綜合評分">78.2</td><td data-label="純能力分">54.8</td><td data-label="力量／三項平均">70.6</td></tr><tr><td data-label="守位">外野</td><td data-label="守位平均">55.2</td><td data-label="用生涯分數挑"><strong>94.4</strong></td><td data-label="名人堂次數">94.7</td><td data-label="明星以上次數">84.9</td><td data-label="綜合評分">80.5</td><td data-label="純能力分">61.0</td><td data-label="力量／三項平均">64.6</td></tr><tr><td data-label="守位">投手</td><td data-label="守位平均">56.7</td><td data-label="用生涯分數挑"><strong>84.6</strong></td><td data-label="名人堂次數">84.3</td><td data-label="明星以上次數">77.6</td><td data-label="綜合評分">74.1</td><td data-label="純能力分">75.7</td><td data-label="力量／三項平均">69.4</td></tr></tbody></table></div>
+<p>最後一欄野手是力量潛力，投手是球速、控球、變化球潛力的平均。兩半用的是同一批種子、同一組玩法交錯分出來的，不是新的種子或真人驗證。投手用生涯分數挑的效果比野手差，表示投手對玩法比較敏感。</p>
+<p>生涯分數是 18 次的平均，分不出「18 次都明星」和「9 次名人堂加 9 次每日」：兩者都是 70 分。歷史頁面另外用「名人堂次數」和「明星以上次數」區分這兩種情況；目前頁面只顯示固定攻略的退休結果。「聯盟校正分」只是跨聯盟換算頭銜，沒有實驗支持。</p>
+<h3 id="歷史開局預測分天才和非天才">歷史開局預測：分天才和非天才</h3>
+<p>〔統計〕上一張表把天才和非天才混在一起，而綜合評分的天才加分主要是在分出誰是天才。把兩組分開，用同樣的方法再算一次（每格是該指標挑出的前 50 顆，在另一半的平均生涯分數）：</p>
+<div class="table" tabindex="0" role="region" aria-label="組別、守位、這組的平均、綜合評分、純能力分、力量／三項平均、第一年的 6，可橫向捲動"><table><thead><tr><th>組別</th><th>守位</th><th style="text-align:right">這組的平均</th><th style="text-align:right">綜合評分</th><th style="text-align:right">純能力分</th><th style="text-align:right">力量／三項平均</th><th style="text-align:right">第一年的 6</th></tr></thead><tbody><tr><td data-label="組別">天才</td><td data-label="守位">捕手</td><td data-label="這組的平均" style="text-align:right">70.4</td><td data-label="綜合評分" style="text-align:right">71.1</td><td data-label="純能力分" style="text-align:right">64.2</td><td data-label="力量／三項平均" style="text-align:right"><strong>84.6</strong></td><td data-label="第一年的 6" style="text-align:right">—</td></tr><tr><td data-label="組別">天才</td><td data-label="守位">內野</td><td data-label="這組的平均" style="text-align:right">69.6</td><td data-label="綜合評分" style="text-align:right">78.2</td><td data-label="純能力分" style="text-align:right">75.9</td><td data-label="力量／三項平均" style="text-align:right"><strong>79.0</strong></td><td data-label="第一年的 6" style="text-align:right">—</td></tr><tr><td data-label="組別">天才</td><td data-label="守位">外野</td><td data-label="這組的平均" style="text-align:right">67.9</td><td data-label="綜合評分" style="text-align:right">80.5</td><td data-label="純能力分" style="text-align:right"><strong>81.7</strong></td><td data-label="力量／三項平均" style="text-align:right">80.2</td><td data-label="第一年的 6" style="text-align:right">—</td></tr><tr><td data-label="組別">天才</td><td data-label="守位">投手</td><td data-label="這組的平均" style="text-align:right">65.3</td><td data-label="綜合評分" style="text-align:right">74.1</td><td data-label="純能力分" style="text-align:right"><strong>75.7</strong></td><td data-label="力量／三項平均" style="text-align:right">69.4</td><td data-label="第一年的 6" style="text-align:right">—</td></tr><tr><td data-label="組別">非天才</td><td data-label="守位">捕手</td><td data-label="這組的平均" style="text-align:right">45.8</td><td data-label="綜合評分" style="text-align:right">50.4</td><td data-label="純能力分" style="text-align:right">45.2</td><td data-label="力量／三項平均" style="text-align:right">60.8</td><td data-label="第一年的 6" style="text-align:right"><strong>62.7</strong></td></tr><tr><td data-label="組別">非天才</td><td data-label="守位">內野</td><td data-label="這組的平均" style="text-align:right">50.0</td><td data-label="綜合評分" style="text-align:right">55.0</td><td data-label="純能力分" style="text-align:right">50.6</td><td data-label="力量／三項平均" style="text-align:right">59.1</td><td data-label="第一年的 6" style="text-align:right"><strong>69.7</strong></td></tr><tr><td data-label="組別">非天才</td><td data-label="守位">外野</td><td data-label="這組的平均" style="text-align:right">53.3</td><td data-label="綜合評分" style="text-align:right">58.8</td><td data-label="純能力分" style="text-align:right">56.6</td><td data-label="力量／三項平均" style="text-align:right">64.0</td><td data-label="第一年的 6" style="text-align:right"><strong>70.7</strong></td></tr><tr><td data-label="組別">非天才</td><td data-label="守位">投手</td><td data-label="這組的平均" style="text-align:right">54.5</td><td data-label="綜合評分" style="text-align:right">51.9</td><td data-label="純能力分" style="text-align:right">58.4</td><td data-label="力量／三項平均" style="text-align:right">52.5</td><td data-label="第一年的 6" style="text-align:right"><strong>72.9</strong></td></tr></tbody></table></div>
+<ul><li>非天才：四個守位都是「第一年擲出幾個 6」最準，差距也明顯。這是歷史玩法下的預測比較，不能拿來替目前攻略硬排除種子。</li><li>天才捕手：看力量潛力，明顯比其他指標準。</li><li>天才內野、外野：三個指標差不多，分不出哪個比較好。</li><li>天才投手：純能力分和綜合評分比較準，三項平均挑出來的反而最差。三項平均和整體生涯的相關比較高，但拿來挑最前面的種子沒有比較好。</li></ul>
+<p>每格只有 50 顆，差 1～2 分的分不出高下。這是固定玩法下的分組比較，不是實驗。</p>
+<h3 id="路線表怎麼讀">路線表怎麼讀</h3>
+<p>〔統計〕種子搜尋器的「路線」是內建的潛力條件，各守位攻略列了每條路線的種子比守位平均高或低幾分。這是分組比較：沒有誤差範圍，路線之間有重疊，而且看的是「符合條件的種子往往怎樣」，不是「選這條路線會怎樣」。守備型路線比較低，也只是分組的結果，不代表練守備不好。</p>
+<h3 id="歷史推薦的挑選方式">歷史推薦的挑選方式</h3>
+<p>〔統計〕當時從 108,126 筆已模擬的資料裡，挑生涯分數最高的；同分時挑首輪入選比較多的，再同分挑比較短的種子。這是固定玩法下的推薦，不是全遊戲最強，也不保證真人能做到。種子要搭配攻略寫的守位。</p>
+<ul><li>「首輪入選」是模擬裡達到名人堂首輪門檻的次數，只用來分出同分的種子。</li><li>「同守位同級品」是生涯分數大於或等於它的種子數，是歷史頁面的比較方式，目前頁面不顯示。</li><li>「18 次裡至少 15 次名人堂」的比例，各守位的收錄門檻和樣本數不同，不能當成任何種子的成功率，也不是守位的上限。</li></ul>
+<p>社群推薦的種子來自 <a href="https://meshthings.com/tools/yakyulife-seed-checker">Meshthings 開局驗證器</a>，資料庫收了 27 顆，用同樣的模擬重測。那個網站評的是開局，不保證生涯結果。2026-09-30 核對時，它標示的規則版本還是 v2.0.6，我們是用 v2.0.11 重測的；版本不同不代表舊推薦就失效。</p>
+</details>
+<details class="evidence">
+<summary>傷病：完整規則</summary>
+<h2 id="受傷的完整規則">受傷的完整規則</h2>
+<p>〔機制〕一般受傷機率的算法：</p>
+<ol><li>基本 15%。</li><li>年齡：32～34 歲加 6，35 歲起加 12。</li><li>被國際賽徵召：隔年加 10。</li><li>學院派：25 歲前減 5。</li><li>到這裡為止：有「鐵人」最多 10%，有「玻璃人」最少 40%。</li><li>再加上事件卡上自己選的風險（只在當季有效），所以鐵人擋不住這部分。</li><li>最後限制在 3%～95% 之間。</li></ol>
+<p>扣能力的規則都是固定點數：大傷該守位全部能力少 5，小傷有 40% 機率隨機一項少 1～2，外遇被抓全部能力少 5。所以同樣扣 5 點，能力 80 的剩約 94%，能力 60 的剩約 92%。不過不同種子的整段生涯受傷率不一定一樣，TJ 還會看球速和變化球。</p>
+<p>種子不直接影響受傷機率，但會決定隨機數和開局能力，再透過成績、特質、徵召和選擇間接影響受傷。種子、守位、玩法都一樣的話，哪一年受傷也一樣。目前沒有通用的「比較不會受傷的種子」指標。</p>
+<p>事件卡的基本成功率是一般球員 50%，天才、大器晚成或大心臟是 70%；保守、普通、全力三種選項再各自調整。這是事件卡的成功率，不是受傷率。</p>
+<p>可以自己控制的部分：</p>
+<ul><li>32 歲和 35 歲是兩個關卡，但不代表 32 歲就該退休；一路續戰的名人堂比例比第一次能退就退多 16～32 個百分點（見〈<a href="#退休的前提">退休的前提</a>〉）。</li><li>想降低手肘受傷，可以投「養生球」：單刀投手的手肘負擔是養生球 0.8 倍、普通投 1 倍、全力投 1.3 倍；二刀流另有一組（見<a href="twoway.html">二刀流攻略</a>）。養生球不保證生涯分數比較高，見<a href="pitcher.html">投手攻略</a>的實驗。</li><li>事件卡的受傷風險是自己選的，只在當季有效，不選就沒有。</li><li>被國際賽徵召，下一次季中受傷檢查的基本風險加 10 個百分點；有「國際賽之鬼」就不會。</li></ul>
+</details>
+<details class="evidence">
+<summary>配點與守位：評價、成本與門檻</summary>
+<h2 id="綜合評價怎麼算">綜合評價怎麼算</h2>
+<p>〔機制〕綜合評價會影響選秀、合約和出賽。三種算法都是先把能力由高到低排好再算，看的是「最強的那項、第二強的那項」，不是固定看哪一項：</p>
+<div class="table" tabindex="0" role="region" aria-label="守位、算法，可橫向捲動"><table><thead><tr><th>守位</th><th>算法</th></tr></thead><tbody><tr><td data-label="守位">野手</td><td data-label="算法">打擊分 ×（1 − 守備比重）＋ 守備分 × 守備比重。打擊分 ＝ Contact、力量、選球、速度由高到低乘 0.38、0.27、0.20、0.15</td></tr><tr><td data-label="守位">投手</td><td data-label="算法">球速、控球、變化球由高到低乘 0.42、0.30、0.18，再加體力 × 0.10</td></tr><tr><td data-label="守位">二刀流</td><td data-label="算法">見<a href="twoway.html">二刀流攻略</a></td></tr></tbody></table></div>
+<p>野手的守備分用目前登錄位置的守備分；登錄指定打擊時，用「一壘守備分減 12」，所以同樣的打擊，一壘的評價一定比指定打擊高。守備比重見〈<a href="#守位本身的價值">守位本身的價值</a>〉。有「失憶症」再扣 3。</p>
+<h2 id="野手共通">野手共通</h2>
+<p>捕手、內野、外野都適用。各守位的門檻數字在各自的攻略。</p>
+<h3 id="模擬怎麼幫野手配點">模擬怎麼幫野手配點</h3>
+<p>〔機制〕模擬裡「會玩」的固定順序（這是模擬的做法，不是遊戲規則）：</p>
+<ol><li>先練守備到目標；二軍、小聯盟時就先準備中職一軍的門檻，捕手看三項各自達標。</li><li>體力先到 50，再把 Contact、力量練到潛力。</li><li>體力再到 56，接著練選球、速度；最後比較剩下的項目哪個便宜。</li></ol>
+<p>〔實驗〕只把第 2 步改成先練力量，其他照推薦玩法，每守位 1,200 顆天才種子。先練力量的名人堂比例：捕手多 1.7 個百分點（誤差範圍 −0.1～+3.4）、內野多 0.2（−1.3～+1.6）、外野多 0.3（−1.2～+1.7），都分不出哪個先練比較好。</p>
+<h3 id="三種配點方式的平均">三種配點方式的平均</h3>
+<p>〔實驗〕以下保留歷史比較：每個野手守位 1,200 顆種子，比較三種配點，其他照當時的推薦玩法。外野目前的建議已改依<a href="outfield.html#要不要練守備">完整中職攻略的獨立補測</a>，不混算新舊樣本：</p>
+<div class="table wide" tabindex="0" role="region" aria-label="守位、練守備，再照順序練打擊、不練守備，照順序練打擊、不練守備，補最低、一軍當指定打擊（練守備時），可橫向捲動"><table><thead><tr><th>守位</th><th>練守備，再照順序練打擊</th><th>不練守備，照順序練打擊</th><th>不練守備，補最低</th><th style="text-align:right">一軍當指定打擊（練守備時）</th></tr></thead><tbody><tr><td data-label="守位">捕手</td><td data-label="練守備，再照順序練打擊">23.2%／67.7</td><td data-label="不練守備，照順序練打擊"><strong>28.8%／76.4</strong></td><td data-label="不練守備，補最低">22.5%／73.3</td><td data-label="一軍當指定打擊（練守備時）" style="text-align:right">41.9%</td></tr><tr><td data-label="守位">內野</td><td data-label="練守備，再照順序練打擊"><strong>35.8%／76.0</strong></td><td data-label="不練守備，照順序練打擊">23.1%／75.2</td><td data-label="不練守備，補最低">17.3%／73.0</td><td data-label="一軍當指定打擊（練守備時）" style="text-align:right">21.1%</td></tr><tr><td data-label="守位">外野</td><td data-label="練守備，再照順序練打擊"><strong>40.3%／78.5</strong></td><td data-label="不練守備，照順序練打擊">35.2%／79.9</td><td data-label="不練守備，補最低">21.3%／75.1</td><td data-label="一軍當指定打擊（練守備時）" style="text-align:right">22.7%</td></tr></tbody></table></div>
+<p>每格是「進名人堂的比例／平均分」。不練守備的人，一軍球季幾乎 100% 是指定打擊。</p>
+<ul><li><strong>捕手</strong>：不練守備的名人堂比例多 5.7 個百分點、平均分多 8.6，兩批都明確。</li><li><strong>內野</strong>：不練守備的名人堂比例少 12.7 個百分點，兩批都明確；平均分分不出來。</li><li><strong>外野（歷史結果）</strong>：不練守備的名人堂比例少 5.2 個百分點、平均分多 1.4，當時只有一批明確。新的兩批補測已支持練守備，並標高風險，數字見<a href="outfield.html#要不要練守備">外野證據</a>。</li><li><strong>同樣不練守備</strong>，照順序練打擊比補最低，三個守位的名人堂比例都明確比較高。</li></ul>
+<p>這個結論看玩法：之前在「事件卡選普通、有機會就出國」的設定下，三個守位都是不練守備比較好。</p>
+<p>〔統計〕全庫資料（6 種打法平均）是亂玩比會玩高 6.6～8.1 分，但亂玩同時改了兩件事，上面的實驗才把守備單獨拆出來。</p>
+<h3 id="守位檢查的共通規則">守位檢查的共通規則</h3>
+<p>〔機制〕</p>
+<ul><li>只在中職一軍、日職一軍、大聯盟檢查，二軍、小聯盟、業餘不會被換位置。</li><li>檢查在每季擲骰之後、你配點之前（見〈<a href="#每季開頭的順序">每季開頭的順序</a>〉），所以要前一季就練好，升級前就要練到下一個聯盟的門檻。</li><li>年齡折扣（捕手以外）：未滿 24 歲門檻少 3、24～25 歲少 1.5、26 歲起沒有。捕手另有一套，見<a href="catcher.html">捕手攻略</a>。</li><li>「愛將」再少 3，而且不會因為年紀變大而失效。成年後有愛將的折扣，等於未滿 24 歲、沒有愛將時的折扣。</li><li>守不住的時候，教練團會從你守得住的位置裡由難到易給前兩個選擇；一個都守不住就只能當指定打擊。</li><li>守得住更難的位置時，會問你要不要升防，可以拒絕。難度順序是游擊＝中外野＝捕手、二壘、三壘＝右外野、一壘＝左外野、指定打擊。</li><li>第一次被檢查、還沒有位置時，直接排到守得住的最難位置。</li></ul>
+<h3 id="守位本身的價值">守位本身的價值</h3>
+<p>〔機制〕每守滿一季的守位加減分（單位是 runs，棒球的得分值）：</p>
+<div class="table" tabindex="0" role="region" aria-label="捕手、游擊、中外野、二壘、三壘、右外野、左外野、一壘、指定打擊，可橫向捲動"><table><thead><tr><th>捕手</th><th>游擊</th><th>中外野</th><th>二壘</th><th>三壘</th><th>右外野</th><th>左外野</th><th>一壘</th><th>指定打擊</th></tr></thead><tbody><tr><td data-label="捕手"><strong>+9</strong></td><td data-label="游擊">+7.5</td><td data-label="中外野">+5</td><td data-label="二壘">+3</td><td data-label="三壘">+2</td><td data-label="右外野">−5</td><td data-label="左外野">−7</td><td data-label="一壘">−10</td><td data-label="指定打擊">−14</td></tr></tbody></table></div>
+<p>實際是用「這個位置的出賽數 ÷ 該聯盟一季的場數」換算，中職、日職、大聯盟一季分別是 120、143、162 場。從游擊改守一壘，這一項少 17.5，但不能直接當成生涯分數少 17.5。</p>
+<p>〔機制〕退休評價的門檻也看守位（依每個位置的出賽數加權）：門檻倍數 ＝ 1 ＋（守位係數 − 1）× 聯盟強度。守位係數是捕手 0.88、游擊 0.90、中外野 0.94、二壘 0.99、三壘 1.00、右外野 1.05、左外野 1.07、一壘 1.10、指定打擊 1.13；聯盟強度是中職 0.35、日職 0.75、大聯盟 1.30。例如在中職，游擊的門檻約是指定打擊的 92%，到了大聯盟差更多。另外，打擊要多好才能當全勤先發也看守位：捕手和游擊比聯盟平均好一點就夠，指定打擊要好很多。所以被放到指定打擊，等於要用更好的打擊去跨更高的線。</p>
+<p>守備在綜合評價裡占的比重也看位置：捕手、游擊、中外野 30%，二壘、三壘 22%，右外野 20%，左外野 14%，一壘和指定打擊 12%；還沒有位置時 24%。</p>
+<p>〔統計〕守備潛力和生涯分數呈負相關，但這沒有排除開局組合、收錄門檻和配點方式的影響，不能拿來證明練守備沒用。</p>
+</details>
+<details class="evidence">
+<summary>特質與衰退：完整規則</summary>
+<h2 id="特質的完整規則">特質的完整規則</h2>
+<p>〔機制〕角色剛建立時沒有任何特質，之後才由骰子、事件、成績和選擇解鎖；第一年就可能覺醒天才。種子、守位、選擇都一樣的話，拿到的特質也一樣。</p>
+<h3 id="25-歲前的事件累積">25 歲前的事件累積</h3>
+<p>〔機制〕事件卡有保守應對、普通應對、全力一搏三個選項，成功次數各自累計，未滿 25 歲（24 歲也算）達到門檻就解鎖：</p>
+<div class="table wide" tabindex="0" role="region" aria-label="路線、條件、特質、效果，可橫向捲動"><table><thead><tr><th>路線</th><th>條件</th><th>特質</th><th>效果</th></tr></thead><tbody><tr><td data-label="路線">保守應對</td><td data-label="條件">成功 15 次，而且沒被抓到外遇、宵夜少於 5 次</td><td data-label="特質">自律狂</td><td data-label="效果">整條衰退曲線延後兩年</td></tr><tr><td data-label="路線">普通應對</td><td data-label="條件">成功 10 次</td><td data-label="特質">愛將</td><td data-label="效果">普通應對成功率多 5 個百分點；出賽率保底 85%；守位門檻永久少 3（捕手是三項各少 3）</td></tr><tr><td data-label="路線">全力一搏</td><td data-label="條件">成功 7 次</td><td data-label="特質">大心臟</td><td data-label="效果">非天才全力一搏成功率 35% 變 55%（天才 55% 變 60%）；失敗懲罰從少 3 變少 2；部分全力失敗的受傷風險從 16% 降到 12%</td></tr></tbody></table></div>
+<p>沒有其他特質時，非天才的成功率是保守 70%、普通 50%、全力 35%；天才或大器晚成是 90%、70%、55%。大心臟也會把基本成功率提高到 70%。</p>
+<p>〔實驗〕三條路線都測過（數字在各守位攻略）：一律保守應對，五個守位進名人堂的比例都比一律普通應對明確多 15～40 個百分點；一律全力一搏，投手以外都比一律普通應對明確差，投手分不出來。實驗比的是整條路線，沒有把自律狂、愛將、大心臟單獨拆出來，所以不能說是哪個特質造成的差距。</p>
+<p>這次沒有比較依年齡、已取得的特質或關鍵賽季切換選項。結果支持目前採用一律保守，但不能據此判定情境式選法較差，也沒有測出指定種子能做到的最好結果。</p>
+<p>兩個常見的誤會：換路線不會讓累計歸零，只是事件卡數量有限，分散選比較難在 24 歲前達到任何一個門檻；兩條路線同時達標也是可能的。</p>
+<p>保守也有代價：訓練類的保守應對失敗累計 20 次，會拿到「練球遲到」，保守成功率永久少 5 個百分點。</p>
+<h3 id="練出來的特質">練出來的特質</h3>
+<p>〔機制〕遊戲記錄的是骰子擲出的點數，不是能力實際升了多少。以下門檻都是骰子點數。</p>
+<p>每季骰數：3 顆 35%、4 顆 40%、5 顆 20%、6 顆 5%，平均 3.95 顆。</p>
+<div class="table" tabindex="0" role="region" aria-label="狀態、每顆骰、每季平均點數，可橫向捲動"><table><thead><tr><th>狀態</th><th>每顆骰</th><th>每季平均點數</th></tr></thead><tbody><tr><td data-label="狀態">一般</td><td data-label="每顆骰">1～6</td><td data-label="每季平均點數">13.8</td></tr><tr><td data-label="狀態">大器晚成</td><td data-label="每顆骰">3～6</td><td data-label="每季平均點數">17.8（多 29%）</td></tr><tr><td data-label="狀態">天才</td><td data-label="每顆骰">4～6</td><td data-label="每季平均點數">19.8（多 43%）</td></tr></tbody></table></div>
+<ul><li><strong>大器晚成</strong>：非天才，25～31 歲時某季配完點後綜合評價低於 47，而且那季擲出的點數合計 16 以上。拿到後骰子最低 3 點、事件卡基本成功率變 70%，並從能力和潛力都低於 70 的項目隨機挑最多兩項，潛力加 10、能力加 5（捕手的守備範圍、接球、臂力、配球不會被挑到）。看的是 25～31 歲當季的綜合評價，不是開局評分；沒有證據支持為了拿它故意不練能力。</li><li><strong>大巧不工</strong>：連續三年，單季至少 75% 的骰子點數都加在同一項能力上。之後每季（全年停賽復健除外）會自動多擲一顆骰，加在那一項；那項滿 80 後，多的點數變成當季的成績加成。高中三年不算。失去二刀流身分時，如果鎖定的能力在被放棄的那一邊，特質會消失。</li><li><strong>學院派</strong>：大學時期拿到大賽冠軍才會有。25 歲前受傷風險少 5 個百分點，每季（全年停賽復健除外）有 35% 機率多擲一顆骰，一般守位平均每季多約 1.2 點。</li></ul>
+<h3 id="要避開的負面特質">要避開的負面特質</h3>
+<p>〔機制〕</p>
+<div class="table" tabindex="0" role="region" aria-label="特質、怎麼中的、代價，可橫向捲動"><table><thead><tr><th>特質</th><th>怎麼中的</th><th>代價</th></tr></thead><tbody><tr><td data-label="特質">外務纏身</td><td data-label="怎麼中的">宵夜加緋聞累計 4 次以上，其中有緋聞</td><td data-label="代價">每季永久少擲 1 顆骰（最少 2 顆），每季平均點數 13.8 變 10.3，少 25%</td></tr><tr><td data-label="特質">薪水小倫</td><td data-label="怎麼中的">拒絕下放後，沒把身價打回來</td><td data-label="代價">所有事件卡成功率永久少 10 個百分點</td></tr><tr><td data-label="特質">氣氛大師</td><td data-label="怎麼中的">公開抱怨交易傳言兩次</td><td data-label="代價">季末被交易的機率永久變高</td></tr><tr><td data-label="特質">更衣室毒瘤</td><td data-label="怎麼中的">社交、代言類的全力一搏失敗超過 10 次，或外遇</td><td data-label="代價">比較容易被交易、續約條件變差；打回身價或拿到神主牌可以解除</td></tr></tbody></table></div>
+<p>〔統計〕每守位 12 顆種子 × 六種打法，共 360 次生涯：退休時有薪水小倫 0 次、失憶症 198 次（55.0%）。模擬遇到可以拒絕的下放一律接受，這是固定玩法，不代表真人一定會這樣選。</p>
+<p>〔機制〕可以拒絕的下放只出現在長約期間（「成績未達當前層級要求，打算將你下放」）；33 歲起的「成績未達當前層級的最低要求」只能接受下放或引退。拒絕下放會觸發更衣室毒瘤（已經有、或有神主牌、國際賽之鬼的話不會），隔年成績沒打回身價就會拿到薪水小倫。</p>
+<p>〔實驗〕只看真的遇到可以拒絕的下放對話的生涯：拒絕的名人堂比例和接受差不多，有的守位略少，數字在各自的攻略。拒絕的那組退休時 95.6%～100% 有薪水小倫、4.1%～45.5% 有更衣室毒瘤（投手最多），接受的那組幾乎沒有。</p>
+<p>外務纏身會一直減少每季的骰子，一般守位每季的基本點數平均少約 25%。自律狂可以防止之後再中，但已經中了外務纏身之後才拿到自律狂，不會解除。二刀流有骰數保底，影響很小。</p>
+<p>「只會這個」不是懲罰：卡片上寫出賽數會變少，但實際上出賽數沒變，反而把安打、全壘打、打點、盜壘、保送最多乘 1.25 作為補償；能力差距補到 18 以內，或打回主力，就會解除。不需要為了避開它改變養成順序。</p>
+<h3 id="受傷和晚年的特質">受傷和晚年的特質</h3>
+<p>〔機制〕</p>
+<div class="table" tabindex="0" role="region" aria-label="特質、怎麼拿、效果，可橫向捲動"><table><thead><tr><th>特質</th><th>怎麼拿</th><th>效果</th></tr></thead><tbody><tr><td data-label="特質">鐵人</td><td data-label="怎麼拿">健康出賽累計 5 季（單刀先發投滿 120 局、後援出賽 42 場、野手和二刀流出賽達該層級 80%）</td><td data-label="效果">基本受傷風險最多 10%，會取代玻璃人</td></tr><tr><td data-label="特質">玻璃人</td><td data-label="怎麼拿">未滿 32 歲時一般大傷累計兩次</td><td data-label="效果">基本受傷風險最少 40%，會取代鐵人</td></tr><tr><td data-label="特質">浴火重生</td><td data-label="怎麼拿">變成玻璃人後，隔年以後拿到一個會算進生涯的獎項</td><td data-label="效果">解除玻璃人，另得 8 點</td></tr><tr><td data-label="特質">橡膠手臂</td><td data-label="怎麼拿">連續兩次靠打針撐過手肘危機</td><td data-label="效果">手肘量表上限從 60 變 120，打針成功率變 85%</td></tr><tr><td data-label="特質">老鬼</td><td data-label="怎麼拿">35 歲起拿到年度 MVP</td><td data-label="效果">下一年衰退減半，一生只有一次</td></tr></tbody></table></div>
+<p>鐵人的判定比卡片寫的「連續五季全勤」寬鬆：健康但出賽不夠的球季不算，也不會歸零；只有健康出賽不到 95% 才會歸零。拿到橡膠手臂時手肘量表會清空，之後主動選手術就會失去它。</p>
+<h2 id="衰退的完整算法">衰退的完整算法</h2>
+<p>〔機制〕32 歲起每年扣能力：32～34 歲每年少 2，35 歲起每年少「5 ＋（年齡 − 35）」。累計扣掉的量：</p>
+<div class="table" tabindex="0" role="region" aria-label="年齡、一般能力累計、捕手配球累計，可橫向捲動"><table><thead><tr><th style="text-align:right">年齡</th><th style="text-align:right">一般能力累計</th><th style="text-align:right">捕手配球累計</th></tr></thead><tbody><tr><td data-label="年齡" style="text-align:right">34</td><td data-label="一般能力累計" style="text-align:right">−6</td><td data-label="捕手配球累計" style="text-align:right">−3</td></tr><tr><td data-label="年齡" style="text-align:right">37</td><td data-label="一般能力累計" style="text-align:right">−24</td><td data-label="捕手配球累計" style="text-align:right">−13</td></tr><tr><td data-label="年齡" style="text-align:right">40</td><td data-label="一般能力累計" style="text-align:right">−51</td><td data-label="捕手配球累計" style="text-align:right">−27</td></tr><tr><td data-label="年齡" style="text-align:right">42</td><td data-label="一般能力累計" style="text-align:right">−74</td><td data-label="捕手配球累計" style="text-align:right">−39</td></tr></tbody></table></div>
+<p>「自律狂」把年齡當成少兩歲算：40 歲時只扣到 38 歲的量，一般能力累計少 32 而不是 51，每項少扣 19；捕手配球累計少 17，比一般捕手少扣 10。這是公式算出來的差，不代表實際能力或生涯分數會多這麼多。</p>
+<ul><li>捕手的配球是每年各自扣一半再四捨五入，不是把累計值除以二；其他能力照常扣。</li><li>「老鬼」只讓下一年的扣分減半（四捨五入，最少還是扣 1），之後恢復。</li><li>表上是扣掉的量，不是實際變化：訓練照常進行，而且能力最低就是 1。</li></ul>
+</details>
+<details class="evidence">
+<summary>合約、交易與感情：證據與取捨</summary>
+<h2 id="續約與市場怎麼選">續約與市場怎麼選？</h2>
+<p>🟡 續約、市場選隊與提前續約的退休頭銜尚無定論。攻略固定選續約，提前延長優先長約。〔機制〕測試自由市場可能沒有球隊開價，最後只能回原隊減薪簽約。這是規則上的避險，不能因此說續約比較容易進名人堂；改走自由市場、重視收入的人可以另看報價。</p>
+<p>〔實驗〕以下只改第一次同時出現兩個選項時的選擇，其他照固定的推薦組合；每組分岔點的年紀、階段、選項都一致。全部都是兩批還分不出優劣。</p>
+<p><strong>續約 → 測試自由市場</strong>：</p>
+<div class="table" tabindex="0" role="region" aria-label="守位、生涯數、名人堂差（百分點）、誤差範圍、平均分差、誤差範圍，可橫向捲動"><table><thead><tr><th>守位</th><th style="text-align:right">生涯數</th><th style="text-align:right">名人堂差（百分點）</th><th>誤差範圍</th><th style="text-align:right">平均分差</th><th>誤差範圍</th></tr></thead><tbody><tr><td data-label="守位">投手</td><td data-label="生涯數" style="text-align:right">1,199</td><td data-label="名人堂差（百分點）" style="text-align:right">+1.5</td><td data-label="誤差範圍">−1.7～4.7</td><td data-label="平均分差" style="text-align:right">+0.9</td><td data-label="誤差範圍">−0.3～2.0</td></tr><tr><td data-label="守位">捕手</td><td data-label="生涯數" style="text-align:right">1,181</td><td data-label="名人堂差（百分點）" style="text-align:right">−0.2</td><td data-label="誤差範圍">−2.1～1.8</td><td data-label="平均分差" style="text-align:right">+0.1</td><td data-label="誤差範圍">−0.6～0.9</td></tr><tr><td data-label="守位">內野</td><td data-label="生涯數" style="text-align:right">1,044</td><td data-label="名人堂差（百分點）" style="text-align:right">+0.6</td><td data-label="誤差範圍">−1.9～3.1</td><td data-label="平均分差" style="text-align:right">+0.1</td><td data-label="誤差範圍">−0.8～1.0</td></tr><tr><td data-label="守位">外野</td><td data-label="生涯數" style="text-align:right">1,068</td><td data-label="名人堂差（百分點）" style="text-align:right">+1.0</td><td data-label="誤差範圍">−1.3～3.3</td><td data-label="平均分差" style="text-align:right">+0.1</td><td data-label="誤差範圍">−0.7～1.0</td></tr><tr><td data-label="守位">二刀流</td><td data-label="生涯數" style="text-align:right">1,075</td><td data-label="名人堂差（百分點）" style="text-align:right">−1.9</td><td data-label="誤差範圍">−4.7～1.0</td><td data-label="平均分差" style="text-align:right">−0.6</td><td data-label="誤差範圍">−1.5～0.3</td></tr></tbody></table></div>
+<p>退休等級分布（名人堂／明星／每日／邊緣／過客）：</p>
+<ul><li>投手：65／30／5／1／0 % → 66／30／4／0／0 %。</li><li>捕手：29／66／4／0／0 % → 29／66／4／0／0 %。</li><li>內野：36／56／7／1／0 % → 36／56／7／1／0 %。</li><li>外野：39／53／7／1／0 % → 40／52／7／1／0 %。</li><li>二刀流：51／45／4／0／0 % → 49／47／4／0／0 %。</li></ul>
+<p><strong>第一個報價 → 回原隊一年約</strong>：</p>
+<div class="table" tabindex="0" role="region" aria-label="守位、生涯數、名人堂差（百分點）、誤差範圍、平均分差、誤差範圍，可橫向捲動"><table><thead><tr><th>守位</th><th style="text-align:right">生涯數</th><th style="text-align:right">名人堂差（百分點）</th><th>誤差範圍</th><th style="text-align:right">平均分差</th><th>誤差範圍</th></tr></thead><tbody><tr><td data-label="守位">投手</td><td data-label="生涯數" style="text-align:right">1,189</td><td data-label="名人堂差（百分點）" style="text-align:right">+2.5</td><td data-label="誤差範圍">−0.1～5.1</td><td data-label="平均分差" style="text-align:right">+0.6</td><td data-label="誤差範圍">−0.3～1.5</td></tr><tr><td data-label="守位">捕手</td><td data-label="生涯數" style="text-align:right">1,181</td><td data-label="名人堂差（百分點）" style="text-align:right">−0.6</td><td data-label="誤差範圍">−2.4～1.3</td><td data-label="平均分差" style="text-align:right">−0.2</td><td data-label="誤差範圍">−0.9～0.4</td></tr><tr><td data-label="守位">內野</td><td data-label="生涯數" style="text-align:right">1,043</td><td data-label="名人堂差（百分點）" style="text-align:right">−1.4</td><td data-label="誤差範圍">−3.7～0.8</td><td data-label="平均分差" style="text-align:right">−0.3</td><td data-label="誤差範圍">−1.1～0.5</td></tr><tr><td data-label="守位">外野</td><td data-label="生涯數" style="text-align:right">1,063</td><td data-label="名人堂差（百分點）" style="text-align:right">−1.9</td><td data-label="誤差範圍">−3.9～0.2</td><td data-label="平均分差" style="text-align:right">−0.5</td><td data-label="誤差範圍">−1.2～0.3</td></tr><tr><td data-label="守位">二刀流</td><td data-label="生涯數" style="text-align:right">1,066</td><td data-label="名人堂差（百分點）" style="text-align:right">+2.3</td><td data-label="誤差範圍">−0.4～5.1</td><td data-label="平均分差" style="text-align:right">+0.7</td><td data-label="誤差範圍">−0.2～1.6</td></tr></tbody></table></div>
+<p>退休等級分布（名人堂／明星／每日／邊緣／過客）：</p>
+<ul><li>投手：67／28／4／0／0 % → 70／25／4／1／0 %。</li><li>捕手：29／66／4／0／0 % → 29／67／4／0／0 %。</li><li>內野：36／56／7／1／0 % → 35／57／7／1／0 %。</li><li>外野：40／52／7／1／0 % → 38／54／6／1／0 %。</li><li>二刀流：49／47／4／0／0 % → 51／44／4／0／0 %。</li></ul>
+<p><strong>母隊提前延長續約：長約 → 拒絕維持現狀</strong>：</p>
+<div class="table" tabindex="0" role="region" aria-label="守位、生涯數、名人堂差（百分點）、誤差範圍、平均分差、誤差範圍，可橫向捲動"><table><thead><tr><th>守位</th><th style="text-align:right">生涯數</th><th style="text-align:right">名人堂差（百分點）</th><th>誤差範圍</th><th style="text-align:right">平均分差</th><th>誤差範圍</th></tr></thead><tbody><tr><td data-label="守位">投手</td><td data-label="生涯數" style="text-align:right">695</td><td data-label="名人堂差（百分點）" style="text-align:right">+3.3</td><td data-label="誤差範圍">−0.1～6.8</td><td data-label="平均分差" style="text-align:right">+1.0</td><td data-label="誤差範圍">−0.1～2.1</td></tr><tr><td data-label="守位">捕手</td><td data-label="生涯數" style="text-align:right">172</td><td data-label="名人堂差（百分點）" style="text-align:right">−1.7</td><td data-label="誤差範圍">−7.2～3.7</td><td data-label="平均分差" style="text-align:right">−0.3</td><td data-label="誤差範圍">−2.1～1.4</td></tr><tr><td data-label="守位">內野</td><td data-label="生涯數" style="text-align:right">160</td><td data-label="名人堂差（百分點）" style="text-align:right">+4.4</td><td data-label="誤差範圍">−2.2～11.0</td><td data-label="平均分差" style="text-align:right">+1.7</td><td data-label="誤差範圍">−0.6～4.0</td></tr><tr><td data-label="守位">外野</td><td data-label="生涯數" style="text-align:right">151</td><td data-label="名人堂差（百分點）" style="text-align:right">+3.3</td><td data-label="誤差範圍">−2.6～9.3</td><td data-label="平均分差" style="text-align:right">−0.3</td><td data-label="誤差範圍">−2.5～1.9</td></tr><tr><td data-label="守位">二刀流</td><td data-label="生涯數" style="text-align:right">171</td><td data-label="名人堂差（百分點）" style="text-align:right">−1.2</td><td data-label="誤差範圍">−7.9～5.5</td><td data-label="平均分差" style="text-align:right">−0.2</td><td data-label="誤差範圍">−2.3～2.0</td></tr></tbody></table></div>
+<p>退休等級分布（名人堂／明星／每日／邊緣／過客）：</p>
+<ul><li>投手：68／30／2／0／0 % → 71／26／2／0／0 %。</li><li>捕手：33／63／3／1／0 % → 31／66／3／1／0 %。</li><li>內野：36／53／10／1／0 % → 41／50／9／1／0 %。</li><li>外野：45／47／6／2／0 % → 48／41／7／4／0 %。</li><li>二刀流：54／42／4／1／0 % → 53／43／4／1／0 %。</li></ul>
+<p>這項提前續約比較，和〈<a href="#合約對話的實驗">合約對話的實驗</a>〉的「長約 → 短約」不同。投手暫選短約是後者的合併結果偏向短約，不能推論成一律拒絕提前續約。市場選隊這裡也只比第一個報價和回原隊一年約，不是把每隊都試過。</p>
+<h2 id="交易對話怎麼選">交易對話怎麼選？</h2>
+<p>🟡 暫同意交易，傳言暫保持沉默。〔機制〕行使交易否決權會有兩年的懲罰：奪冠機率下降，下一張合約少 15%；公開抱怨交易傳言兩次會得到「氣氛大師」。這些是規則上的代價，實驗沒有確認同意或沉默比較容易進名人堂，仍維持 🟡，不列進「不要這樣做」。各守位的比較在各自〈其他對話怎麼選〉。</p>
+<p>二刀流的交易傳言每批只有 33、32 顆不同種子遇到，尚無可用比較，不給個別燈號；可以參考保持沉默的規則理由，但不是已測出推薦。</p>
+<h2 id="感情對話怎麼選">感情對話怎麼選？</h2>
+<p>🟡 暫承認交往、拒絕可能外遇的邀約；一般暫求婚，內野暫延後。〔機制〕承認交往成功有體力加成；外遇被抓會扣能力。搭便車是在交往後，飯店酒吧邀約則是已婚後才出現。</p>
+<p>〔機制〕求婚有體力加成、當季受傷風險降低，交往第四年起分手風險會上升，所以一般暫選求婚。這些好處不能直接換算成名人堂機會：內野的合併實驗反而偏向延後，暫定方向照實驗寫，兩批沒有都確認。薪水不當成決勝負的依據。</p>
+<p>〔實驗〕兩組先做相同的承認交往選擇，再只改第一次遇到下列對話時的選擇；分岔點的年紀、階段、選項全部一致。每個守位都是兩批沒有都確認，維持 🟡。</p>
+<p><strong>聚餐散場：拒絕搭車 → 讓她上車</strong>：</p>
+<div class="table" tabindex="0" role="region" aria-label="守位、生涯數、名人堂差（百分點）、誤差範圍、平均分差、誤差範圍，可橫向捲動"><table><thead><tr><th>守位</th><th style="text-align:right">生涯數</th><th style="text-align:right">名人堂差（百分點）</th><th>誤差範圍</th><th style="text-align:right">平均分差</th><th>誤差範圍</th></tr></thead><tbody><tr><td data-label="守位">投手</td><td data-label="生涯數" style="text-align:right">136</td><td data-label="名人堂差（百分點）" style="text-align:right">−0.7</td><td data-label="誤差範圍">−10.0～8.5</td><td data-label="平均分差" style="text-align:right">−0.6</td><td data-label="誤差範圍">−3.8～2.6</td></tr><tr><td data-label="守位">捕手</td><td data-label="生涯數" style="text-align:right">145</td><td data-label="名人堂差（百分點）" style="text-align:right">−7.6</td><td data-label="誤差範圍">−14.5～−0.6</td><td data-label="平均分差" style="text-align:right">−3.5</td><td data-label="誤差範圍">−6.0～−1.0</td></tr><tr><td data-label="守位">內野</td><td data-label="生涯數" style="text-align:right">133</td><td data-label="名人堂差（百分點）" style="text-align:right">+0.8</td><td data-label="誤差範圍">−5.7～7.2</td><td data-label="平均分差" style="text-align:right">+0.3</td><td data-label="誤差範圍">−2.2～2.8</td></tr><tr><td data-label="守位">外野</td><td data-label="生涯數" style="text-align:right">154</td><td data-label="名人堂差（百分點）" style="text-align:right">−1.9</td><td data-label="誤差範圍">−8.6～4.7</td><td data-label="平均分差" style="text-align:right">+0.2</td><td data-label="誤差範圍">−2.3～2.7</td></tr><tr><td data-label="守位">二刀流</td><td data-label="生涯數" style="text-align:right">159</td><td data-label="名人堂差（百分點）" style="text-align:right">−5.7</td><td data-label="誤差範圍">−13.1～1.8</td><td data-label="平均分差" style="text-align:right">−1.7</td><td data-label="誤差範圍">−4.0～0.6</td></tr></tbody></table></div>
+<p>退休等級分布（名人堂／明星／每日／邊緣／過客）：</p>
+<ul><li>投手：71／27／2／0／0 % → 70／27／2／1／0 %。</li><li>捕手：32／64／3／0／0 % → 25／68／6／1／0 %。</li><li>內野：38／56／5／0／1 % → 38／56／4／1／1 %。</li><li>外野：38／54／6／1／1 % → 36／57／6／1／0 %。</li><li>二刀流：54／42／4／1／0 % → 48／47／4／1／0 %。</li></ul>
+<p><strong>已婚後飯店酒吧：回訊息晚安 → 赴約</strong>：</p>
+<div class="table" tabindex="0" role="region" aria-label="守位、生涯數、名人堂差（百分點）、誤差範圍、平均分差、誤差範圍，可橫向捲動"><table><thead><tr><th>守位</th><th style="text-align:right">生涯數</th><th style="text-align:right">名人堂差（百分點）</th><th>誤差範圍</th><th style="text-align:right">平均分差</th><th>誤差範圍</th></tr></thead><tbody><tr><td data-label="守位">投手</td><td data-label="生涯數" style="text-align:right">915</td><td data-label="名人堂差（百分點）" style="text-align:right">−2.4</td><td data-label="誤差範圍">−4.7～−0.1</td><td data-label="平均分差" style="text-align:right">−0.7</td><td data-label="誤差範圍">−1.5～0.1</td></tr><tr><td data-label="守位">捕手</td><td data-label="生涯數" style="text-align:right">938</td><td data-label="名人堂差（百分點）" style="text-align:right">+0.5</td><td data-label="誤差範圍">−1.1～2.1</td><td data-label="平均分差" style="text-align:right">+0.1</td><td data-label="誤差範圍">−0.4～0.7</td></tr><tr><td data-label="守位">內野</td><td data-label="生涯數" style="text-align:right">729</td><td data-label="名人堂差（百分點）" style="text-align:right">+0.7</td><td data-label="誤差範圍">−1.1～2.5</td><td data-label="平均分差" style="text-align:right">+0.3</td><td data-label="誤差範圍">−0.4～1.0</td></tr><tr><td data-label="守位">外野</td><td data-label="生涯數" style="text-align:right">747</td><td data-label="名人堂差（百分點）" style="text-align:right">−2.3</td><td data-label="誤差範圍">−4.3～−0.2</td><td data-label="平均分差" style="text-align:right">−0.8</td><td data-label="誤差範圍">−1.5～−0.0</td></tr><tr><td data-label="守位">二刀流</td><td data-label="生涯數" style="text-align:right">792</td><td data-label="名人堂差（百分點）" style="text-align:right">−1.6</td><td data-label="誤差範圍">−3.9～0.6</td><td data-label="平均分差" style="text-align:right">−0.6</td><td data-label="誤差範圍">−1.3～0.2</td></tr></tbody></table></div>
+<p>退休等級分布（名人堂／明星／每日／邊緣／過客）：</p>
+<ul><li>投手：70／25／4／0／0 % → 68／28／4／0／0 %。</li><li>捕手：30／66／4／0／0 % → 30／66／4／0／0 %。</li><li>內野：39／54／6／0／0 % → 40／53／6／0／0 %。</li><li>外野：45／48／6／1／0 % → 42／50／6／1／0 %。</li><li>二刀流：55／41／3／0／0 % → 53／42／4／0／0 %。</li></ul>
+<p><strong>求婚 → 再存一點錢</strong>：</p>
+<div class="table" tabindex="0" role="region" aria-label="守位、生涯數、名人堂差（百分點）、誤差範圍、平均分差、誤差範圍，可橫向捲動"><table><thead><tr><th>守位</th><th style="text-align:right">生涯數</th><th style="text-align:right">名人堂差（百分點）</th><th>誤差範圍</th><th style="text-align:right">平均分差</th><th>誤差範圍</th></tr></thead><tbody><tr><td data-label="守位">投手</td><td data-label="生涯數" style="text-align:right">1,198</td><td data-label="名人堂差（百分點）" style="text-align:right">+0.3</td><td data-label="誤差範圍">−1.8～2.5</td><td data-label="平均分差" style="text-align:right">+0.1</td><td data-label="誤差範圍">−0.7～0.8</td></tr><tr><td data-label="守位">捕手</td><td data-label="生涯數" style="text-align:right">1,187</td><td data-label="名人堂差（百分點）" style="text-align:right">+0.3</td><td data-label="誤差範圍">−0.9～1.6</td><td data-label="平均分差" style="text-align:right">+0.1</td><td data-label="誤差範圍">−0.4～0.5</td></tr><tr><td data-label="守位">內野</td><td data-label="生涯數" style="text-align:right">1,169</td><td data-label="名人堂差（百分點）" style="text-align:right">+2.0</td><td data-label="誤差範圍">0.3～3.6</td><td data-label="平均分差" style="text-align:right">+0.6</td><td data-label="誤差範圍">−0.0～1.3</td></tr><tr><td data-label="守位">外野</td><td data-label="生涯數" style="text-align:right">1,175</td><td data-label="名人堂差（百分點）" style="text-align:right">−0.9</td><td data-label="誤差範圍">−2.5～0.8</td><td data-label="平均分差" style="text-align:right">−0.1</td><td data-label="誤差範圍">−0.7～0.5</td></tr><tr><td data-label="守位">二刀流</td><td data-label="生涯數" style="text-align:right">1,194</td><td data-label="名人堂差（百分點）" style="text-align:right">−0.1</td><td data-label="誤差範圍">−2.0～1.9</td><td data-label="平均分差" style="text-align:right">−0.1</td><td data-label="誤差範圍">−0.7～0.6</td></tr></tbody></table></div>
+<p>退休等級分布（名人堂／明星／每日／邊緣／過客）：</p>
+<ul><li>投手：70／26／4／0／0 % → 71／25／4／0／0 %。</li><li>捕手：30／66／4／0／0 % → 30／65／4／0／0 %。</li><li>內野：39／54／7／1／1 % → 41／52／7／1／0 %。</li><li>外野：43／49／6／1／1 % → 43／50／6／1／0 %。</li><li>二刀流：54／41／4／0／0 % → 54／41／5／0／0 %。</li></ul>
+<p>內野延後的名人堂比例偏多 2.0 個百分點（誤差範圍 +0.3～+3.6），兩批沒有都確認。延後略好和求婚的規則好處並存，不能把規則直接當成已證明的名人堂建議。離婚、已讀不回沒有補測，原因見<a href="#尚無可用比較的對話">下表</a>。</p>
+</details>
+<details class="evidence">
+<summary>尚未解決的問題</summary>
+<h2 id="尚無可用比較的對話">尚無可用比較的對話</h2>
+<p>不給燈號。〔實驗〕以下是補測實際遇到的限制；遇到少不代表選法一樣好。</p>
+<div class="table" tabindex="0" role="region" aria-label="對話或情況、為什麼沒有可用比較、已知的規則或下一步，可橫向捲動"><table><thead><tr><th>對話或情況</th><th>為什麼沒有可用比較</th><th>已知的規則或下一步</th></tr></thead><tbody><tr><td data-label="對話或情況">選秀落榜之後</td><td data-label="為什麼沒有可用比較">本輪兩批有效數：投手 0／0、捕手 77／49、內野 94／78、外野 88／89、二刀流 20／19；各批目標 600，都未達標</td><td data-label="已知的規則或下一步">校園與業餘已實際比較；部分平均分偏向校園，但不足計畫數量，不升燈</td></tr><tr><td data-label="對話或情況">被釋出後，簽中職或日職二軍</td><td data-label="為什麼沒有可用比較">本輪兩種來源、五守位都未遇到兩個選項同時出現，已達候選上限或用完種子池</td><td data-label="已知的規則或下一步">不等於遊戲不可能出現；也不同於已測過的「中職合約或引退」</td></tr><tr><td data-label="對話或情況">業餘年度結束</td><td data-label="為什麼沒有可用比較">內野、外野每批約 20 顆種子遇到；其他更少</td><td data-label="已知的規則或下一步">〔機制〕「高掛球鞋」就是直接退休；想繼續打要再投入選秀，沒有名人堂效果估計</td></tr><tr><td data-label="對話或情況">外野高中旅美後的小聯盟選擇</td><td data-label="為什麼沒有可用比較">本輪限定實際高中旅美，兩批只有 7／4 顆有效種子；隨手輸入的種子 0／0</td><td data-label="已知的規則或下一步">不混入大學或職業後旅美，仍不足以判斷留下或返台</td></tr><tr><td data-label="對話或情況">捕手練守備時的大學選秀時程</td><td data-label="為什麼沒有可用比較">新時程研究只測不練守備；練守備只有高中與原升學路線比較</td><td data-label="已知的規則或下一步">不能套用不練守備者讀完大一的結論</td></tr><tr><td data-label="對話或情況">大學期間旅美：隨手輸入的內野、外野種子</td><td data-label="為什麼沒有可用比較">至少一批不到 50 顆不同種子遇到</td><td data-label="已知的規則或下一步">種子搜尋器的種子有可用比較，仍是 🟡</td></tr><tr><td data-label="對話或情況">天賦覺醒時轉二刀流：隨手輸入的投手、捕手、內野、外野種子</td><td data-label="為什麼沒有可用比較">至少一批不到 50 顆種子遇到</td><td data-label="已知的規則或下一步">不能給這些種子的個別燈號</td></tr><tr><td data-label="對話或情況">外野同時日美報價：隨手輸入的種子</td><td data-label="為什麼沒有可用比較">至少一批不到 50 顆種子遇到</td><td data-label="已知的規則或下一步">種子搜尋器的種子支持選美國，但只在決定要出國時適用</td></tr><tr><td data-label="對話或情況">各守位單獨的沒有球隊開價（投手除外）</td><td data-label="為什麼沒有可用比較">至少一批不到 50 顆不同種子遇到</td><td data-label="已知的規則或下一步">可暫採五守位合併的減薪簽約結論，不能稱個別驗證</td></tr><tr><td data-label="對話或情況">二刀流季末交易傳言</td><td data-label="為什麼沒有可用比較">兩批分別只有 33、32 顆種子遇到</td><td data-label="已知的規則或下一步">〔機制〕可以保持沉默，避開抱怨累積的代價</td></tr><tr><td data-label="對話或情況">外遇被抓後的離婚、已讀不回</td><td data-label="為什麼沒有可用比較">這次不測：兩組都要先接受外遇才走得到</td><td data-label="已知的規則或下一步">不能套用拒絕外遇邀約的結果</td></tr></tbody></table></div>
+<h2 id="還缺哪些實驗">還缺哪些實驗</h2>
+<p>下面是還沒做的比較；測過但樣本不足的對話已列在<a href="#尚無可用比較的對話">上表</a>，不再寫成「測過沒差」。</p>
+<ul><li>各特定守位的長期訓練策略；球團會議中的換位置與升防已補測，內外野仍分不出優劣。</li><li>以保住二刀流身分為目標的訓練策略；投打配比已補測，但還沒比較這種完整玩法。只看維持身分較久的人退休較好，不能證明維持身分本身的效果。</li><li>投球強度對受傷與薪水的影響；疲勞養生已補測，退休頭銜仍尚無定論。</li><li>用第四批不同種子再確認「有條件才旅外」的規則；目前已用第二、三批確認。</li></ul>
+<p>〔機制〕一般大傷後要不要再休養一季，由系統決定；下一季也會自動進入復健流程，沒有另外兩個復健選項可比較。牛棚裡的中繼、終結者同樣由上一季表現判定，玩家能選的是要不要轉先發。守位調整則是在球團會議提供的選項中選，沒有主動指定任意守位的按鈕。這些不列成「沒測過的選擇」；要研究它們，應比較可實行的訓練或投球策略。</p>
+</details>
+</main>
+</div>
+<script>
+if (matchMedia("(max-width:860px)").matches) document.querySelector("aside details").open = false;
+// Links into the collapsed evidence open it first, on load, on hash change and on
+// a click that repeats the current hash (which fires no hashchange).
+function reveal(hash, focus = false) {
+  let id;
+  try { id = decodeURIComponent(hash.slice(1)); } catch { return; }
+  const el = id && document.getElementById(id);
+  if (!el) return;
+  for (let d = el.closest("details"); d; d = d.parentElement.closest("details")) d.open = true;
+  if (focus) { el.setAttribute("tabindex", "-1"); el.focus({ preventScroll: true }); }
+  el.scrollIntoView();
+}
+addEventListener("hashchange", () => reveal(location.hash));
+document.addEventListener("click", (e) => {
+  const a = e.target.closest('a[href^="#"]');
+  if (!a) return;
+  if (a.closest(".guide-toc") && matchMedia("(max-width:860px)").matches) {
+    document.querySelector(".guide-toc > details").open = false;
+  }
+  reveal(a.getAttribute("href"), true);
+});
+reveal(location.hash);
+</script>
+<footer class="guide-footer"><span>下一步，帶著攻略開始養成。</span><a href="../index.html">找種子</a><a href="index.html">攻略總覽</a><a href="#page-top">回到頂端</a></footer>
+<button class="back-to-top" id="backToTop" type="button" hidden><span aria-hidden="true">↑</span> 回到頂端</button>
+<script>
+const backToTop = document.getElementById("backToTop");
+const updateBackToTop = () => { backToTop.hidden = scrollY < 400; };
+addEventListener("scroll", updateBackToTop, { passive: true });
+addEventListener("pageshow", updateBackToTop);
+updateBackToTop();
+backToTop.addEventListener("click", () => {
+  document.querySelector(".site-brand").focus({ preventScroll: true });
+  scrollTo({ top: 0, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth" });
+});
+</script>
+</body>
+</html>

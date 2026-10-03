@@ -1,0 +1,54 @@
+# License
+
+Copyright (c) 2026 the yakyulife-seed authors.
+
+This project is licensed under the **Creative Commons Attribution-NonCommercial
+4.0 International** license (CC BY-NC 4.0).
+
+    https://creativecommons.org/licenses/by-nc/4.0/
+    Full legal code: https://creativecommons.org/licenses/by-nc/4.0/legalcode
+
+You may share and adapt this project, including `index.html`, for any
+non-commercial purpose, as long as you give appropriate credit and say whether
+you changed anything.
+
+NonCommercial is not a preference. The tool is a companion to YaKyoLife
+(野球人生), which is published under CC BY-NC 4.0, and part of this repository is
+adapted from the game's own code. A permissive license such as MIT would claim
+to grant rights that are not the authors' to give.
+
+## Third-party material
+
+**`src/core/game-opening.mjs`** adapts YaKyoLife's seeded RNG, character creation,
+ability tables and first-year dice/genius rules from `src/core/rng.js`,
+`src/core/state.js`, `src/data/abilities.js` and `src/flow/phases.js`:
+https://github.com/LeoGGcat/yakyulife/tree/9b17859dacaa40110a9d3774e6f11f419881f308
+(v2.0.11, copyright 2026 最先生 / LeoGGcat, CC BY-NC 4.0).
+Changes isolate the RNG per evaluation, retain only opening state, and return
+initial/final snapshots instead of running the game's UI and career flow.
+The same attribution applies to this code embedded in generated `index.html`.
+
+**`src/core/engine.mjs`** is a new implementation of the application interface
+and reference metrics. Its mathematical score weights and route thresholds retain
+the historical Meshthings scale for data compatibility; they are not official game
+rules. The former extracted Meshthings program and recommendation prose have been
+replaced. See `docs/engine.md` for the specification and verification scope.
+
+**`src/sim/career.mjs`** adapts the play-style archetypes and point-allocation
+policies from `tools/sim-twoway.mjs` in the YaKyoLife source
+(https://github.com/LeoGGcat/yakyulife, © LeoGGcat, CC BY-NC 4.0). The
+adaptation is attributed in the file header and kept close to the original so
+results stay comparable with the author's calibration.
+
+## Not distributed here
+
+**The full game copy** is never committed to this repository. `node cli.mjs sim`
+and `node cli.mjs game update` clone it into `data/game/` on your machine, and
+`data/` is gitignored. The game remains under its own CC BY-NC 4.0 license.
+
+**`data/seeds.db`** and any simulation results in it are generated on your
+machine and are not part of this repository.
+
+**Historical commits:** older revisions include the extracted Meshthings program
+under its original author's terms. This license does not grant rights to that
+historical material; replacing the current files does not erase Git history.

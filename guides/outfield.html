@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>外野攻略｜野球人生 養成攻略</title>
+<script>// Apply before paint, then attach the same control on every standalone page.
+(() => {
+  const themes = ['system', 'dark', 'light'];
+  const labels = {system:'跟隨系統',dark:'深色',light:'淺色'};
+  let theme = 'system';
+  try { const saved = JSON.parse(localStorage.getItem('yakyu-theme')); if (themes.includes(saved)) theme = saved; } catch {}
+  const apply = () => {
+    if (theme === 'system') delete document.documentElement.dataset.theme;
+    else document.documentElement.dataset.theme = theme;
+  };
+  apply();
+  document.addEventListener('DOMContentLoaded', () => {
+    const button = document.getElementById('themeBtn');
+    if (!button) return;
+    const label = () => {
+      const text = `主題：${labels[theme]}；切換為${labels[themes[(themes.indexOf(theme)+1)%themes.length]]}`;
+      button.setAttribute('aria-label', text); button.setAttribute('title', text);
+    };
+    label();
+    button.addEventListener('click', () => {
+      theme = themes[(themes.indexOf(theme)+1)%themes.length];
+      try { localStorage.setItem('yakyu-theme', JSON.stringify(theme)); } catch {}
+      apply(); label();
+    });
+  });
+})();
+</script>
+<style>/* Shared by the finder and every guide; inlined so file:// stays self-contained. */
+:root {
+  --bg:#F3F6FA; --panel:#FFFFFF; --panel-2:#EAF0F5; --text:#17324D; --muted:#52677A;
+  --line:#CBD6E2; --line-strong:#8296A9; --accent:#126B50; --accent-soft:#E2F1E9; --accent-text:#FFFFFF;
+  --gold:#936313; --gold-soft:#FFF1CB; --good:#126B50; --good-soft:#E2F1E9;
+  --bad:#AC3640; --info:#255C93; --info-soft:#E5EFFA; --want:#126B50;
+  --bar-bg:#E7EDF3; --bar-pot:#A5CDBA; --bar-abl:#126B50;
+  --shadow:0 3px 12px rgba(23,50,77,.05);
+  --font:"Microsoft JhengHei", "PingFang TC", "Noto Sans TC", sans-serif;
+  --mono:"Cascadia Mono", Consolas, ui-monospace, monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark) {
+  :root:not([data-theme="light"]) {
+    --bg:#102233; --panel:#193044; --panel-2:#213C52; --text:#EAF2F8; --muted:#ADC1D2;
+    --line:#3B556C; --line-strong:#7491A9; --accent:#87D4B2; --accent-soft:#244A42; --accent-text:#102C22;
+    --gold:#EAC774; --gold-soft:#4B422B; --good:#87D4B2; --good-soft:#244A42;
+    --bad:#FFAAA9; --info:#A3CAF0; --info-soft:#29445E; --want:#87D4B2;
+    --bar-bg:#102233; --bar-pot:#487864; --bar-abl:#87D4B2; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg:#102233; --panel:#193044; --panel-2:#213C52; --text:#EAF2F8; --muted:#ADC1D2;
+  --line:#3B556C; --line-strong:#7491A9; --accent:#87D4B2; --accent-soft:#244A42; --accent-text:#102C22;
+  --gold:#EAC774; --gold-soft:#4B422B; --good:#87D4B2; --good-soft:#244A42;
+  --bad:#FFAAA9; --info:#A3CAF0; --info-soft:#29445E; --want:#87D4B2;
+  --bar-bg:#102233; --bar-pot:#487864; --bar-abl:#87D4B2; color-scheme:dark;
+}
+* { box-sizing:border-box; }
+html { -webkit-text-size-adjust:100%; scroll-padding-top:90px; }
+body { margin:0; color:var(--text); background:var(--bg); font:15px/1.65 var(--font); }
+a { color:var(--accent); text-underline-offset:3px; }
+button,input,select,textarea { font:inherit; color:inherit; }
+button,summary { cursor:pointer; }
+:focus-visible { outline:3px solid var(--info); outline-offset:3px; }
+[hidden] { display:none!important; }
+.site-header { display:flex; align-items:center; flex-wrap:wrap; gap:12px 32px; min-height:76px; padding:14px max(24px,calc((100vw - 1360px)/2)); background:var(--panel); border-bottom:1px solid var(--line); position:sticky; top:0; z-index:10; }
+.site-brand { display:flex; align-items:center; gap:12px; color:var(--text); text-decoration:none; font-size:21px; font-weight:800; line-height:1.25; }
+.brand-mark { flex:none; display:inline-block; position:relative; width:29px; height:29px; border:2px solid var(--accent); border-radius:4px 4px 10px 4px; transform:rotate(45deg); margin:0 5px; }
+.brand-mark:after { content:""; position:absolute; width:9px; height:9px; background:var(--accent); right:3px; bottom:3px; border-radius:50%; }
+.brand-note { display:block; font-size:12px; font-weight:500; color:var(--muted); margin-top:4px; }
+.site-nav { display:flex; align-items:center; gap:8px; margin-left:auto; }
+.site-nav a { padding:9px 15px; color:var(--muted); text-decoration:none; font-weight:700; border-radius:6px; }
+.site-nav a[aria-current="page"] { color:var(--accent); background:var(--accent-soft); }
+.site-nav a:hover { color:var(--accent); }
+.icon-btn { min-width:44px; min-height:44px; border:1px solid var(--line); background:var(--panel); border-radius:6px; padding:6px 10px; cursor:pointer; }
+.skip-link { position:fixed; top:8px; left:12px; z-index:100; transform:translateY(-160%); padding:10px 16px; background:var(--panel); color:var(--text); border:2px solid var(--accent); }
+.skip-link:focus { transform:none; }
+.btn { display:inline-flex; align-items:center; justify-content:center; min-height:40px; border:1px solid var(--line-strong); background:var(--panel); border-radius:6px; padding:7px 14px; font-weight:700; text-decoration:none; }
+.btn.primary { background:var(--accent); border-color:var(--accent); color:var(--accent-text); }
+.btn:hover { border-color:var(--accent); }
+.site-footer { display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; max-width:1408px; margin:32px auto 0; padding:24px; border-top:1px solid var(--line); font-size:13px; color:var(--muted); }
+@media(max-width:640px) {
+  html { scroll-padding-top:16px; }
+  .site-header { position:static; padding:16px; gap:16px 12px; }
+  .site-brand { font-size:20px; flex:1; }
+  .site-header>.icon-btn { order:1; }
+  .site-nav { order:2; flex:1 0 100%; margin:0; gap:4px; }
+  .site-nav a { flex:1; text-align:center; padding:10px; }
+  .site-footer { padding:20px 16px 80px; }
+}
+@media(prefers-reduced-motion:reduce) {
+  *,*::before,*::after { animation:none!important; transition:none!important; scroll-behavior:auto!important; }
+}
+
+/* The guide is the reading view of the same scouting desk. */
+.guide-nav { border-bottom: 1px solid var(--line); background: var(--panel); }
+nav.guides { display: flex; flex-wrap: wrap; gap: 4px; max-width: 1320px; margin: auto; padding: 8px 28px; }
+nav.guides a { display: inline-flex; align-items: center; min-height: 42px; padding: 7px 16px; border-radius: 6px; color: var(--muted); text-decoration: none; font-weight: 700; }
+nav.guides a:hover { color: var(--text); background: var(--panel-2); }
+nav.guides a[aria-current] { background: var(--accent-soft); color: var(--accent); }
+.guide-page .wrap { display: grid; grid-template-columns: 220px minmax(0, 850px); gap: 48px; max-width: 1240px; margin: auto; padding: 40px 28px 64px; }
+.guide-toc { position: sticky; top: 96px; align-self: start; max-height: calc(100dvh - 120px); overflow: auto; padding-right: 12px; font-size: 14px; line-height: 1.6; }
+.guide-toc summary { cursor: pointer; font-weight: 700; color: var(--text); padding: 8px 0; }
+.guide-toc > details > summary { margin-bottom: 8px; }
+.guide-toc ol { list-style: none; margin: 0; padding: 0; }
+.guide-toc a { display: block; padding: 5px 0; color: var(--muted); text-decoration: none; }
+.guide-toc a:hover { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+.guide-toc li.l3 { padding-left: 14px; font-size: 13px; }
+.guide-toc li.ev { margin-top: 12px; padding-top: 8px; border-top: 1px solid var(--line); }
+.guide-toc li.ev summary { font-size: 13px; color: var(--muted); }
+.guide-article { min-width: 0; font-size: 16px; line-height: 1.85; }
+.guide-article h1 { margin: 0 0 24px; font-size: clamp(28px, 3vw, 40px); font-weight: 800; letter-spacing: -.035em; line-height: 1.3; }
+.guide-article h2 { margin: 42px 0 16px; padding-top: 20px; border-top: 1px solid var(--line); font-size: 24px; line-height: 1.45; }
+.guide-article h3 { margin: 28px 0 10px; font-size: 19px; line-height: 1.5; }
+.guide-article h4 { margin: 22px 0 8px; font-size: 17px; }
+.guide-article h2, .guide-article h3, .guide-article h4, #guide-content { scroll-margin-top: 100px; }
+.guide-article p { margin: 12px 0; }
+.guide-article a { text-underline-offset: 3px; }
+.guide-article li { margin: 5px 0; }
+.guide-article ul, .guide-article ol { padding-left: 1.5em; }
+.guide-start { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; padding: 18px 20px; margin: 0 0 28px; border-left: 4px solid var(--accent); background: var(--panel); }
+.guide-start p { flex-basis: 100%; margin: 0; color: var(--muted); font-size: 15px; }
+.guide-start > a { font-size: 14px; font-weight: 700; }
+.guide-action { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 8px 16px; border-radius: 6px; background: var(--accent); color: var(--accent-text, white); text-decoration: none; }
+.guide-action:hover { filter: brightness(.92); }
+.guide-entry { margin-bottom: 28px; }
+.guide-entry > p { color: var(--muted); margin: 0 0 16px; }
+.position-guides { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: var(--panel); }
+.position-guides a { min-width: 0; display: flex; flex-direction: column; gap: 6px; padding: 18px 14px; text-decoration: none; color: var(--text); border-left: 1px solid var(--line); }
+.position-guides a:first-child { border-left: 0; }
+.position-guides a:hover { background: var(--accent-soft); }
+.position-guides a:focus-visible { outline-offset: -4px; }
+.position-guides .position-code { width: fit-content; color: var(--accent); font-weight: 800; font-size: 13px; letter-spacing: .04em; }
+.position-guides strong { font-size: 20px; line-height: 1.4; }
+.position-guides a > span:last-child { font-size: 13px; color: var(--muted); line-height: 1.55; }
+.guide-common { display: inline-block; padding: 12px 0 0; font-size: 14px; }
+.guide-article code { background: var(--panel-2); padding: 2px 5px; border-radius: 4px; font: .88em var(--mono); overflow-wrap: anywhere; }
+.guide-article pre { background: var(--panel-2); padding: 14px; border-radius: 8px; overflow: auto; }
+.guide-article pre code { padding: 0; background: none; }
+.guide-article .table { overflow-x: auto; max-width: 100%; margin: 16px 0; border: 1px solid var(--line); border-radius: 8px; background: var(--panel); }
+.guide-article table { border-collapse: collapse; width: 100%; font-size: 14px; line-height: 1.7; }
+.guide-article th, .guide-article td { padding: 11px 14px; vertical-align: top; text-align: left; border-bottom: 1px solid var(--line); }
+.guide-article th { background: var(--panel-2); font-weight: 700; }
+.guide-article tr:last-child td { border-bottom: 0; }
+.guide-article blockquote { margin: 20px 0; padding: 4px 18px; border-left: 3px solid var(--gold); background: var(--panel); color: var(--muted); }
+.guide-article hr { border: 0; border-top: 1px solid var(--line); margin: 32px 0; }
+details.evidence { margin: 36px 0 0; border: 1px solid var(--line); border-radius: 10px; padding: 0 20px; background: var(--panel); }
+details.evidence > summary { cursor: pointer; font-weight: 700; font-size: 16px; padding: 18px 0; }
+details.evidence[open] > summary { border-bottom: 1px solid var(--line); margin-bottom: 8px; }
+details.evidence h2:first-of-type { border-top: 0; }
+.guide-article .outline { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; margin: 20px 0; }
+.outline section { border-top: 3px solid var(--line); padding-top: 12px; }
+.guide-article .outline h3 { margin: 0 0 8px; font-size: 18px; }
+.guide-article .outline ol { margin: 0; padding-left: 20px; font-size: 14px; }
+.guide-footer { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; max-width: 1240px; margin: auto; padding: 24px 28px 104px; border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; }
+.guide-footer a { min-height: 32px; display: inline-flex; align-items: center; }
+.back-to-top { position: fixed; right: max(20px, env(safe-area-inset-right)); bottom: max(20px, env(safe-area-inset-bottom)); z-index: 20; min-height: 44px; padding: 10px 16px; border: 1px solid var(--accent); border-radius: 8px; background: var(--accent); color: var(--accent-text); font-size: 14px; font-weight: 700; box-shadow: 0 3px 12px #0002; }
+.back-to-top:hover { filter: brightness(.92); }
+@media (max-width: 1100px) { .guide-page .wrap { gap: 28px; grid-template-columns: 190px minmax(0, 1fr); } .position-guides { grid-template-columns: repeat(3, minmax(0, 1fr)); } .position-guides a:nth-child(4) { border-left: 0; } .position-guides a:nth-child(n+4) { border-top: 1px solid var(--line); } }
+@media (max-width: 860px) {
+  nav.guides { padding: 8px 16px; gap: 2px; }
+  nav.guides a { min-height: 44px; padding: 7px 13px; font-size: 14px; }
+  .guide-page .wrap { grid-template-columns: minmax(0, 1fr); padding: 24px 20px 40px; gap: 24px; }
+  .guide-toc { position: sticky; top: 90px; z-index: 9; max-height: none; padding: 4px 16px; border: 1px solid var(--line); border-radius: 8px; background: var(--panel); }
+  .guide-toc > details[open] { max-height: 55dvh; overflow-y: auto; }
+  .guide-toc > details > summary { margin: 0; min-height: 44px; display: list-item; padding: 10px 0; }
+  .guide-toc a { padding: 9px 0; }
+  .guide-toc details[open] > ol { padding-bottom: 12px; }
+  .guide-footer { padding: 20px 20px 104px; }
+}
+@media (max-width: 640px) { .guide-toc { top: 8px; } }
+@media (max-width: 600px) {
+  .guide-article { font-size: 16px; line-height: 1.8; }
+  .guide-article h2 { font-size: 22px; }
+  .guide-article .outline { grid-template-columns: minmax(0, 1fr); gap: 20px; }
+  .guide-article .table.wide { border: 0; background: none; border-radius: 0; }
+  .table.wide table, .table.wide tbody, .table.wide tr, .table.wide td { display: block; width: 100%; }
+  .table.wide thead { display: none; }
+  .table.wide tr { border: 1px solid var(--line); border-radius: 8px; margin: 0 0 12px; padding: 10px 14px; background: var(--panel); }
+  .table.wide td { border: 0; padding: 4px 0; text-align: left !important; overflow-wrap: anywhere; }
+  .table.wide td[data-label]::before { content: attr(data-label) '：'; color: var(--muted); font-size: 13px; }
+  details.evidence { padding: 0 14px; }
+  .guide-start { padding: 16px; }
+  .position-guides { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .position-guides a { padding: 15px 12px; }
+  .position-guides a:nth-child(n) { border-left: 0; border-top: 0; }
+  .position-guides a:nth-child(even) { border-left: 1px solid var(--line); }
+  .position-guides a:nth-child(n+3) { border-top: 1px solid var(--line); }
+  .position-guides a:last-child { grid-column: 1 / -1; }
+  .position-guides a > span:last-child { font-size: 12px; }
+}
+@media print { .site-header, .guide-nav, .guide-toc, .guide-footer, .guide-start, .guide-entry, .back-to-top { display: none; } .guide-page .wrap { display: block; padding: 0; } details.evidence { border: 0; padding: 0; } }
+</style>
+</head>
+<body class="guide-page">
+<a class="skip-link" href="#guide-content">跳到攻略內容</a>
+<header class="site-header" id="page-top" tabindex="-1">
+  <a class="site-brand" href="../index.html"><span class="brand-mark" aria-hidden="true"></span><span>野球人生<small class="brand-note">種子與養成</small></span></a>
+  <nav class="site-nav" aria-label="主要導覽"><a href="../index.html">找種子</a><a href="index.html" aria-current="page">養成攻略</a></nav>
+  <button class="icon-btn" id="themeBtn" type="button" title="切換深色／淺色" aria-label="切換深色／淺色">◐</button>
+</header>
+<div class="guide-nav"><nav class="guides" aria-label="攻略守位"><a href="index.html">總覽</a><a href="common.html">共通</a><a href="pitcher.html">投手</a><a href="catcher.html">捕手</a><a href="infield.html">內野</a><a href="outfield.html" aria-current="page">外野</a><a href="twoway.html">二刀流</a></nav></div>
+<div class="wrap">
+<aside class="guide-toc"><details open><summary>本頁大綱</summary><ol><li class="l2"><a href="#先決定目標">先決定目標</a></li><li class="l2"><a href="#挑種子">挑種子</a></li><li class="l2"><a href="#每季配點">每季配點</a></li><li class="l2"><a href="#只走中職哪一年選秀">只走中職：哪一年選秀</a></li><li class="l2"><a href="#遇到對話怎麼選">遇到對話怎麼選</a></li><li class="l2"><a href="#小心這些坑">小心這些坑</a></li><li class="l2"><a href="#其他玩法旅外">其他玩法：旅外</a></li><li class="ev"><details><summary>推薦種子核對</summary><ol><li class="l2"><a href="#推薦種子核對">推薦種子核對</a></li></ol></details></li><li class="ev"><details><summary>證據怎麼讀</summary><ol><li class="l2"><a href="#證據怎麼讀">證據怎麼讀</a></li></ol></details></li><li class="ev"><details><summary>證據：升學與選秀</summary><ol><li class="l2"><a href="#大學期間要提前投入選秀嗎">大學期間要提前投入選秀嗎？</a></li><li class="l2"><a href="#選秀後段輪次要接受指名嗎">選秀後段輪次要接受指名嗎？</a></li><li class="l2"><a href="#只走中職的選秀時程">只走中職的選秀時程</a></li></ol></details></li><li class="ev"><details><summary>證據：配點、事件與守位</summary><ol><li class="l2"><a href="#事件卡該走哪條路線">事件卡該走哪條路線？</a></li><li class="l2"><a href="#要不要練守備">要不要練守備？</a></li><li class="l2"><a href="#天賦覺醒要轉二刀流嗎">天賦覺醒要轉二刀流嗎？</a></li><li class="l2"><a href="#被換守位或被問要不要升防時">被換守位或被問要不要升防時？</a></li><li class="l2"><a href="#守備門檻怎麼算">守備門檻怎麼算？</a></li></ol></details></li><li class="ev"><details><summary>證據：旅外</summary><ol><li class="l2"><a href="#畢業時選哪條路">畢業時選哪條路？</a></li><li class="l2"><a href="#進職棒後要旅外嗎">進職棒後要旅外嗎？</a></li><li class="l2"><a href="#大學期間要旅美嗎">大學期間要旅美嗎？</a></li></ol></details></li><li class="ev"><details><summary>證據：傷病、合約與退休</summary><ol><li class="l2"><a href="#下放該接受嗎">下放該接受嗎？</a></li><li class="l2"><a href="#長約還是短約">長約還是短約？</a></li><li class="l2"><a href="#其他對話怎麼選">其他對話怎麼選？</a></li><li class="l2"><a href="#沒人開價時要減薪簽約嗎">沒人開價時要減薪簽約嗎？</a></li><li class="l2"><a href="#36-歲後該續戰嗎">36 歲後該續戰嗎？</a></li></ol></details></li><li class="ev"><details><summary>證據：歷史選種與待驗證事項</summary><ol><li class="l2"><a href="#怎麼挑種子">怎麼挑種子？</a></li><li class="l2"><a href="#這頁還沒驗證的">這頁還沒驗證的</a></li></ol></details></li></ol></details></aside>
+<main class="guide-article" id="guide-content" tabindex="-1">
+<h1>外野攻略</h1><div class="guide-start"><p>先挑一個外野種子，再照這頁安排養成。</p><a class="guide-action" href="../index.html#p=OF">找外野種子</a><a href="common.html">共通規則</a></div>
+<p>遊戲 v2.0.11｜最後核對 2026-10-03｜<a href="index.html#燈號怎麼看">燈號怎麼看</a></p>
+<h2 id="先決定目標">先決定目標</h2>
+<p><strong>要重現搜尋器的退休結果</strong>：照<a href="common.html#攻略玩法">攻略玩法</a>與本頁的配點、對話選擇。旅外和保住特定守位等其他目標另列在後面；改走其他路線後，結果也會改變。</p>
+<p><strong>照攻略玩</strong>：事件卡選保守應對、先練守備再練打擊，讀完大三，在大四季前選秀，全程留在中職。〔實驗〕選秀時程部分依平均分判定；練守備有名人堂優勢，但平均分較低，屬於高風險（<a href="#只走中職的選秀時程">時程</a>、<a href="#要不要練守備">守備</a>）。</p>
+<p><strong>怎麼讀</strong>：「名人堂多 5 個百分點」是在受測種子中，平均每 100 顆多 5 顆進名人堂，不是把同一顆種子重玩 100 次。「高風險」是名人堂比例提高，但平均退休分數下降，要一起看頭銜分布。<strong>隨手輸入的種子</strong>是自己隨手輸入、沒有經過種子搜尋器篩選的種子，這種種子有幾項建議不一樣，表格裡會註明。其他見<a href="index.html#燈號怎麼看">燈號怎麼看</a>。</p>
+<h2 id="挑種子">挑種子</h2>
+<ul><li><strong>直接用推薦的</strong>：<code>hjfdh</code>。〔統計〕照<a href="common.html#攻略玩法">攻略玩法</a>玩，退休是名人堂。本次生涯沒有一般大傷，累積薪資 99,414 萬，退休時是指定打擊。遊戲開始時選「外野」。<a href="#推薦種子核對">查看推薦理由與完整結果</a>。</li><li><strong>自己挑</strong>：種子搜尋器排序選「退休頭銜」，再按「只看名人堂」。〔統計〕未模擬種子的開局指標僅供參考，不用來硬排除候選，歷史證據見<a href="#怎麼挑種子">怎麼挑種子</a>。</li></ul>
+<h2 id="每季配點">每季配點</h2>
+<p><strong>以名人堂為目標，推薦先練守備；平均退休分較低，要接受這個取捨。</strong> 〔實驗〕目前中職玩法的守備比較與退休分布見<a href="#要不要練守備">證據</a>；旅外搭配這套配點沒有一起重測。</p>
+<p>〔統計〕<strong>照搜尋器的固定玩法</strong>：尚未登錄位置或目前是指定打擊時，以中外野為目標；已守右外野、左外野或一壘，就按目前位置。業餘、二軍先用中職一軍的門檻。每次分配前算守備分，達標就轉練打擊，沒有達標才繼續練守備。</p>
+<p>〔機制〕中外野守備分 ＝ 守備範圍 × 0.55 ＋ 接球 × 0.30 ＋ 臂力 × 0.15。〔統計〕固定玩法採下表的不折減門檻：</p>
+<div class="table" tabindex="0" role="region" aria-label="訓練目標、中職一軍、日職一軍、大聯盟，可橫向捲動"><table><thead><tr><th>訓練目標</th><th style="text-align:right">中職一軍</th><th style="text-align:right">日職一軍</th><th style="text-align:right">大聯盟</th></tr></thead><tbody><tr><td data-label="訓練目標">中外野守備分</td><td data-label="中職一軍" style="text-align:right">49</td><td data-label="日職一軍" style="text-align:right">57</td><td data-label="大聯盟" style="text-align:right">63</td></tr></tbody></table></div>
+<p>〔統計〕練守備時，先在未達潛力的三項中選能力最低的；三項都達潛力才一起比較。同分依守備範圍、接球、臂力選；守一壘時改為接球、守備範圍、臂力。這套配點不扣年齡與「愛將」優惠，也不要求三項各自都到表列數字。遊戲實際換守位時的優惠，以及其他位置的公式與門檻，見<a href="#守備門檻怎麼算">證據</a>。</p>
+<p><strong>守備達標後練打擊</strong>：</p>
+<ol><li>體力練到 50。</li><li>Contact 先練到潛力，再練力量到潛力。</li><li>體力練到 56。</li><li>先把選球練到潛力，再練速度到潛力。</li><li>之後依<a href="common.html#固定配點細節">後期分配規則</a>比較 Contact、力量、選球、速度、體力；比較值同分時也照這個順序。</li></ol>
+<p>〔機制〕潛力是能力的成長基準線。能力 63 以下升 1 點花 1 點，64～71 花 2 點，72 以上花 3 點；已達潛力再乘 3。〔統計〕骰子照原順序整顆分配，每放一顆重算；一般訓練點每放 1 點重算。</p>
+<h2 id="只走中職哪一年選秀">只走中職：哪一年選秀</h2>
+<p>🟢 〔實驗〕如果不走旅外、全程留在中職，推薦讀完大三，在「大四季前」開始選秀；大二、大三季前先留校。與讀完大二相比，靠平均分判定；高中或大學旅外的路線另有舊比較，沒有一起重測。 <a href="#只走中職的選秀時程">五種時機的比較</a>。</p>
+<p>〔機制〕「讀完大一」就是大二季前，沒有另一個大一選秀按鈕；讀完大三是大四季前，和大四打完畢業後選秀相差一整季。目標年份落選就留校，之後每年再試；後段指名也接受。</p>
+<h2 id="遇到對話怎麼選">遇到對話怎麼選</h2>
+<p>以下列出攻略固定的選擇。燈號引用各項研究，前提可能與完整攻略不同；數字不能相加，也不是這套玩法的增益。</p>
+<div class="table wide" tabindex="0" role="region" aria-label="何時、遊戲裡的對話、按這個、燈號，可橫向捲動"><table><thead><tr><th>何時</th><th>遊戲裡的對話</th><th>按這個</th><th>燈號</th></tr></thead><tbody><tr><td data-label="何時">每張事件卡</td><td data-label="遊戲裡的對話">事件卡（保守應對／普通應對／全力一搏）</td><td data-label="按這個">保守應對</td><td data-label="燈號"><a href="#事件卡該走哪條路線">🟢 名人堂多 19 個百分點</a></td></tr><tr><td data-label="何時">每季</td><td data-label="遊戲裡的對話">分配訓練成果</td><td data-label="按這個">先練守備，再照順序練打擊</td><td data-label="燈號"><a href="#要不要練守備">🟢 高風險：名人堂多約 3 個百分點，平均分較低</a></td></tr><tr><td data-label="何時">高三結束</td><td data-label="遊戲裡的對話">高中畢業・人生的第一個路口</td><td data-label="按這個">就讀大學</td><td data-label="燈號"><a href="#只走中職的選秀時程">🟢 全程中職時，讀完大三再選秀</a></td></tr><tr><td data-label="何時">大二到大四開季前</td><td data-label="遊戲裡的對話">大…季前 · 升學與職棒的十字路口</td><td data-label="按這個">大二、大三先留校；大四季前投入中華職棒選秀</td><td data-label="燈號"><a href="#只走中職的選秀時程">🟢 讀完大三選秀；部分比較依平均分</a></td></tr><tr><td data-label="何時">大四結束，若仍在校</td><td data-label="遊戲裡的對話">大學畢業</td><td data-label="按這個">投入中華職棒選秀</td><td data-label="燈號"><a href="#只走中職的選秀時程">🟢 目標是讀完大三開始選秀，落選後每年再試</a></td></tr><tr><td data-label="何時">在中職時</td><td data-label="遊戲裡的對話">日職球團開出旅外合約、大聯盟球探遞出合約</td><td data-label="按這個">留在中職</td><td data-label="燈號"><a href="#進職棒後要旅外嗎">🟢 旅外的話平均分少 2～10 分</a></td></tr><tr><td data-label="何時">升上一軍後</td><td data-label="遊戲裡的對話">守位會議：教練團認為你的守備已撐不住…（…標準）／守位會議：教練團想把你推上更吃重的位置</td><td data-label="按這個">暫選守得住的較難位置，有升防就接受</td><td data-label="燈號"><a href="#被換守位或被問要不要升防時">🟡 門檻較低，但兩批還分不出優劣</a></td></tr><tr><td data-label="何時">長約期間成績不夠</td><td data-label="遊戲裡的對話">球團約談：成績未達當前層級要求，打算將你下放</td><td data-label="按這個">接受下放</td><td data-label="燈號"><a href="#下放該接受嗎">🟢 拒絕的人幾乎都拿到「薪水小倫」</a></td></tr><tr><td data-label="何時">自由球員沒人要</td><td data-label="遊戲裡的對話">沒有球隊開價</td><td data-label="按這個">減薪簽約</td><td data-label="燈號"><a href="#沒人開價時要減薪簽約嗎">🟢 五守位合併：直接引退的話名人堂少約 7 個百分點</a></td></tr><tr><td data-label="何時">36 歲起每年</td><td data-label="遊戲裡的對話">又是一年春訓，身體大不如前了</td><td data-label="按這個">再戰一年</td><td data-label="燈號"><a href="#36-歲後該續戰嗎">🟢 提早退休的話名人堂少 18 個百分點</a></td></tr></tbody></table></div>
+<p><strong>🟡 暫定選項與取捨</strong>：目前分不出優劣，不代表一樣好。</p>
+<ul><li><a href="#選秀後段輪次要接受指名嗎">選秀後段輪次</a>：🟡 暫接受指名，重返的合併結果偏向較差，兩批沒有都確認。〔實驗〕</li><li><a href="#天賦覺醒要轉二刀流嗎">天賦覺醒時轉二刀流</a>：🟡 攻略固定專心當外野手，優劣尚無定論。</li><li><a href="#長約還是短約">選擇合約類型</a>：🟡 攻略固定選長約，優劣尚無定論。</li><li><a href="#其他對話怎麼選">中華隊徵召</a>：🟡 尚無定論，攻略沿用畫面的主要選項。</li><li><a href="common.html#續約與市場怎麼選">自由球員續約</a>：🟡 求穩先續約，測試市場可能沒人開價；提前延長續約固定選長約；市場選隊尚無定論。〔機制〕</li><li><a href="common.html#交易對話怎麼選">交易否決權</a>：🟡 暫同意；否決會降低奪冠機會、下一張合約減薪。〔機制〕</li><li><a href="common.html#交易對話怎麼選">季末交易傳言</a>：🟡 暫保持沉默，避免抱怨兩次拿到「氣氛大師」。〔機制〕</li><li><a href="common.html#感情對話怎麼選">「兩位是在交往嗎？」、搭便車、飯店邀約、求婚</a>：🟡 暫承認交往、拒絕可能外遇的邀約；求婚暫接受，依規則有訓練上的好處，退休頭銜仍未確認。〔機制〕</li><li><a href="#其他對話怎麼選">請決定今年的事件組成</a>：🟡 攻略固定選「訓練至上」，優劣尚無定論。</li><li><a href="#其他對話怎麼選">33 歲起的下放約談</a>：🟡 攻略固定接受下放，這個情境的優劣尚無定論。</li></ul>
+<p><strong>尚無可用比較</strong>：樣本不足或推薦玩法走不到的對話，集中在<a href="common.html#尚無可用比較的對話">共通表</a>，不給燈號。</p>
+<p><strong>🔴 不要這樣做</strong>：高中畢業直接選秀、只留中職時大二或大三就選秀、進職棒後旅外、拒絕下放、36 歲就退休。</p>
+<h2 id="小心這些坑">小心這些坑</h2>
+<ul><li><strong>第一次升上一軍時</strong>，會被排到你守得住的位置裡最難的那個；想從中外野開始，升上去之前就要達標。守不住時會依序往右外野、左外野、一壘、指定打擊移動。</li><li><strong>當季配的點救不了當季</strong>：守備檢查在每季擲骰之後、你配點之前。</li></ul>
+<h2 id="其他玩法旅外">其他玩法：旅外</h2>
+<p>〔實驗〕歷史比較支持高中畢業有旅美合約時接受；沒有旅美時也可考慮旅日，但屬高風險，兩者都沒有才念大學。這些建議只適用搜尋器挑的種子；隨手輸入的種子就讀大學。旅外尚未與目前的選秀時程一起重測。</p>
+<p><strong>想賺錢或想站上大聯盟</strong>：〔實驗〕其他照走，旅外改成只接美國的報價（任何時期）。約一半的生涯會上大聯盟，生涯累積薪資約 37 億（留在中職約 4 億）；進名人堂的比例約 43%（留在中職約 40%），平均分少約 2 分。這和推薦的做法沒有直接比較過。</p>
+<div class="table wide" tabindex="0" role="region" aria-label="何時、遊戲裡的對話、按這個、燈號，可橫向捲動"><table><thead><tr><th>何時</th><th>遊戲裡的對話</th><th>按這個</th><th>燈號</th></tr></thead><tbody><tr><td data-label="何時">高三結束</td><td data-label="遊戲裡的對話">高中畢業・人生的第一個路口</td><td data-label="按這個">有「洽談旅美合約」就選它；沒有旅美時看下一列，兩種都沒有才就讀大學；隨手輸入的種子一律就讀大學</td><td data-label="燈號"><a href="#畢業時選哪條路">🟢 旅美名人堂多 4 個百分點</a></td></tr><tr><td data-label="何時">高三結束，有旅日合約時</td><td data-label="遊戲裡的對話">高中畢業・人生的第一個路口</td><td data-label="按這個">沒有旅美合約的話可以選「洽談旅日合約」，怕風險就就讀大學；隨手輸入的種子就讀大學</td><td data-label="燈號"><a href="#畢業時選哪條路">🟢 高風險：名人堂多 5 個百分點，平均分少約 2 分</a></td></tr><tr><td data-label="何時">大四結束</td><td data-label="遊戲裡的對話">大學畢業</td><td data-label="按這個">有旅美合約就去，有旅日合約也可以去（高風險），都沒有就投入中華職棒選秀；隨手輸入的種子選秀</td><td data-label="燈號"><a href="#畢業時選哪條路">🟢 和高中畢業同一個實驗</a></td></tr></tbody></table></div>
+<p>〔實驗〕<a href="#大學期間要旅美嗎">大學期間旅美</a>：🟡 偏向旅美，但失敗的風險也較高；兩批沒有都確認。</p>
+<p><strong>畢業旅美之後怎麼走，尚無可用比較</strong>：例如在小聯盟要不要回台，補測樣本不足。前面的旅美實驗，後續一律留在國外，不能據此說每次都該留下。</p>
+<details class="evidence">
+<summary>推薦種子核對</summary>
+<h2 id="推薦種子核對">推薦種子核對</h2>
+<p>〔統計〕以下是目前完整攻略的重播結果，起始守位為外野，退休頭銜都是名人堂。挑選順序與限制見<a href="common.html#推薦種子怎麼選">推薦種子怎麼選</a>。</p>
+<div class="table" tabindex="0" role="region" aria-label="種子、退休年齡、一般大傷、手肘危機、累積薪資（萬）、退休身分／守位，可橫向捲動"><table><thead><tr><th>種子</th><th style="text-align:right">退休年齡</th><th style="text-align:right">一般大傷</th><th style="text-align:right">手肘危機</th><th style="text-align:right">累積薪資（萬）</th><th>退休身分／守位</th></tr></thead><tbody><tr><td data-label="種子"><code>hjfdh</code></td><td data-label="退休年齡" style="text-align:right">43</td><td data-label="一般大傷" style="text-align:right">0</td><td data-label="手肘危機" style="text-align:right">0</td><td data-label="累積薪資（萬）" style="text-align:right">99,414</td><td data-label="退休身分／守位">指定打擊</td></tr></tbody></table></div>
+<p>這次選 <code>hjfdh</code>，是因為名人堂與一般大傷條件相同時，它的收入較高。仍須照攻略練守備；最後轉到指定打擊，不代表可以提前省略守備配點。</p>
+<p>〔統計〕舊推薦 <code>5f687</code>、<code>664er</code> 仍是名人堂，一般大傷分別為 0 次、1 次，累積薪資為 68,961 萬、33,090 萬；退休守位也都是指定打擊。</p>
+</details>
+<details class="evidence">
+<summary>證據怎麼讀</summary>
+<h2 id="證據怎麼讀">證據怎麼讀</h2>
+<p>每段開頭的燈號就是上面表格用的燈號。燈號照這個順序判斷：</p>
+<ol><li>先看進名人堂的比例有沒有變（單位是百分點，例如 40% 變 45% 是多 5 個百分點）。</li><li>名人堂比例分不出來時，才看平均生涯分數。</li><li>名人堂比例變高、平均分卻變低時，照名人堂比例建議，並標「高風險」：名人堂比例提高，但平均退休分數下降，需一起看頭銜分布。</li></ol>
+<p>早期單項實驗在<strong>當時固定的推薦組合</strong>下進行：事件卡選保守應對、高中畢業念大學、練守備、遇到旅外報價都留在中職，其他決定照模擬的固定做法。每次只改一個決定，看退休等級怎麼變。這些單項差距不能相加。完整中職攻略後來已另做<a href="common.html#攻略修正的比較">整套比較</a>，旅外組合仍未重測；固定設定和限制見<a href="common.html#數字是怎麼來的">共通攻略</a>。三種證據：</p>
+<ul><li><strong>〔實驗〕</strong>：早期單項比較用兩批不同種子，每批抽 600 顆，最多合併 1,200 顆；實際遇到對話的有效數可能較少，依各節所列。後續補測與選秀時程研究各有自己的樣本數和判定規則，以該節所列為準。固定時程與整套攻略是兩項獨立研究，各自每個守位、每個種子來源合併 10,000 顆。數字附上誤差範圍，跨過 0 表示該次比較尚不能確認方向；「明確」另要求兩批一致，並通過該研究的多項比較檢查。燈號依種子搜尋器的種子判斷，隨手輸入的種子不同時另註。</li><li><strong>〔統計〕</strong>：包含歷史十八種玩法的統計，以及目前固定攻略的退休結果。開局特徵與成績的相關性不能證明因果，也不能直接拿來排除攻略玩法的候選種子。</li><li><strong>〔機制〕</strong>：直接讀遊戲程式得到的規則。</li></ul>
+<p>退休等級換成分數：名人堂 100、明星 70、每日 40、邊緣 15、過客 0。實驗裡每顆種子照推薦玩法玩一次，「平均分」是這些分數的平均。歷史研究的「生涯分數」用 18 種固定打法各玩一次再平均；現在搜尋器顯示的是照完整攻略玩的單次退休結果。實驗設定與限制見<a href="common.html#數字是怎麼來的">共通攻略</a>。</p>
+</details>
+<details class="evidence">
+<summary>證據：升學與選秀</summary>
+<h2 id="大學期間要提前投入選秀嗎">大學期間要提前投入選秀嗎？</h2>
+<p>🟢 推薦留在大學。</p>
+<p>〔實驗〕只改第一次遇到這個選擇，1,200 次生涯。提前投入選秀比留在大學，名人堂少 0.8 個百分點（誤差範圍 −4.0～2.5），平均分少 10.7 分（誤差範圍 −12.7～−8.7）。平均分兩批都明確較低；名人堂差沒有兩批都確認。隨手輸入的種子也支持留下。</p>
+<p>退休等級分布（名人堂／明星／每日／邊緣／過客）：40／51／6／1／2 % → 40／38／4／1／18 %。</p>
+<p>〔機制〕大學最多讀四年，大二到大四季前都可能問要不要提早選秀或旅外。這項只改第一次遇到的選秀選擇，不是每一個年級分開驗證。完整時程的新結果支持大四季前選秀，見<a href="#只走中職的選秀時程">五種時程</a>；不能把這段舊結果寫成每年都要留校。</p>
+<h2 id="選秀後段輪次要接受指名嗎">選秀後段輪次要接受指名嗎？</h2>
+<p>🟡 暫選接受指名：重返校園或業餘的合併結果偏向較差。</p>
+<p>〔實驗〕只改第一次遇到這個選擇，566 次生涯。重返校園或業餘比接受指名，名人堂少 4.6 個百分點（誤差範圍 −8.6～−0.6），平均分少 0.5 分（誤差範圍 −2.3～1.3）。兩批沒有都確認。</p>
+<p>退休等級分布（名人堂／明星／每日／邊緣／過客）：25／61／11／2／1 % → 20／68／10／1／1 %。</p>
+<h2 id="只走中職的選秀時程">只走中職的選秀時程</h2>
+<p>🟢 全程中職時，推薦讀完大三，在大四季前開始選秀；部分比較依平均分判定。</p>
+<p>〔實驗〕另用兩批各 5,000 顆新種子，每顆完整跑五種時程。合併 10,000 顆，未入職、提早退休或中途換位置都保留；選秀年級、季前／畢業階段與成功簽約都有核對。以下是全程中職、保守事件卡的完整策略結果，不能把名人堂比例當成真人成功率。</p>
+<div class="table" tabindex="0" role="region" aria-label="開始選秀的時機、名人堂、平均分，可橫向捲動"><table><thead><tr><th>開始選秀的時機</th><th style="text-align:right">名人堂</th><th style="text-align:right">平均分</th></tr></thead><tbody><tr><td data-label="開始選秀的時機">高中畢業</td><td data-label="名人堂" style="text-align:right">33.6%</td><td data-label="平均分" style="text-align:right">54.6</td></tr><tr><td data-label="開始選秀的時機">讀完大一（大二季前）</td><td data-label="名人堂" style="text-align:right">40.0%</td><td data-label="平均分" style="text-align:right">67.6</td></tr><tr><td data-label="開始選秀的時機">讀完大二（大三季前）</td><td data-label="名人堂" style="text-align:right">42.7%</td><td data-label="平均分" style="text-align:right">75.1</td></tr><tr><td data-label="開始選秀的時機">讀完大三（大四季前）</td><td data-label="名人堂" style="text-align:right">42.5%</td><td data-label="平均分" style="text-align:right">77.9</td></tr><tr><td data-label="開始選秀的時機">大學畢業</td><td data-label="名人堂" style="text-align:right">39.3%</td><td data-label="平均分" style="text-align:right">77.7</td></tr></tbody></table></div>
+<p>〔實驗〕讀完大三比高中直接選秀，名人堂多 8.9 個百分點（誤差範圍 +7.1～+10.7），兩批確認。比等到大學畢業，名人堂多 3.1 個百分點（+1.5～+4.7），也兩批確認。</p>
+<p>讀完大三比讀完大二，名人堂少 0.2 個百分點（−1.9～+1.5），未確認；平均分多 2.8 分（+2.2～+3.3），兩批支持讀完大三。比讀完大一也有平均分優勢。讀完大二的名人堂點估計稍高，不能把平均分推薦寫成名人堂已勝出；只看名人堂，不能選出唯一贏家。</p>
+<p>隨手輸入的種子，在讀完大三與畢業之間仍分不出優劣；兩者各自比讀完大二都有平均分優勢。這次有練守備，全部留在中職，不含高中、大學旅外路線。</p>
+<p>退休等級分布（名人堂／明星／每日／邊緣／過客；每條時程 10,000 人）：</p>
+<div class="table" tabindex="0" role="region" aria-label="時機、人數，可橫向捲動"><table><thead><tr><th>時機</th><th>人數</th></tr></thead><tbody><tr><td data-label="時機">高中畢業</td><td data-label="人數">3357／2854／244／51／3494</td></tr><tr><td data-label="時機">讀完大一（大二季前）</td><td data-label="人數">3996／3741／346／52／1865</td></tr><tr><td data-label="時機">讀完大二（大三季前）</td><td data-label="人數">4267／4340／491／78／824</td></tr><tr><td data-label="時機">讀完大三（大四季前）</td><td data-label="人數">4246／4719／560／100／375</td></tr><tr><td data-label="時機">大學畢業</td><td data-label="人數">3933／5111／609／98／249</td></tr></tbody></table></div>
+<p>共同設定、全守位對照與多項比較規則見<a href="common.html#五種選秀時程怎麼測">共通證據</a>。</p>
+</details>
+<details class="evidence">
+<summary>證據：配點、事件與守位</summary>
+<h2 id="事件卡該走哪條路線">事件卡該走哪條路線？</h2>
+<p>🟢 推薦保守應對。〔實驗〕事件卡一律選保守、普通或全力，其他照推薦玩法：</p>
+<div class="table" tabindex="0" role="region" aria-label="一律選、進名人堂的比例、平均分，可橫向捲動"><table><thead><tr><th>一律選</th><th style="text-align:right">進名人堂的比例</th><th style="text-align:right">平均分</th></tr></thead><tbody><tr><td data-label="一律選">普通應對</td><td data-label="進名人堂的比例" style="text-align:right">21.1%</td><td data-label="平均分" style="text-align:right">68.5</td></tr><tr><td data-label="一律選">保守應對</td><td data-label="進名人堂的比例" style="text-align:right">40.3%</td><td data-label="平均分" style="text-align:right">78.5</td></tr><tr><td data-label="一律選">全力一搏</td><td data-label="進名人堂的比例" style="text-align:right">16.2%</td><td data-label="平均分" style="text-align:right">62.1</td></tr></tbody></table></div>
+<p>保守比普通多 19.3 個百分點（誤差範圍 +16.4～+22.1），全力比普通少 4.9 個百分點（誤差範圍 −7.2～−2.6），都明確。走保守路線的人退休時大多有「自律狂」（衰退延後兩年），走普通路線的大多有「愛將」，走全力路線的大多有「大心臟」。</p>
+<p>〔機制〕25 歲前保守應對成功 15 次，而且沒被抓到外遇、宵夜少於 5 次，就會得到自律狂。訓練類的保守應對失敗累計 20 次會拿到「練球遲到」（保守成功率永久少 5 個百分點），實驗結果已經包含這個代價。畫面上看不到累計次數（<a href="common.html#25-歲前的事件累積">共通攻略</a>）。實驗沒有把「自律狂」單獨拆出來，所以只能說保守路線整體比較好。</p>
+<h2 id="要不要練守備">要不要練守備？</h2>
+<p>🟢 以名人堂為目標，推薦練守備；平均分較低，屬於高風險。</p>
+<p>〔實驗〕固定目前完整中職攻略：讀完大三、大四季前開始選秀，保守事件卡。只比較整段生涯練不練守備，其餘配點順序與對話規則相同。兩批各 5,000 顆新種子，合併 10,000 顆，全部起始種子保留。練守備比不練，名人堂多 2.970 個百分點（誤差範圍 +1.361～+4.577），平均分少 2.824（−3.270～−2.377），兩批都通過校正。</p>
+<div class="table wide" tabindex="0" role="region" aria-label="配點、名人堂、平均分、名人堂／明星／每日／邊緣／過客人數，可橫向捲動"><table><thead><tr><th>配點</th><th style="text-align:right">名人堂</th><th style="text-align:right">平均分</th><th>名人堂／明星／每日／邊緣／過客人數</th></tr></thead><tbody><tr><td data-label="配點">先練守備，再照順序練打擊</td><td data-label="名人堂" style="text-align:right">45.46%</td><td data-label="平均分" style="text-align:right">79.171</td><td data-label="名人堂／明星／每日／邊緣／過客人數">4546／4519／489／81／365</td></tr><tr><td data-label="配點">不練守備，照順序練打擊</td><td data-label="名人堂" style="text-align:right">42.49%</td><td data-label="平均分" style="text-align:right">81.994</td><td data-label="名人堂／明星／每日／邊緣／過客人數">4249／5549／160／14／28</td></tr></tbody></table></div>
+<p>〔實驗〕練守備多了一些名人堂，但落到每日以下的人也更多；如果在意平均退休頭銜，這是實際的代價。隨手輸入的種子也一樣：練守備的名人堂多 3.950 個百分點（誤差範圍 +2.622～+5.275），平均分少 4.883（−5.356～−4.409），兩批確認。</p>
+<p>舊的三種配點比較留在<a href="common.html#三種配點方式的平均">歷史共通表</a>，不與這次合併；本次沒有重測「補最低的能力」。<a href="common.html#四項選擇的獨立補測">本輪方法與限制</a>。</p>
+<p>〔機制〕退休評價的門檻會依守位調整，指定打擊最高、中外野比較低（<a href="common.html#守位本身的價值">共通攻略</a>）。</p>
+<h2 id="天賦覺醒要轉二刀流嗎">天賦覺醒要轉二刀流嗎？</h2>
+<p>🟡 尚無定論。〔機制〕高中時覺醒天才，教練會問要不要轉二刀流，拒絕之後就不會再問。〔實驗〕只看遇到這個對話的 201 次生涯：轉二刀流的名人堂比例少 3.5 個百分點（誤差範圍 −12.6～+5.6），平均分少 1.2，分不出來。二刀流要每季同時過投打兩邊的審查（<a href="twoway.html">二刀流攻略</a>）。隨手輸入的種子至少一批不到 50 顆遇到，尚無可用比較。</p>
+<h2 id="被換守位或被問要不要升防時">被換守位或被問要不要升防時？</h2>
+<p>🟡 暫選守得住的較難位置，有升防就接受。〔機制〕較難位置的退休門檻較低，但守備會花點數，不能單憑門檻說一定比較好（<a href="common.html#守位本身的價值">共通規則</a>）。</p>
+<p>〔實驗〕只改第一次遇到這個選擇，1,181 次生涯。選較容易的位置比選守得住的較難位置，名人堂少 0.1 個百分點（誤差範圍 −0.5～0.3），平均分少 0.1 分（誤差範圍 −0.3～0.1）。兩批仍分不出優劣。</p>
+<p>退休等級分布（名人堂／明星／每日／邊緣／過客）：41／51／6／1／0 % → 41／51／6／1／0 %。</p>
+<p>〔實驗〕只改第一次遇到這個選擇，274 次生涯。留守比接受升防，名人堂少 0.7 個百分點（誤差範圍 −2.5～1.0），平均分少 0.6 分（誤差範圍 −1.5～0.3）。兩批仍分不出優劣；規則上的方向維持 🟡。</p>
+<p>退休等級分布（名人堂／明星／每日／邊緣／過客）：33／51／12／4／0 % → 32／51／13／4／0 %。</p>
+<p>〔機制〕守不住原位時，選項會從守得住的位置中由難到易排列。內野依序是游擊、二壘、三壘、一壘、指定打擊；外野依序是中外野、右外野、左外野、一壘、指定打擊。</p>
+<h2 id="守備門檻怎麼算">守備門檻怎麼算？</h2>
+<p>〔機制〕守備分是三項能力的加權總和，達不到門檻就會被換位置：</p>
+<div class="table wide" tabindex="0" role="region" aria-label="守位、守備分怎麼算、中職一軍、日職一軍、大聯盟，可橫向捲動"><table><thead><tr><th>守位</th><th>守備分怎麼算</th><th style="text-align:right">中職一軍</th><th style="text-align:right">日職一軍</th><th style="text-align:right">大聯盟</th></tr></thead><tbody><tr><td data-label="守位">中外野</td><td data-label="守備分怎麼算">守備範圍 ×0.55 ＋ 接球 ×0.30 ＋ 臂力 ×0.15</td><td data-label="中職一軍" style="text-align:right">49</td><td data-label="日職一軍" style="text-align:right">57</td><td data-label="大聯盟" style="text-align:right">63</td></tr><tr><td data-label="守位">右外野</td><td data-label="守備分怎麼算">臂力 ×0.45 ＋ 守備範圍 ×0.35 ＋ 接球 ×0.20</td><td data-label="中職一軍" style="text-align:right">43</td><td data-label="日職一軍" style="text-align:right">50</td><td data-label="大聯盟" style="text-align:right">56</td></tr><tr><td data-label="守位">左外野</td><td data-label="守備分怎麼算">守備範圍 ×0.40 ＋ 接球 ×0.35 ＋ 臂力 ×0.25</td><td data-label="中職一軍" style="text-align:right">41</td><td data-label="日職一軍" style="text-align:right">47</td><td data-label="大聯盟" style="text-align:right">53</td></tr><tr><td data-label="守位">一壘</td><td data-label="守備分怎麼算">接球 ×0.60 ＋ 守備範圍 ×0.20 ＋ 臂力 ×0.20</td><td data-label="中職一軍" style="text-align:right">36</td><td data-label="日職一軍" style="text-align:right">42</td><td data-label="大聯盟" style="text-align:right">48</td></tr></tbody></table></div>
+<ul><li>未滿 24 歲門檻少 3、24～25 歲少 1.5；有「愛將」再少 3。只有中職一軍、日職一軍、大聯盟會檢查。</li><li>三個比重加起來剛好是 1，所以三項練到同一個數字，守備分就等於那個數字。各守位三項要練到多少（每格依序是「未滿 24 歲／24～25 歲／26 歲以上」）：</li></ul>
+<div class="table" tabindex="0" role="region" aria-label="守位、中職一軍、日職一軍、大聯盟，可橫向捲動"><table><thead><tr><th>守位</th><th>中職一軍</th><th>日職一軍</th><th>大聯盟</th></tr></thead><tbody><tr><td data-label="守位">中外野</td><td data-label="中職一軍">46／48／49</td><td data-label="日職一軍">54／56／57</td><td data-label="大聯盟">60／62／63</td></tr><tr><td data-label="守位">右外野</td><td data-label="中職一軍">40／42／43</td><td data-label="日職一軍">47／49／50</td><td data-label="大聯盟">53／55／56</td></tr><tr><td data-label="守位">左外野</td><td data-label="中職一軍">38／40／41</td><td data-label="日職一軍">44／46／47</td><td data-label="大聯盟">50／52／53</td></tr><tr><td data-label="守位">一壘</td><td data-label="中職一軍">33／35／36</td><td data-label="日職一軍">39／41／42</td><td data-label="大聯盟">45／47／48</td></tr></tbody></table></div>
+<ul><li><strong>自行配點時可比較成本</strong>：每花 1 點能換到多少守備分，等於「比重 ÷ 這一級的價錢」。例如想守中外野時，兩項都未達潛力，守備範圍 66（每級 2 點）只換到 0.55 ÷ 2 ＝ 0.275，接球 55（每級 1 點）能換到 0.30 ÷ 1 ＝ 0.30，這時練接球比較划算。這是另一種配點方式，搜尋器固定玩法仍按前面的順序選。</li><li>26 歲以上、沒有愛將時，偏重某一項也能過關的例子（守備範圍／接球／臂力）：中外野大聯盟 69／60／55、右外野大聯盟 54／52／60、左外野大聯盟 55／53／50。</li></ul>
+</details>
+<details class="evidence">
+<summary>證據：旅外</summary>
+<h2 id="畢業時選哪條路">畢業時選哪條路？</h2>
+<p>🟢 推薦有旅美合約就去；有旅日合約也可以去，但是高風險；都沒有就念大學。隨手輸入的種子一律念大學。〔機制〕高中畢業的對話會顯示你的綜合能力：50 以上才有「洽談旅美合約」（從新人聯盟或 1A 出發），44 以上才有「洽談旅日合約」（從日職二軍出發）。</p>
+<p>〔實驗〕「畢業時旅美／旅日」是指高中、大學期間（包括大學畢業）收到的報價都接受，進職棒以後一律留在中職，所以不只是高中畢業那一次的效果。和推薦玩法的「念大學」比較：</p>
+<div class="table" tabindex="0" role="region" aria-label="高中畢業後、進名人堂、平均分、過客，可橫向捲動"><table><thead><tr><th>高中畢業後</th><th style="text-align:right">進名人堂</th><th style="text-align:right">平均分</th><th style="text-align:right">過客</th></tr></thead><tbody><tr><td data-label="高中畢業後">念大學</td><td data-label="進名人堂" style="text-align:right">40.3%</td><td data-label="平均分" style="text-align:right">78.5</td><td data-label="過客" style="text-align:right">2%</td></tr><tr><td data-label="高中畢業後">直接選秀</td><td data-label="進名人堂" style="text-align:right">33.9%</td><td data-label="平均分" style="text-align:right">55.1</td><td data-label="過客" style="text-align:right">35%</td></tr><tr><td data-label="高中畢業後">畢業時有旅美合約就去</td><td data-label="進名人堂" style="text-align:right">44.5%</td><td data-label="平均分" style="text-align:right">77.9</td><td data-label="過客" style="text-align:right">2%</td></tr><tr><td data-label="高中畢業後">畢業時有旅日合約就去</td><td data-label="進名人堂" style="text-align:right">45.2%</td><td data-label="平均分" style="text-align:right">76.2</td><td data-label="過客" style="text-align:right">2%</td></tr></tbody></table></div>
+<ul><li><strong>念大學比直接選秀</strong>：平均分多 23.4（誤差範圍 +20.9～+25.8），名人堂多 6.4 個百分點（誤差範圍 +3.0～+9.8），平均分兩批都明確。</li><li><strong>旅美比念大學</strong>：名人堂多 4.2 個百分點（誤差範圍 +2.2～+6.1），兩批都明確；平均分分不出來。約 37% 的生涯會上大聯盟。</li><li><strong>旅日比念大學</strong>：名人堂多 4.8 個百分點（誤差範圍 +2.0～+7.7），但平均分少 2.2，屬於高風險。這個做法遇到兩國都有報價時也選旅日，「只有旅日合約」的情況沒有單獨測過；退休等級分布從 40／51／6／1／2 % 變成 45／36／13／3／2 %。</li></ul>
+<p><strong>隨手輸入的種子不一樣</strong>：旅美的平均分少 2.0、名人堂沒有變多；旅日的平均分少 8.0。所以只有用種子搜尋器挑的種子才建議畢業旅美，隨手輸入的種子請念大學。</p>
+<h2 id="進職棒後要旅外嗎">進職棒後要旅外嗎？</h2>
+<p>🟢 推薦留在中職。〔實驗〕進職棒以後只接某一種旅外報價，其他留在中職，和一律留在中職（名人堂 40.3%、平均分 78.5）比較：</p>
+<div class="table" tabindex="0" role="region" aria-label="做法、名人堂差（百分點）、平均分差、上大聯盟、平均累積薪資，可橫向捲動"><table><thead><tr><th>做法</th><th style="text-align:right">名人堂差（百分點）</th><th style="text-align:right">平均分差</th><th style="text-align:right">上大聯盟</th><th style="text-align:right">平均累積薪資</th></tr></thead><tbody><tr><td data-label="做法">進職棒後旅美</td><td data-label="名人堂差（百分點）" style="text-align:right">+1.1</td><td data-label="平均分差" style="text-align:right">−1.8</td><td data-label="上大聯盟" style="text-align:right">41%</td><td data-label="平均累積薪資" style="text-align:right">31.7 億</td></tr><tr><td data-label="做法">進職棒後旅日</td><td data-label="名人堂差（百分點）" style="text-align:right">−2.0</td><td data-label="平均分差" style="text-align:right">−10.4</td><td data-label="上大聯盟" style="text-align:right">19%</td><td data-label="平均累積薪資" style="text-align:right">19.4 億</td></tr><tr><td data-label="做法">只接美國報價（任何時期）</td><td data-label="名人堂差（百分點）" style="text-align:right">+2.7</td><td data-label="平均分差" style="text-align:right">−2.4</td><td data-label="上大聯盟" style="text-align:right">52%</td><td data-label="平均累積薪資" style="text-align:right">37.0 億</td></tr></tbody></table></div>
+<p>留在中職的平均累積薪資約 3.8 億台幣。進職棒後旅外，平均分都明確變低，名人堂比例沒有明確變高。只接 24 歲以下的報價，名人堂比例略高但兩批沒有都明確（隨手輸入的種子只接 24 歲以下的日職報價時，平均分明確變低）；只接大聯盟等級的美國報價，平均分明確變低。這幾條規則用第二、三批驗證。</p>
+<p>〔實驗〕如果一定要出國、又同時收到日本和美國的報價：選美國的名人堂比例多 13.2 個百分點（誤差範圍 +4.9～+21.6，151 次生涯），兩批都明確；隨手輸入的種子至少一批不到 50 顆遇到，尚無可用比較。</p>
+<p>薪水不影響退休等級（<a href="common.html#薪水不影響退休等級">共通攻略</a>）。</p>
+<h2 id="大學期間要旅美嗎">大學期間要旅美嗎？</h2>
+<p>🟡 偏向旅美，但有風險，怕失敗可留在大學。兩批沒有都確認。</p>
+<p>〔實驗〕只改第一次遇到這個選擇，204 次生涯。提前旅美比留在大學，名人堂多 10.3 個百分點（誤差範圍 2.9～17.7），平均分少 0.7 分（誤差範圍 −4.0～2.6）。兩批沒有都確認；隨手輸入的種子至少一批不足 50 顆遇到，尚無可用比較。</p>
+<p>退休等級分布（名人堂／明星／每日／邊緣／過客）：72／28／0／0／0 % → 82／10／4／2／2 %。</p>
+<p>合併結果的名人堂比例偏高、平均分略低，失敗的生涯也較多；暫定方向照名人堂比例，不以薪水判斷。</p>
+</details>
+<details class="evidence">
+<summary>證據：傷病、合約與退休</summary>
+<h2 id="下放該接受嗎">下放該接受嗎？</h2>
+<p>🟢 推薦接受。〔機制〕遊戲裡有兩種球團約談：</p>
+<ul><li><strong>成績未達當前層級要求，打算將你下放</strong>：長約期間才會出現，可以拒絕。拒絕會觸發「更衣室毒瘤」（已經有的話不再觸發），隔年成績沒打回身價就會拿到「薪水小倫」（所有事件卡成功率永久少 10 個百分點）。</li><li><strong>成績未達當前層級的最低要求</strong>：33 歲起才會出現，只能接受下放或引退，見<a href="#其他對話怎麼選">其他對話</a>。</li></ul>
+<p>〔實驗〕長約期間遇到可以拒絕的下放時，一律接受或一律拒絕（六種打法，4,981 次生涯、1,157 顆種子）：拒絕的名人堂比例少 0.4 個百分點（誤差範圍 −0.6～−0.2），兩批都明確，差距很小。拒絕的那組退休時 100% 有薪水小倫、7.5% 有更衣室毒瘤；接受的那組幾乎沒有。隨手輸入的種子名人堂差分不出來，但負面特質一樣。所以建議接受（<a href="common.html#要避開的負面特質">共通攻略</a>）。</p>
+<h2 id="長約還是短約">長約還是短約？</h2>
+<p>🟡 尚無定論。〔實驗〕只改第一次遇到「選擇合約類型」或「母隊提前延長續約」時的選擇：外野選短約，名人堂比例少 1.2 個百分點（誤差範圍 −3.2～+0.8），平均分少 0.4，1,181 次生涯，分不出來。五個守位合併也分不出來。</p>
+<h2 id="其他對話怎麼選">其他對話怎麼選？</h2>
+<p>🟡 尚無定論。〔實驗〕整段生涯遇到時一律選左邊或右邊，只比真的遇到過的生涯：</p>
+<div class="table" tabindex="0" role="region" aria-label="對話：左 → 右、名人堂差（百分點）、誤差範圍，可橫向捲動"><table><thead><tr><th>對話：左 → 右</th><th style="text-align:right">名人堂差（百分點）</th><th>誤差範圍</th></tr></thead><tbody><tr><td data-label="對話：左 → 右">中華隊徵召：披上國家隊戰袍 → 以調整為由婉拒</td><td data-label="名人堂差（百分點）" style="text-align:right">−2.3</td><td data-label="誤差範圍">−4.4～−0.1</td></tr><tr><td data-label="對話：左 → 右">記者問交往：笑而不答 → 大方承認</td><td data-label="名人堂差（百分點）" style="text-align:right">+2.4</td><td data-label="誤差範圍">−0.5～+5.4</td></tr><tr><td data-label="對話：左 → 右">交易否決權：點頭同意 → 行使否決權</td><td data-label="名人堂差（百分點）" style="text-align:right">+0.8</td><td data-label="誤差範圍">−1.7～+3.4</td></tr><tr><td data-label="對話：左 → 右">季末交易傳言：保持沉默 → 公開抱怨</td><td data-label="名人堂差（百分點）" style="text-align:right">0.0</td><td data-label="誤差範圍">一樣</td></tr><tr><td data-label="對話：左 → 右">33 歲起被下放：接受下放 → 選擇引退</td><td data-label="名人堂差（百分點）" style="text-align:right">0.0</td><td data-label="誤差範圍">退休等級完全一樣</td></tr><tr><td data-label="對話：左 → 右">事件組成：訓練至上 → 代言寵兒</td><td data-label="名人堂差（百分點）" style="text-align:right">+1.8</td><td data-label="誤差範圍">−1.2～+4.7</td></tr><tr><td data-label="對話：左 → 右">事件組成：訓練至上 → 體驗人生</td><td data-label="名人堂差（百分點）" style="text-align:right">+1.6</td><td data-label="誤差範圍">−1.3～+4.5</td></tr><tr><td data-label="對話：左 → 右">事件組成：訓練至上 → 均衡生活</td><td data-label="名人堂差（百分點）" style="text-align:right">−0.8</td><td data-label="誤差範圍">−3.5～+2.0</td></tr></tbody></table></div>
+<p>婉拒中華隊徵召合起來看名人堂略少，但兩批沒有都明確；其他都分不出來。中華隊徵召前五年是強制的，沒有婉拒選項；公開抱怨交易傳言兩次會得到「氣氛大師」（<a href="common.html#要避開的負面特質">共通攻略</a>）。</p>
+<h2 id="沒人開價時要減薪簽約嗎">沒人開價時要減薪簽約嗎？</h2>
+<p>🟢 暫採減薪簽約，依五個守位合併的結果。〔實驗〕只改第一次遇到「沒有球隊開價」時的選擇，五個守位合併 1,287 次生涯：直接引退的名人堂比例少 7.2 個百分點（誤差範圍 −8.7～−5.8），兩批都明確。這個守位單獨看，至少一批不到 50 顆不同種子遇到，尚無可用比較；不能說已在這個守位確認（<a href="common.html#合約對話的實驗">共通證據</a>）。</p>
+<h2 id="36-歲後該續戰嗎">36 歲後該續戰嗎？</h2>
+<p>🟢 推薦續戰。〔實驗〕六種打法，一路續戰和第一次能退休就退休比較：名人堂比例 40.2% → 22.5%，少 17.7 個百分點（誤差範圍 −19.1～−16.2），平均退休年齡 41.4 → 35.8 歲。</p>
+</details>
+<details class="evidence">
+<summary>證據：歷史選種與待驗證事項</summary>
+<h2 id="怎麼挑種子">怎麼挑種子？</h2>
+<p>以下保留歷史十八種玩法的選種比較。它們不是目前攻略的退休結果；現在挑種子請看頁面前面的〈挑種子〉，不要用這些相關性直接排除候選。</p>
+<p>〔統計〕用不同的開局指標各挑出前 50 顆種子，再看它們在另一半模擬裡的平均生涯分數（方法見<a href="common.html#歷史開局預測分天才和非天才">共通攻略</a>）：</p>
+<div class="table" tabindex="0" role="region" aria-label="組別、這組的平均、綜合評分、純能力分、力量潛力、第一年的 6，可橫向捲動"><table><thead><tr><th>組別</th><th style="text-align:right">這組的平均</th><th style="text-align:right">綜合評分</th><th style="text-align:right">純能力分</th><th style="text-align:right">力量潛力</th><th style="text-align:right">第一年的 6</th></tr></thead><tbody><tr><td data-label="組別">天才</td><td data-label="這組的平均" style="text-align:right">67.9</td><td data-label="綜合評分" style="text-align:right">80.5</td><td data-label="純能力分" style="text-align:right">81.7</td><td data-label="力量潛力" style="text-align:right">80.2</td><td data-label="第一年的 6" style="text-align:right">—</td></tr><tr><td data-label="組別">非天才</td><td data-label="這組的平均" style="text-align:right">53.3</td><td data-label="綜合評分" style="text-align:right">58.8</td><td data-label="純能力分" style="text-align:right">56.6</td><td data-label="力量潛力" style="text-align:right">64.0</td><td data-label="第一年的 6" style="text-align:right"><strong>70.7</strong></td></tr></tbody></table></div>
+<ul><li>非天才看第一年擲出幾個 6 最準；天才的三個指標差不到 2 分，分不出哪個比較好。歷史比較依生涯分數排序，前 50 顆平均 94.4 分。</li><li>天才外野平均 68.4 分，非天才 54.1 分。非天才第一年擲出 0／1／2／3 個 6，平均分別是 50.1／55.8／62.9／71.2 分。</li><li>力量潛力 78 以上的天才外野有 123 顆，平均 83.0 分，其中 20.3% 有 15 次以上進名人堂。同樣這 123 顆種子選內野時，平均 82.7 分，所以內野和外野的這個結果不是兩份獨立的證據。</li><li>種子搜尋器的路線：長打型外野（力量潛力 ≥ 75、Contact ≥ 68）比外野平均高 9 分，上壘型高 3 分，中外野型低 6 分。這是分組比較，不代表練守備不好。</li><li>當時推薦的種子：<code>5f687</code> 綜合評分 B 45，18 次都進名人堂，其中 16 次是首輪入選；<code>664er</code> 選外野時綜合評分 A 63，18 次都進名人堂，首輪 13 次（選內野也是 18 次都進）。滿分的外野種子共 10 顆。社群推薦的 <code>r005whp2</code>（綜合評分 74）重測 98 分。</li><li>這份歷史資料已模擬 17,386 顆外野種子，平均 56 分；18 次裡至少 15 次進名人堂的有 242 顆（1.39%），比例是各守位最高。</li></ul>
+<h2 id="這頁還沒驗證的">這頁還沒驗證的</h2>
+<ul><li>高中畢業旅美之後的小聯盟選擇：補測樣本不足，尚無可用比較</li><li>平均練和偏重某一項練，生涯有沒有差</li></ul>
+</details>
+</main>
+</div>
+<script>
+if (matchMedia("(max-width:860px)").matches) document.querySelector("aside details").open = false;
+// Links into the collapsed evidence open it first, on load, on hash change and on
+// a click that repeats the current hash (which fires no hashchange).
+function reveal(hash, focus = false) {
+  let id;
+  try { id = decodeURIComponent(hash.slice(1)); } catch { return; }
+  const el = id && document.getElementById(id);
+  if (!el) return;
+  for (let d = el.closest("details"); d; d = d.parentElement.closest("details")) d.open = true;
+  if (focus) { el.setAttribute("tabindex", "-1"); el.focus({ preventScroll: true }); }
+  el.scrollIntoView();
+}
+addEventListener("hashchange", () => reveal(location.hash));
+document.addEventListener("click", (e) => {
+  const a = e.target.closest('a[href^="#"]');
+  if (!a) return;
+  if (a.closest(".guide-toc") && matchMedia("(max-width:860px)").matches) {
+    document.querySelector(".guide-toc > details").open = false;
+  }
+  reveal(a.getAttribute("href"), true);
+});
+reveal(location.hash);
+</script>
+<footer class="guide-footer"><span>下一步，帶著攻略開始養成。</span><a href="../index.html#p=OF">找外野種子</a><a href="index.html">攻略總覽</a><a href="#page-top">回到頂端</a></footer>
+<button class="back-to-top" id="backToTop" type="button" hidden><span aria-hidden="true">↑</span> 回到頂端</button>
+<script>
+const backToTop = document.getElementById("backToTop");
+const updateBackToTop = () => { backToTop.hidden = scrollY < 400; };
+addEventListener("scroll", updateBackToTop, { passive: true });
+addEventListener("pageshow", updateBackToTop);
+updateBackToTop();
+backToTop.addEventListener("click", () => {
+  document.querySelector(".site-brand").focus({ preventScroll: true });
+  scrollTo({ top: 0, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth" });
+});
+</script>
+</body>
+</html>
